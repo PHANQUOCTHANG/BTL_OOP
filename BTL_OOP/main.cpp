@@ -3,4 +3,5 @@
 int main() {
     cout << "Hello World" ;
     int a = 1 ;
+    int b=2;
 }
