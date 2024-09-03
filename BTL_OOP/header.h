@@ -1,4 +1,4 @@
-#pragma once
+#pragma once //Giúp gọi hàm lần 
 #include<bits/stdc++.h>
 using namespace std;
 class User{
