@@ -16,7 +16,8 @@ bool registerUser(const string& username, const string& password) {
     file.close();
     return true;
 }
-//hàm kiểm tra thông tin đăng nhâp
+//hàm kiểm tra thông tin đăng nhâp, logn in
+//hello
 bool loginUser(const string& username, const string& password) {
     ifstream file("users.txt");
     if (!file.is_open()) {
