@@ -1,6 +1,6 @@
-#include "header.h"
-#include "function.cpp"
-#include "username.cpp"
+#include "Header.h"
+#include "Function.cpp"
+#include "Username.cpp"
 //Ham main
 int main() {
     userProcess();

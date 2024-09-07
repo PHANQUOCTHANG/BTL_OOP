@@ -3,7 +3,7 @@
 using namespace std;
 class User{
     private:
-       string username,password; 
+       string Username,Password; 
     public:
         string getUsername();
         string getPassword();
