@@ -1,13 +1,41 @@
 #pragma once //Giúp gọi hàm lần 
 #include<bits/stdc++.h>
+#include <conio.h>
 using namespace std;
-class User{
+class Account{
     private:
-       string Username,Password; 
+       string accountName,accountPassword; 
     public:
-        string getUsername();
-        string getPassword();
-        void setUsername(string &username);
-        void setPassword(string &password);
+        string getAccountName();
+        string getAccountPassword();
+        void setAccountName(string &accountName);
+        void setAccountPassword(string &accountPassword);
+        void Register();
+        bool Login();
+        friend void userProcess();
+};
+class Admin:public Account{
+    private:
+        bool key;
+        
+    public:
+        Admin(){
+            this->key = 0;
+        }
+        void setKey(){
+            this->key = 1;
+        }
+        string getAdminName(){
+            return this->adminName;
+        }
+        string getadminPassword(){
+            return this->adminPassword;
+        }
+    protected:
+       const string adminName="admin",
+                    adminPassword="admin";
 
+};
+class User:public Account{
+    
 };
