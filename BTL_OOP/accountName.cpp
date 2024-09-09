@@ -5,8 +5,6 @@
 string Account::getAccountName(){
     return this->accountName;
 }   
-
-
 string Account::getAccountPassword(){
     return this->accountPassword;
 }

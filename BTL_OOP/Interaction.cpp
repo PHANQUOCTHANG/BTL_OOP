@@ -1,4 +1,4 @@
-// #pragma once
+#pragma once
 #include "Header.h"
 //Hàm set delay(độ chậm) cho giao diện
 void delay(int milliseconds) {
