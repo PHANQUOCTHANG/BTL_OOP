@@ -2,6 +2,8 @@
 #include<bits/stdc++.h>
 #include <conio.h>
 using namespace std;
+
+
 class Account{
     private:
        string accountName,accountPassword; 
