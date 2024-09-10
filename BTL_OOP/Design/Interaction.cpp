@@ -1,13 +1,5 @@
 #pragma once
-<<<<<<<< HEAD:BTL_OOP/Design/Interaction.cpp
 #include "../Header.h"
-========
-#include "Header.h"
-
-
-
-
->>>>>>>> ff8d405d726258de298cc80ddf25fd32b383db35:BTL_OOP/Account/Interaction.cpp
 //Hàm set delay(độ chậm) cho giao diện
 void delay(int milliseconds) {
     std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));

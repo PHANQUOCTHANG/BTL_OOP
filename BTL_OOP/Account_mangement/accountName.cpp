@@ -1,17 +1,7 @@
 #pragma once
-<<<<<<<< HEAD:BTL_OOP/Account_mangement/accountName.cpp
 #include "../Header.h"
 #include "../Design/Interaction.cpp"
 #include "../function.cpp"
-========
-#include "Header.h"
-#include "Interaction.cpp"
-#include "Function.cpp"
-
-
-
-
->>>>>>>> ff8d405d726258de298cc80ddf25fd32b383db35:BTL_OOP/Account/accountName.cpp
 string Account::getAccountName(){
     return this->accountName;
 }   
