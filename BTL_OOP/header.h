@@ -12,7 +12,7 @@ class Account{
         void setAccountPassword(string &accountPassword);
         void Register();
         bool Login();
-        friend void userProcess();
+        friend void accountProcess();
 };
 class Admin:public Account{
     private:

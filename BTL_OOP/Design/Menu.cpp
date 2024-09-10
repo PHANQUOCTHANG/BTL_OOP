@@ -1,10 +1,8 @@
 #pragma once
-#include "Header.h"
+#include "../Header.h"
 #include "Interaction.cpp"
-#include "Function.cpp"
-#include "accountName.cpp"
-
-
+#include "../Function.cpp"
+#include "../Account_mangement\accountName.cpp"
 
 //Hàm menu đăng nhâp / đăng kí thông tin nguòi dùng
 void accountProcess(){

@@ -1,5 +1,5 @@
 #pragma once
-#include "Header.h"
+#include "../Header.h"
 //Hàm set delay(độ chậm) cho giao diện
 void delay(int milliseconds) {
     std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));

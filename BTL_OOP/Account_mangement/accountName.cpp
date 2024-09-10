@@ -1,7 +1,7 @@
 #pragma once
-#include "Header.h"
-#include "Interaction.cpp"
-#include "function.cpp"
+#include "../Header.h"
+#include "../Design/Interaction.cpp"
+#include "../function.cpp"
 string Account::getAccountName(){
     return this->accountName;
 }   
