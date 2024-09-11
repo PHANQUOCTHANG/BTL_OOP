@@ -8,20 +8,48 @@ string Account::getAccountName(){
 string Account::getAccountPassword(){
     return this->accountPassword;
 }
+string Account::adminName="admin";
+string Account::adminPassword="admin";
 void Account::setAccountName(string &accountName){
     cout << "Enter username: ";
     cin >> accountName;
     this->accountName = accountName;
 }
-void Account::setAccountPassword(string &accountPassword){
+void Account::setAccountPassword(string &accountName){
     cout << "Enter password: ";
-    this->accountPassword = hidePassword(accountPassword);
+    this->accountPassword = hidePassword(accountName);
+}
+bool Account::setAccountRegister(string &accountName,string &accountPassword){
+
+    string verify;
+    do
+    {
+        cout << "Enter username: ";
+        cin >> accountName;
+        this->accountName = accountName;
+        cout << "Enter password: ";
+        this->accountPassword = hidePassword(accountPassword);
+        cout << "Confirm password: ";
+        hidePassword(verify);
+        if(verify != accountPassword){
+            cout<<"\033[33m"<<"Password does not mactch!"<<"\033[0m"<<endl;
+            char res;
+            cout<<"\033[33m"<<"Do you want continue ! (Y/N)"<<"\033[0m"<<endl;
+            cin>>res;
+            res=toupper(res);
+            if(res!='Y') return 0;
+            
+            delay(2000);
+            system("cls");
+            cout<<"\033[32m"<<"Register: "<<"\033[0m"<<endl;
+        }
+    } while (verify != accountPassword);
+    return 1;
 }
 void Account::Register(){
     string accountName,accountPassword;
     cout<<"\033[32m"<<"Register: "<<"\033[0m"<<endl;
-    setAccountName(accountName);
-    setAccountPassword(accountPassword);
+    if(!setAccountRegister(accountName,accountPassword)) return;
     if (registerUser(accountName, accountPassword)) {
         cout << "\033[33m" << "Registration successful!" << "\033[0m" <<endl;
     } else {
@@ -62,12 +90,11 @@ bool Account::Login(){
             }
             
         } else if (choice == "2") {
-            Admin temp;
             do{
                 cout<<"\033[32m"<<"Login as a Admin: "<<"\033[0m"<<endl;
                 setAccountName(accountName);
                 setAccountPassword(accountPassword);
-                if(this->accountName != temp.getAdminName() || this->accountPassword != temp.getadminPassword()){
+                if(this->accountName != adminName || this->accountPassword != adminPassword){
                     cout << "\033[33m" << "Invalid adminName or adminPassword!" << "\033[0m" << endl;
                     char rep;
                     cout << "\033[33m" << "Do you want back (Y/N)?--> " << "\033[0m";
@@ -77,8 +104,8 @@ bool Account::Login(){
                     system("cls");
                 }
             }
-            while(this->accountName != temp.getAdminName() || this->accountPassword != temp.getadminPassword());
-            if (accountName == temp.getAdminName() && accountPassword == temp.getadminPassword()) {
+            while(this->accountName != adminName || this->accountPassword != adminPassword);
+            if (accountName == adminName && accountPassword == adminPassword) {
                 cout << "\033[33m" << "Login successful!" << "\033[0m" << endl;
                 cout << "\033[33m" << "Now you are a Admin ! Press Enter to continue !" << "\033[0m" << endl;
                 std::cin.ignore();  // Bỏ qua bất kỳ ký tự nào đã có sẵn trong bộ đệm

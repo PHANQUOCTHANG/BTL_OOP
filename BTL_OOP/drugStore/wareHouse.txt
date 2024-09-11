@@ -1,0 +1,4 @@
+1,Paracetamol,pill,Acetaminophen, Pain relief - fever reduction,650 mg,nausea(rare),01/01/2026,15000,100
+
+
+

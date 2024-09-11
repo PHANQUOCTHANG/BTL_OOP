@@ -3,8 +3,10 @@
 #include "Interaction.cpp"
 #include "../Function.cpp"
 #include "../Account_mangement\accountName.cpp"
+// #include "Admin\Admin.h"
 
 //Hàm menu đăng nhâp / đăng kí thông tin nguòi dùng
+
 void accountProcess(){
     Account p;
     string choice;
@@ -15,6 +17,8 @@ void accountProcess(){
         system("cls");
         if (choice == "1") {
             p.Register();
+            delay(2000);
+            
         } else if (choice == "2") {
             if(p.Login()){
                 system("cls");
