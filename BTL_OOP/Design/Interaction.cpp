@@ -21,6 +21,26 @@ std::string hidePassword(std::string &password) {
     std::cout << std::endl;
     return password;
 }
+// Hàm căn giữa một chuỗi (có thể thêm khoảng trắng nếu chuỗi ngắn hơn chiều rộng cột)
+std::string centerText(const std::string& text, int width) {
+    int padding = width - text.length();
+    if (padding > 0) {
+        int padLeft = padding / 2;
+        int padRight = padding - padLeft;
+        return std::string(padLeft, ' ') + text + std::string(padRight, ' ');
+    } else {
+        return text.substr(0, width);  // Cắt bớt chuỗi nếu nó dài hơn chiều rộng cột
+    }
+}
+void phu1(){
+    for(int i=0;i<188;++i){
+        if(i==0 || i==4 || i==25 || i==32 || i==53 || i==84 || i== 95 || i==126 || i==147 || i== 166 || i==187) cout<<'+';
+        else{
+            cout<<'-';
+        }
+    }
+    cout<<endl;
+}
 void showMenu1(){
     cout<<"+-----------------"<<"\033[35m"<<"MENU"<<"\033[0m"<<"-----------------+\n";
   cout << "|    1. Register          2. Login     |\n";

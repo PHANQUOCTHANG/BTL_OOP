@@ -12,7 +12,7 @@ private:
     std::string dosage;      // Liều lượng sử dụng
     std::string sideEffects; // Tác dụng phụ (nếu có)
     std::string expirationDate; // Ngày hết hạn
-    double price;            // Giá của thuốc
+    int price;            // Giá của thuốc
     int quantityInStock;     // Số lượng trong kho
     static int drugCount;
 public:
@@ -77,10 +77,12 @@ public:
     friend Drug createDrug();
 
     //Hàm thao tác với File kho thuốc
-    static void countDrugsInFile();
-    void writeToFile();
-    static vector<Drug> readFromFile();
-    void updateDrugInFile(const std::string& fileName, int drugId, const Drug& updatedDrug);
+    static void countDrugsInFile();//Đếm số lượng thuốc trong kho
+    void writeToFile();//Ghi thông tin thuốc vào file
+    static vector<Drug> readFromFile(); //Đọc thông tin thuốc từ file
+    void updateDrugInFile( int drugId, const Drug& updatedDrug); //Cập nhật thông tin thuốc trong file
+    static void deleteDrugById( int idToDelete);//Xóa thông tin thuốc trong file
+    static void printDrugList();
 };
 
 
