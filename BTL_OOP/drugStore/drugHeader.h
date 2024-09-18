@@ -14,17 +14,10 @@ private:
     std::string expirationDate; // Ngày hết hạn
     int price;            // Giá của thuốc
     int quantityInStock;     // Số lượng trong kho
-    static int drugCount;
+    int discount;
 public:
-    // Constructor
-    
-    Drug(int _id, std::string _name, std::string _type, std::string _ingredients, std::string _uses,
-         std::string _dosage, std::string _sideEffects, std::string _expirationDate, double _price, int _quantityInStock)
-        : id(_id), name(_name), type(_type), ingredients(_ingredients), uses(_uses), dosage(_dosage),
-          sideEffects(_sideEffects), expirationDate(_expirationDate), price(_price), quantityInStock(_quantityInStock) {drugCount++;
-        }
-          
-
+    //Nạp chồng toán tử
+    friend istream& operator >> (istream &in,Drug &p);
     // Getter và Setter cho từng thuộc tính
     int getId() const { return id; }
     void setId(int _id) { id = _id; }
@@ -54,35 +47,30 @@ public:
     void setPrice(double _price) { price = _price; }
 
     int getQuantityInStock() const { return quantityInStock; }
-    void setQuantityInStock(int _quantityInStock) { quantityInStock = _quantityInStock; }
+    void setQuantityInStock(int _quantityInStock) { quantityInStock = _quantityInStock;}
 
-    static int getDrugCount() {
-        return drugCount;
-    }
+    int getDiscount() const { return discount; }
+    void setDiscount(int _discount) { discount = _discount;}
     //Hàm hiển thị
     void display() {
-    std::cout << "ID: " << id << "\n"
-              << "Name: " << name << "\n"
-              << "Type: " << type << "\n"
-              << "Ingredients: " << ingredients << "\n"
-              << "Uses: " << uses << "\n"
-              << "Dosage: " << dosage << "\n"
-              << "Side Effects: " << sideEffects << "\n"
-              << "Expiration Date: " << expirationDate << "\n"
-              << "Price: " << price << "\n"
-              << "Quantity In Stock: " << quantityInStock << "\n\n";
-}
-
-    //Hàm thêm loại thuốc mới
-    friend Drug createDrug();
-
+    std::cout <<"\033[32m"<< "ID: "<<"\033[34m" << id << "\n"
+              <<"\033[32m"<< "Name: "<<"\033[34m" << name << "\n"
+              <<"\033[32m"<< "Type: "<<"\033[34m" << type << "\n"
+              <<"\033[32m"<< "Ingredients: "<<"\033[34m" << ingredients << "\n"
+              <<"\033[32m"<< "Uses: "<<"\033[34m" << uses << "\n"
+              <<"\033[32m"<< "Dosage: "<<"\033[34m" << dosage << "\n"
+              <<"\033[32m"<< "Side Effects: "<<"\033[34m" << sideEffects << "\n"
+              <<"\033[32m"<< "Expiration Date: "<<"\033[34m" << expirationDate << "\n"
+              <<"\033[32m"<< "Price: "<<"\033[34m" << price << "\n"
+              <<"\033[32m"<< "Quantity In Stock: "<<"\033[34m" << quantityInStock << "\n\n"<<"\033[0m";
+    }
     //Hàm thao tác với File kho thuốc
-    static void countDrugsInFile();//Đếm số lượng thuốc trong kho
-    void writeToFile();//Ghi thông tin thuốc vào file
-    static vector<Drug> readFromFile(); //Đọc thông tin thuốc từ file
-    void updateDrugInFile( int drugId, const Drug& updatedDrug); //Cập nhật thông tin thuốc trong file
-    static void deleteDrugById( int idToDelete);//Xóa thông tin thuốc trong file
-    static void printDrugList();
+    static int countDrugsInFile(const string &fileName);//Đếm số lượng thuốc trong kho
+    void writeToFile(const string &fileName);//Ghi thông tin thuốc vào file
+    static vector<Drug> readFromFile(const string &fileName); //Đọc thông tin thuốc từ file
+    static void updateDrugInFile( int drugId, const Drug updatedDrug,const string &fileName); //Cập nhật thông tin thuốc trong file
+    static void deleteDrugById( int idToDelete,const string &fileName);//Xóa thông tin thuốc trong file
+    static void printDrugList(Drug p);
 };
 
 

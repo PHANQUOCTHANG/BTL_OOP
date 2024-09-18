@@ -1,28 +1,26 @@
 #pragma once
 #include "drugHeader.h"
 #include "../Design/Interaction.cpp"
-int Drug::drugCount;
 //Hafm ghi thông tin của 1 object Drug vào File
-void Drug::writeToFile() {
-        std::ofstream outFile("drugStore/wareHouse.txt", std::ios::app); // Mở file ở chế độ append
+void Drug::writeToFile(const string &fileName) {
+        std::ofstream outFile(fileName, std::ios::app); // Mở file ở chế độ append
         if (!outFile) {
-            cout << "\033[33m" << "Unable to open file to write" << "\033[0m" << endl;
+            cout << "\033[31m" << "Unable to open file to write" << "\033[0m" << endl;
             return;
         }
-        outFile << id << "," << name << "," << type << "," << ingredients << "," << uses << ","
-                << dosage << "," << sideEffects << "," << expirationDate << "," << price << "," 
+        outFile << id << ";" << name << ";" << type << ";" << ingredients << ";" << uses << ";"
+                << dosage << ";" << sideEffects << ";" << expirationDate << ";" << price << ";" 
                 << quantityInStock << "\n";
         outFile.close();
-        // drugCount++;
-        std::cerr<< "\033[33m"  << "Successful Recording!"<< "\033[0m" <<endl;        
+        
 }
 // Hàm đọc tất cả thông tin từ file và lưu vào vector các đối tượng Drug
-std::vector<Drug> Drug::readFromFile() {
+std::vector<Drug> Drug::readFromFile(const string &fileName) {
     std::vector<Drug> drugList;
-    std::ifstream inFile("drugStore/wareHouse.txt");
+    std::ifstream inFile(fileName);
     
     if (!inFile) {
-        cout << "\033[33m" << "Unable to open file to read" << "\033[0m" << endl;
+        cout << "\033[31m" << "Unable to open file to read" << "\033[0m" << endl;
         return drugList;
     }
     
@@ -33,14 +31,24 @@ std::vector<Drug> Drug::readFromFile() {
         std::vector<std::string> tokens;
 
         // Tách từng giá trị từ dòng CSV
-        while (std::getline(ss, item, ',')) {
+        while (std::getline(ss, item, ';')) {
             tokens.push_back(item);
         }
 
         if (tokens.size() == 10) {
             // Tạo đối tượng Drug từ các giá trị đã đọc
-            Drug drug(std::stoi(tokens[0]), tokens[1], tokens[2], tokens[3], tokens[4],
-                      tokens[5], tokens[6], tokens[7], std::stod(tokens[8]), std::stoi(tokens[9]));
+            Drug drug;
+            drug.id=stoi(tokens[0]),
+            drug.name=tokens[1],
+            drug.type=tokens[2],
+            drug.ingredients=tokens[3],
+            drug.uses=tokens[4],
+            drug.dosage=tokens[5],
+            drug.sideEffects=tokens[6],
+            drug.expirationDate=tokens[7],
+            drug.price=stoi(tokens[8]),
+            drug.quantityInStock=stoi(tokens[9]);
+            
             drugList.push_back(drug);
         }
     }
@@ -49,12 +57,12 @@ std::vector<Drug> Drug::readFromFile() {
     return drugList;
 }
 // Hàm sửa thông tin của một đối tượng Drug dựa trên id
-void Drug::updateDrugInFile( int drugId, const Drug& updatedDrug) {
-    std::vector<Drug> drugList = readFromFile();
-    std::ofstream outFile("drugStore/wareHouse.txt"); // Ghi đè file cũ
+void Drug::updateDrugInFile( int drugId, const Drug updatedDrug,const string &fileName) {
+    std::vector<Drug> drugList = readFromFile(fileName);
+    std::ofstream outFile(fileName); // Ghi đè file cũ
 
     if (!outFile) {
-        cout << "\033[33m" << "Unable to open file to read" << "\033[0m" << endl;
+        cout << "\033[31m" << "Unable to open file to read" << "\033[0m" << endl;
         return;
     }
 
@@ -64,17 +72,18 @@ void Drug::updateDrugInFile( int drugId, const Drug& updatedDrug) {
             drug = updatedDrug;
         }
         // Ghi lại từng dòng vào file
-        drug.writeToFile();
+        drug.writeToFile(fileName);
     }
 
     outFile.close();
 }
 //Hàm đếm số thuốc trong kho
-void Drug::countDrugsInFile() {
-        std::ifstream inFile("drugStore/wareHouse.txt");
+int Drug::countDrugsInFile(const string &fileName) {
+        int drugCount;
+        std::ifstream inFile(fileName);
         if (!inFile) {
-            cout << "\033[33m" << "Unable to open file to read" << "\033[0m" << endl;
-            return;
+            cout << "\033[31m" << "Unable to open file to read" << "\033[0m" << endl;
+            return 0;
         }
         drugCount=1;
         std::string line;
@@ -84,37 +93,30 @@ void Drug::countDrugsInFile() {
             }
         }
         inFile.close();
+        return drugCount;
 }
 // Hàm bạn để nhập liệu thuốc 
-Drug createDrug(){
-        int id = Drug::getDrugCount();                 // 
-        std::string name;        //
-        std::string type;        //
-        std::string ingredients; //
-        std::string uses;        //
-        std::string dosage;      //
-        std::string sideEffects; //
-        std::string expirationDate;
-        double price;            //
-        int quantityInStock;     //    
-        cout<<"Enter information of new Drug: "<<endl;
-        cout<<"Name: "; std::getline(std::cin, name);
-        cout<<"Type: "; std::getline(std::cin, type);
-        cout<<"Ingredients: "; std::getline(std::cin, ingredients);
-        cout<<"Uses: "; std::getline(std::cin, uses);
-        cout<<"Dosage: "; std::getline(std::cin, dosage);
-        cout<<"SideEffects: "; std::getline(std::cin, sideEffects);
-        cout<<"ExpirationDate: "; std::getline(std::cin, expirationDate);
-        cout<<"Price: "; cin>>price;
-        cout<<"QuantityInStock: "; cin>>quantityInStock;
+istream& operator >> (istream &in,Drug &p){
+        
+        cout<< "\033[36m" <<"Enter information of new Drug: "<< "\033[0m" <<endl;
+        p.id = Drug::countDrugsInFile("drugStore/wareHouse.txt");
+        cout<<"\033[36m" <<"Name: "<< "\033[0m"; std::getline(std::cin, p.name);
+        cout<<"\033[36m" <<"Type: "<< "\033[0m"; std::getline(std::cin, p.type);
+        cout<<"\033[36m" <<"Ingredients: "<< "\033[0m"; std::getline(std::cin, p.ingredients);
+        cout<<"\033[36m" <<"Uses: "<< "\033[0m"; std::getline(std::cin, p.uses);
+        cout<<"\033[36m" <<"Dosage: "<< "\033[0m"; std::getline(std::cin, p.dosage);
+        cout<<"\033[36m" <<"SideEffects: "<< "\033[0m"; std::getline(std::cin, p.sideEffects);
+        cout<<"\033[36m" <<"ExpirationDate: "<< "\033[0m"; std::getline(std::cin, p.expirationDate);
+        cout<<"\033[36m" <<"Price: "<< "\033[0m"; cin>>p.price;
+        cout<<"\033[36m" <<"QuantityInStock: "<< "\033[0m"; cin>>p.quantityInStock;
         cin.ignore();
-        return Drug(id,name,type,ingredients,uses,dosage,sideEffects,expirationDate,price,quantityInStock);
+        return in;
 }
 // Hàm tĩnh để xóa thuốc theo ID
-void Drug::deleteDrugById( int idToDelete) {
-        std::ifstream inFile("drugStore/wareHouse.txt");
+void Drug::deleteDrugById( int idToDelete,const string &fileName) {
+        std::ifstream inFile(fileName);
         if (!inFile) {
-            cout << "\033[33m" << "Unable to open file to read" << "\033[0m" << endl;
+            cout << "\033[31m" << "Unable to open file to read" << "\033[0m" << endl;
             return;
         }
 
@@ -133,10 +135,10 @@ void Drug::deleteDrugById( int idToDelete) {
             int id = -1;  // Khởi tạo ID mặc định
             
             try {
-                std::getline(ss, token, ',');  // Lấy ID
+                std::getline(ss, token, ';');  // Lấy ID
                 id = std::stoi(token);  // Chuyển đổi sang số nguyên
             } catch (const std::invalid_argument& e) {
-                std::cerr <<"\033[33m" << "Error: Unable to convert '" << token << "' to integer numbers.\n"<<"\033[0m" <<endl;
+                std::cerr <<"\033[31m" << "Error: Unable to convert '" << token << "' to integer numbers.\n"<<"\033[0m" <<endl;
                 continue;  // Bỏ qua dòng không hợp lệ
             }
 
@@ -151,14 +153,14 @@ void Drug::deleteDrugById( int idToDelete) {
         inFile.close();
 
         if (!found) {
-            std::cout<<"\033[33m" << "Unable to find ID " << idToDelete << " to delete."<<"\033[0m" <<endl;
+            std::cout<<"\033[31m" << "Unable to find ID " << idToDelete << " to delete."<<"\033[0m" <<endl;
             return;
         }
 
         // Ghi lại các dòng còn lại vào file (ghi đè file gốc)
-        std::ofstream outFile("drugStore/wareHouse.txt");
+        std::ofstream outFile(fileName);
         if (!outFile) {
-            std::cerr<<"\033[33m" << "Unable to open file to record!"<<"\033[0m" <<endl;
+            std::cerr<<"\033[31m" << "Unable to open file to record!"<<"\033[0m" <<endl;
             return;
         }
 
@@ -167,43 +169,21 @@ void Drug::deleteDrugById( int idToDelete) {
         }
 
         outFile.close();
-
-        drugCount--;  // Giảm biến đếm khi xóa thuốc
-        std::cout<<"\033[33m"  << "Drugs with ID of " << idToDelete << " have been removed."<<"\033[0m" <<endl;
+        std::cout<<"\033[32m"<< "Drugs with ID of " << idToDelete << " have been removed successful."<<"\033[0m" <<endl;
 }
     // Hàm hiển thị bảng thuốc
-void Drug::printDrugList() {
-    vector<Drug> drugs = Drug::readFromFile();
-    // In tiêu đề bảng với định dạng căn giữa
-    phu1();
-    std::cout << "|" << centerText("ID", 3)
-              << "|" << centerText("Name", 20)
-              << "|" << centerText("Type", 6)
-              << "|" << centerText("Ingredients", 20)
-              << "|" << centerText("Uses", 30)
-              << "|" << centerText("Dosage", 10)
-              << "|" << centerText("SideEffects", 30)
-              << "|" << centerText("ExpirationDate", 20)
-              << "|" << centerText("Price: (VND)", 18)
-              << "|" << centerText("QuantityInStock", 20) 
-              << "|\n";
-
-    // In đường kẻ ngang giữa các cột
-    phu1();
+void Drug::printDrugList(Drug drug) {
+    
     // In các loại thuốc trong bảng với độ rộng cột được định nghĩa trước
-    for (const auto& drug : drugs) {
         std::cout << "|" << centerText(to_string(drug.id), 3)   // ID
-                  << "|" << centerText(drug.name, 20)  // Tên thuốc
-                  << "|" << centerText(drug.type, 6)   // Loại
-                  << "|" << centerText(drug.ingredients, 20)  // Thành phần
-                  << "|" << centerText(drug.uses, 30)  // Công dụng
-                  << "|" << centerText(drug.dosage, 10)   // Liều
-                  << "|" << centerText(drug.sideEffects, 30)  // Tác dụng phụ
+                  << "|" << centerText(drug.name, 25)  // Tên thuốc
+                  << "|" << centerText(drug.type, 20)   // Loại
+                  << "|" << centerText(drug.ingredients, 40)  // Thành phần
                   << "|" << centerText(drug.expirationDate, 20)  // HSD
                   << "|" << centerText(to_string(drug.price), 18)  // Giá
                   << "|" << centerText(to_string( drug.quantityInStock), 20)  // Số lượng
                   << "|\n";
-    }
+    
 
     // Đường kẻ ngang kết thúc
     phu1();
