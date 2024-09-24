@@ -1,6 +1,20 @@
-1;Tetracycline;Tablet;Tetracycline;Treats respiratory infections, skin infections;1 tablet every 6 hours for 7-10 days;Diarrhea, nausea, allergic reactions;31/12/2026;36000;2
-2;Pharcoter Syrup;Syrup;Dextromethorphan, Chlorpheniramine;Cough suppressant;5-10ml every 4-6 hours;Drowsiness, dry mouth, dizziness;31/12/2026;200000;4
-3;Paracetamol;Tablet;Paracetamol;Pain relief, fever reduction;1-2 tablets every 4-6 hours, not exceeding 8 tablets in 24 hours;Nausea, stomach ache, allergic reactions;31/12/2026;30000;10
-4;Ibuprofen;Tablet;Ibuprofen;Pain relief, anti-inflammatory, fever reduction;1-2 tablets every 4-6 hours as needed, not exceeding 6 tablets in 24 hours;Stomach pain, dizziness, high blood pressure;31/12
-5;Aspirin;Tablet;Aspirin;Reduces the risk of heart attacks, blood clot prevention;1 tablet daily;Stomach pain, bleeding, allergic reactions;31/12/2026;45000;3
-6;Vitamin C;Effervescent tablet;Ascorbic acid;Boosts immune system, antioxidant;1 tablet dissolved in water daily;Stomach upset, kidney stones (in high doses);31/12/2026;135000;3
+1;Aspirin;Tablet;Aspirin;Pain relief;1-2 tablets every 4-6 hours;Stomach upset, nausea;2025-12-01;50000;200;0;0
+2;Paracetamol;Tablet;Paracetamol;Fever reduction;1-2 tablets every 4-6 hours;Rare allergic reactions;2024-05-20;30000;200;0;0
+3;Ibuprofen;Tablet;Ibuprofen;Anti-inflammatory;1 tablet every 6-8 hours;Dizziness, nausea;2024-08-15;60000;200;0;0
+4;Vitamin C;Tablet;Ascorbic Acid;Immune booster;1 tablet per day;Stomach upset in high doses;2025-02-28;40000;300;0;0
+5;Cough Syrup;Liquid;Dextromethorphan, Guaifenesin;Cough relief;10ml every 6-8 hours;Drowsiness;2024-11-10;80000;50;0;0
+6;Amoxicillin;Capsule;Amoxicillin;Antibiotic;500mg every 8 hours;Allergic reactions;2025-06-01;75000;80;0;0
+7;Loratadine;Tablet;Loratadine;Antihistamine;1 tablet per day;Drowsiness;2026-01-15;20000;500;0;0
+8;Hydrocortisone Cream;Cream;Hydrocortisone;Anti-inflammatory;Apply 2-3 times per day;Skin irritation;2024-12-30;45000;60;0;0
+9;Metformin;Tablet;Metformin;Diabetes management;500mg twice daily;Stomach upset, nausea;2025-09-10;65000;120;0;0
+10;Cetirizine;Tablet;Cetirizine;Allergy relief;1 tablet per day;Drowsiness;2026-04-05;30000;400;0;0
+11;Azithromycin;Tablet;Azithromycin;Antibiotic;500mg once daily for 3 days;Nausea, diarrhea;2025-07-20;85000;200;0;0
+12;Lisinopril;Tablet;Lisinopril;Blood pressure control;10mg once daily;Dizziness, cough;2026-02-12;55000;130;0;0
+13;Atorvastatin;Tablet;Atorvastatin;Cholesterol reduction;20mg once daily;Muscle pain, nausea;2025-03-25;120000;138;0;0
+14;Omeprazole;Capsule;Omeprazole;Stomach acid control;20mg once daily;Headache, stomach pain;2024-12-10;60000;160;0;0
+15;Simvastatin;Tablet;Simvastatin;Cholesterol reduction;40mg once daily;Muscle pain, liver issues;2026-06-30;110000;150;0;0
+16;Furosemide;Tablet;Furosemide;Diuretic;40mg once daily;Dehydration, dizziness;2025-09-05;45000;110;0;0
+17;Levothyroxine;Tablet;Levothyroxine;Thyroid hormone replacement;50mcg once daily;Hair loss, weight loss;2026-03-01;75000;220;0;0
+18;Clindamycin;Capsule;Clindamycin;Antibiotic;300mg every 6 hours;Nausea, diarrhea;2025-01-15;95000;178;0;0
+19;Tetracycline;Capsule;Tetracycline;Antibiotic;500mg every 12 hours;Sun sensitivity;2024-11-15;70000;200;0;0
+20;Doxycycline;Capsule;Doxycycline;Antibiotic;100mg once daily;Sun sensitivity, nausea;2025-04-25;85000;200;0;0

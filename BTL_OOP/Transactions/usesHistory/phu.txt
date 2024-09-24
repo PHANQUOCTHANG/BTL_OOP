@@ -1,7 +1,11 @@
-1;Tetracycline;Tablet;Tetracycline;Treats respiratory infections, skin infections;1 tablet every 6 hours for 7-10 days;Diarrhea, nausea, allergic reactions;31/12/2026;36000;2
-2;Pharcoter Syrup;Syrup;Dextromethorphan, Chlorpheniramine;Cough suppressant;5-10ml every 4-6 hours;Drowsiness, dry mouth, dizziness;31/12/2026;200000;4
-3;Paracetamol;Tablet;Paracetamol;Pain relief, fever reduction;1-2 tablets every 4-6 hours, not exceeding 8 tablets in 24 hours;Nausea, stomach ache, allergic reactions;31/12/2026;30000;10
-4;Ibuprofen;Tablet;Ibuprofen;Pain relief, anti-inflammatory, fever reduction;1-2 tablets every 4-6 hours as needed, not exceeding 6 tablets in 24 hours;Stomach pain, dizziness, high blood pressure;31/12/2026;60000;3
-5;Aspirin;Tablet;Aspirin;Reduces the risk of heart attacks, blood clot prevention;1 tablet daily;Stomach pain, bleeding, allergic reactions;31/12/2026;45000;3
-6;Vitamin C;Effervescent tablet;Ascorbic acid;Boosts immune system, antioxidant;1 tablet dissolved in water daily;Stomach upset, kidney stones (in high doses);31/12/2026;135000;3
-7;Vitamin C;Effervescent tablet;Ascorbic acid;Boosts immune system, antioxidant;1 tablet dissolved in water daily;Stomach upset, kidney stones (in high doses);31/12/2026;135000;3
+1;phu;Doxycycline;2024-09-23 20:29:52;85000;1;85000
+2;phu;Aspirin;2024-09-23 20:35:48;50000;4;0
+3;phu;Aspirin;2024-09-23 20:38:11;50000;4;200000
+4;phu;Aspirin;2024-09-23 20:54:40;50000;2;80000
+5;phu;Aspirin;2024-09-23 21:21:26;50000;20;800000
+6;phu;Ibuprofen;2024-09-23 21:28:21;60000;150;900000
+7;phu;Doxycycline;2024-09-23 21:33:00;85000;199;1.6915e+07
+8;phu;Tetracycline;2024-09-23 21:35:39;70000;170;1.19e+07
+9;phu;Clindamycin;2024-09-23 21:37:47;95000;2;190000
+10;phu;Paracetamol;2024-09-23 21:41:10;30000;2;60000
+11;phu;Paracetamol;2024-09-23 21:41:33;30000;198;5.94e+06

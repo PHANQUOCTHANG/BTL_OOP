@@ -1,5 +1,7 @@
 #pragma once
 #include "../Header.h"
+
+
 class Account{
     private:
        string accountName,accountPassword; 
@@ -18,7 +20,9 @@ class Account{
         bool setAccountRegister(string accountName,string accountPassword);
         void Register();
         bool Login();
-        string getAdminName();
-        string getadminPassword();
-        friend void accountProcess();
+        static void removedAccount(const string &userName,const string &fileName);
+        static vector<pair<string,string>> loadUserInfo(const std::string& filename) ;
+        static void accountProcess();
 };
+
+bool isExistUsername(const string& name); //Kiểm tra tài khoản đã tồn tại chưa

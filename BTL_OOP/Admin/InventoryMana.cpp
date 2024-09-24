@@ -2,6 +2,7 @@
 #include "Admin.h"
 
 
+//Hàm show thông tin số lượng tồn kho của các loại thuốc
 void Admin::viewStockLevels(vector<Drug> temp){
     phu2();
     for(auto x:temp){
@@ -9,6 +10,9 @@ void Admin::viewStockLevels(vector<Drug> temp){
     }
 
 }
+
+
+//Hàm cảnh báo sắp hết sản phẩm trong kho cần phải nhập thêm
 void Admin::lowStockAlerts(vector<Drug> temp){
     int count=0;
     for(auto x:temp){
@@ -33,6 +37,8 @@ void Admin::lowStockAlerts(vector<Drug> temp){
     cout<<"\033[0m";
 
 }
+
+//Show Menu
 void Admin::inventoryManaMenu(){
             cout<<"+-------------------"<<"\033[35m"<<"Admin"<<"\033[0m"<<"--------------------+\n";
   cout << "|    1. View Stock Levels                    |\n";
@@ -44,6 +50,8 @@ void Admin::inventoryManaMenu(){
 
 }
 
+
+//Menu tổng
 void Admin::inventoryManaProcess(){
   int choice;
   while (1)

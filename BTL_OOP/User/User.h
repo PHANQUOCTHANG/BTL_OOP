@@ -1,48 +1,98 @@
 #pragma once
 #include "../Header.h"
 #include "../Account_mangement/Account.h"
-#include "../drugStore/DrugFunction.cpp"
+#include "../Oders/Orders.h"
 #include "../drugStore/drugHeader.h"
 #include "../Design/Interaction.cpp"
+#include "../Function.cpp"
 
-class Orders:public Drug{
-    
 
-};
+//Đối tượng thông tin
 class Info
 {
     private:
-        string name,address,hotLine;
+        string name, //tên Đầy đủ
+        address,  //Địa chỉ
+        phoneNumber; //Số điện thoại
+        bool check; //kiểm tra đã nhập đại chỉ chưa
     public:
+        //getter và setter
+
+        //tên Đầy đủ
         std::string getName() const { return name; }
         void setName(std::string _name) { name = _name; }
        
+       //Địa chỉ
         std::string getAddress() const { return address; }
         void setAddress(std::string _address) { address = _address; }
        
-        std::string getHotLine() const { return hotLine; }
-        void setHotLine(std::string _hotLine) { hotLine = _hotLine; }
+        //Số điện thoại
+        std::string getPhoneNumber() const { return phoneNumber; }
+        void setPhoneNumber(std::string _phoneNumber) { phoneNumber = _phoneNumber; }
        
-   
+        //kiểm tra đã nhập đại chỉ chưa
+        bool getCheck() const { return check; }
+        void setCheck(bool is) { check = is; }
 
 };
-class User:public Account,Info{
+
+
+
+//Đói tượng Người dùng
+class User : public Info, public Account
+{
 
     public:
-    //User
+
+        //constructer mặc định
+        User(){
+            this->setName("");
+        }
+
+        //constructer đầy đủ tham số
+        User( string fullName, string address, string phoneNumber) {
+            this->setName(fullName) ;
+            this->setAddress (address);
+            this->setPhoneNumber(phoneNumber);
+        }
+
+    //User Main
         void userMenu();
         void userProcess();
     //Drug
+
         void userBuyDrugMenu1();
         void userBuyDrugProcess();
         void payment(int id,vector<Drug> temp);
+    //User Infor
+        void userInfoMenu1();  //Show Menu
+        void userInfoProcess(); //Menu tổng
+        void update(); //Cập nhât
+        void cartProcess(); //Menu Cart
+        void writeInfor(const string &fileName); //Ghi thông tin vào file
+        User findUserByUsername(const string &fileName, const string &searchUsername);  //Tìm thông tin người dùng bằng tên người dùng
+    //discount
 
-    //User
-        void userInfoMenu1();
-        void userInfoProcess();
-        void update();
-        void cartProcess();
-
+        void userDiscountMenu1(); //Show Menu
+        void userDiscountProcess(); //Menu tổng
 
 
 };
+
+
+//Phương thức thanh toán
+string paymentMethod(int choice);
+
+
+
+//Mua thuốc
+void userBuyDrugMenu2(); // Menu
+void searchMedicines(const std::vector<Drug>& medicines, const std::string& query); //Tìm kiếm thuốc
+void searchDrug(string name,vector<Drug> temp); //Tìm thuốc 
+
+
+//Thông tin người dùng
+void userInfoCart1(); //Menu
+int total(vector<Orders> cart); //Tính tổng bill cart
+
+

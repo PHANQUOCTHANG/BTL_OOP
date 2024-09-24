@@ -1,19 +1,20 @@
-#pragma once
+
 #include "Admin.h"
 
-
+//Show Menu
 void Admin::adminMenu(){
         cout<<"+-------------------"<<"\033[35m"<<"Admin"<<"\033[0m"<<"--------------------+\n";
   cout << "|    1. Drug Management                      |\n";
   cout << "|    2. Inventory Management                 |\n";
   cout << "|    3. Sales Management                     |\n";
   cout << "|    4. User Management                      |\n";
-  cout << "|    5. Generate Reports                     |\n";
-  cout << "|    6. Back                                 |\n";
+  cout << "|    5. Back                                 |\n";
     cout<<"+--------------------------------------------+\n";
     cout<<"Enter your choice: ";
 }
 
+
+//Hàm Admin Menu tổng
 void Admin::adminProcess(){
   int choice;
   while (1)
@@ -36,21 +37,17 @@ void Admin::adminProcess(){
       case 3:
       {
         system("cls");
+        salesManaProcess();
         break;
       }
       case 4:
       {
         system("cls");
+        userManaProcess();
         break;
 
       }
       case 5:
-      {
-        system("cls");
-        break;
-
-      }
-      case 6:
       {
         system("cls");
         return;
@@ -60,7 +57,6 @@ void Admin::adminProcess(){
         break;
       }
     }
-    delay(1000);
 
   }
 }

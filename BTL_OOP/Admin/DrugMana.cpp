@@ -1,15 +1,22 @@
-#pragma once
+
 #include "Admin.h"
+
+
+//Show Menu
 void Admin::printDrugManaMenu(){
        cout<<"+-------------------"<<"\033[35m"<<"MENU"<<"\033[0m"<<"---------------------+\n";
  cout << "|    1.Show Drug List                        |\n";
  cout << "|    2.Add more medicine to the warehouse    |\n";
  cout << "|    3.Remove medicine                       |\n";
  cout << "|    4.Modify drug information               |\n";
- cout << "|    5.Log out                               |\n";
+ cout << "|    5.Add discount                          |\n";
+ cout << "|    6.Back                                  |\n";
    cout<<"+--------------------------------------------+\n";
    cout<<"Enter your choice: ";
 }
+
+
+//Hàm Quản lý cập nhật thông tin về thuốc
 void Admin::drugManaUpdate(int id,Drug &origin){
     system("cls");
     int choice;
@@ -128,8 +135,12 @@ void Admin::drugManaUpdate(int id,Drug &origin){
     }
 
 }
+
+
+//Hàm menu tổng
 void Admin::drugManaProcess(){
     int choice;
+    int id;
     while (1)
     {
       vector<Drug> temp = Drug::readFromFile("drugStore/wareHouse.txt");
@@ -165,7 +176,6 @@ void Admin::drugManaProcess(){
             cout<<"\033[31m"<<"List is empty ! Please add more infomation "<<"\033[0m"<<endl;
             break;
           }
-          int id;
           cout<<"\033[36m"<<"Enter Drug's id need to delete: "<<"\033[0m";
           cin>>id;
           if(id> temp.size() || id <0){
@@ -196,7 +206,6 @@ void Admin::drugManaProcess(){
             break;
           }
           system("cls");
-          int id;
           cout<<"\033[36m"<<"Enter Drug's id need to update: "<<"\033[0m";
           cin>>id;
           if(id> temp.size() || id <0){
@@ -208,6 +217,32 @@ void Admin::drugManaProcess(){
           break;
         }
         case 5:
+        {
+          system("cls");
+          if(temp.size() ==0){
+            cout<<"\033[31m"<<"List is empty ! Please add more infomation "<<"\033[0m"<<endl;
+            break;
+          }
+          system("cls");
+          int id;
+          cout<<"\033[36m"<<"Enter Drug's id need to update: "<<"\033[0m";
+          cin>>id;
+          if(id> temp.size() || id <0){
+            cout<<"\033[31m"<<"Id not valid !"<<"\033[0m"<<endl;
+          }
+          else{
+            title();
+            Drug::printDrugList(temp[id-1]);
+            int sale;
+            cout<<"Enter the discount you want: " ; cin>>sale;
+            Drug DisCount = temp[id-1];
+            DisCount.setDiscount(sale);
+            Drug::updateDrugInFile(id,DisCount,"drugStore/wareHouse.txt");
+            cout<<"\033[32m"<<"Add discount successfully"<<"\033[0m"<<endl;
+          }
+          break;
+        }
+        case 6:
         {
           system("cls");
           return;

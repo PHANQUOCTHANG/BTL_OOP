@@ -2,8 +2,9 @@
 #include "User.h"
 
 
+//Show Menu 1
 void User::userBuyDrugMenu1(){
-            cout<<"+-------------------"<<"\033[35m"<<"Admin"<<"\033[0m"<<"--------------------+\n";
+            cout<<"+-------------------"<<"\033[35m"<<"User"<<"\033[0m"<<"---------------------+\n";
   cout << "|    1. View all drug in store               |\n";
   cout << "|    2. Search Medicine by Name              |\n";
   cout << "|    3. Back                                 |\n";
@@ -11,8 +12,11 @@ void User::userBuyDrugMenu1(){
     cout<<"Enter your choice: ";
 
 }
+
+
+//Show Menu 2
 void userBuyDrugMenu2(){
-            cout<<"+-------------------"<<"\033[35m"<<"Admin"<<"\033[0m"<<"--------------------+\n";
+            cout<<"+-------------------"<<"\033[35m"<<"User"<<"\033[0m"<<"---------------------+\n";
   cout << "|    1. Buy now                              |\n";
   cout << "|    2. Add cart                             |\n";
   cout << "|    3. Back                                 |\n";
@@ -20,8 +24,11 @@ void userBuyDrugMenu2(){
     cout<<"Enter your choice: ";
 
 }
+
+
+//Phương thức thanh toán
 string paymentMethod(int choice){
-    cout<<"Choose a payment method"<<endl;
+    cout<<"\033[36m"  <<"Choose a payment method"<<"\033[0m"  <<endl;
     cout<<"+------------------------------------------------+"<<endl;
     cout<<"|    1. Pay on Pickup       2. Online payment    |\n";
     cout<<"+------------------------------------------------+"<<endl;
@@ -35,38 +42,59 @@ string paymentMethod(int choice){
         return "Online payment";
       }
       else{
-        cout<<"Invalid choose"<<endl;
+        cout<<"\033[31m"  <<"Invalid choose"<<"\033[0m"  <<endl;
       }
     }
     return "";
 }
+
+
+//Thanh Toán
 void User::payment(int id,vector<Drug> temp){
   string fileName;
   int choice;
   char rep;
   while (1)
   {
+    if(temp[id-1].getOOT() || temp[id-1].getQuantityInStock()<= 0){
+      system("cls");
+      cout<<"\033[33m"  <<"The product is currently out of stock! Please select another product !"<<"\033[0m"  <<endl;
+      return;
+    }
     system("cls");
     temp[id-1].display();
     userBuyDrugMenu2();
     cin>>choice;
-    int quanlity,totalMoney;
+    int quanlity;
+    double totalMoney;
     switch (choice)
     {
     case 1:{
-      cout<<"Enter the quantity you want to buy :"; cin>>quanlity;
-      totalMoney = temp[id-1].getPrice()*quanlity;
-      cout<<"Total money is "<<totalMoney<<endl;
+      do{
+          cout<<"\033[36m"  <<"Enter the quantity you want to buy :"<<"\033[0m"; cin>>quanlity;
+          if(quanlity > temp[id-1].getQuantityInStock()){
+            cout<<"\033[31m"  <<"Excess quantity!"<<"\033[0m"  <<endl;
+          }
+      }while(quanlity > temp[id-1].getQuantityInStock());
+      totalMoney =(temp[id-1].getPrice() - 1.0*(temp[id-1].getPrice() * (1.0*temp[id-1].getDiscount()/100)))*quanlity ;
+      cout<<"\033[33m"  <<"Total money is: "<<"\033[0m"<<totalMoney  <<endl;
       paymentMethod(choice);
-      cout<<"Successful order confirmation"<<endl;
+      cout<<"\033[32m"  <<"Successful order confirmation"<<"\033[0m"  <<endl;
+      Drug::DecreseQuan(id,temp[id-1],"drugStore/wareHouse.txt",quanlity);
       string fileName="Transactions/usesHistory/";
       fileName+=this->getAccountName()+".txt";
-      Drug demo = temp[id-1];
+
+      Orders demo;
+      demo.inheritDrug(temp[id-1]);
       demo.setId(Drug::countDrugsInFile(fileName));
-      demo.setPrice(totalMoney);
+      demo.setTotal(totalMoney);
       demo.setQuantityInStock(quanlity);
-      demo.writeToFile(fileName);
-      cout<<"Do you want continue ? (Y/N) "; cin>>rep;
+      demo.setExpirationDate(getCurrentTime());
+      demo.setBuyerName(this->getAccountName());
+      demo.writeOrderToFile(fileName);
+      demo.writeOrderToFile("Transactions/HistorySales.txt");
+      temp[id-1].setQuantityInStock(temp[id-1].getQuantityInStock()-quanlity);
+      cout<<"\033[33m"  <<"Do you want continue ? (Y/N) "<<"\033[0m"; cin>>rep;
       rep=toupper(rep);
       if(rep!='Y'){
         system("cls");
@@ -77,18 +105,29 @@ void User::payment(int id,vector<Drug> temp){
     }
     case 2:
     {
-      cout<<"Enter the quantity you want to add cart :"; cin>>quanlity;
-      totalMoney = temp[id-1].getPrice()*quanlity;
-      cout<<"Total money is "<<totalMoney<<endl;
-      cout<<"Successful add cart"<<endl;
-      Drug demo = temp[id-1];
-      demo.setId(Drug::countDrugsInFile("Transactions/usesHistory/phucart.txt"));
-      demo.setPrice(totalMoney);
-      demo.setQuantityInStock(quanlity);
+      do{
+          cout<<"\033[36m"  <<"Enter the quantity you want to add cart :"<<"\033[0m"; cin>>quanlity;
+          if(quanlity > temp[id-1].getQuantityInStock()){
+            cout<<"\033[31m"  <<"Excess quantity!"<<"\033[0m"  <<endl;
+          }
+      }while(quanlity > temp[id-1].getQuantityInStock());
+      totalMoney =(temp[id-1].getPrice() - 1.0*(temp[id-1].getPrice() * (1.0*temp[id-1].getDiscount()/100)))*quanlity ;
+      cout<<"\033[33m"  <<"Total money is: "<<"\033[0m" <<totalMoney<<endl;
+      cout<<"\033[32m"  <<"Successful add cart"<<"\033[0m"<<endl;
+      Drug::DecreseQuan(id,temp[id-1],"drugStore/wareHouse.txt",quanlity);
       string fileName="Transactions/usesHistory/";
       fileName+=this->getAccountName()+"cart.txt";
-      demo.writeToFile(fileName);
-      cout<<"Do you want continue ? (Y/N) "; cin>>rep;
+
+      Orders demo;
+      demo.inheritDrug(temp[id-1]);
+      demo.setId(Drug::countDrugsInFile(fileName));
+      demo.setTotal(totalMoney);
+      demo.setQuantityInStock(quanlity);
+      demo.setExpirationDate(getCurrentTime());
+      demo.setBuyerName(this->getAccountName());
+      demo.writeOrderToFile(fileName);
+      temp[id-1].setQuantityInStock(temp[id-1].getQuantityInStock()-quanlity);
+      cout<<"\033[32m"<<"Do you want continue ? (Y/N) "<<"\033[0m"; cin>>rep;
       rep=toupper(rep);
       if(rep!='Y'){
         system("cls");
@@ -105,19 +144,26 @@ void User::payment(int id,vector<Drug> temp){
     default:
       break;
     }
+    
   }
 }
-void searchMedicines(const std::vector<Drug>& medicines, const std::string& query) {
-    std::cout << "\nSearch results for \"" << query << "\":" << std::endl;
+
+
+//Tìm kiếm thuốc 1
+void searchMedicines(const vector<Drug>& medicines, const string& query) {
+    cout <<"\033[33m"  << "Search results for \"" << query << "\":" <<"\033[0m"  << endl;
     bool found = false;
     for (const auto& med : medicines) {
-        if (med.getName().find(query) != std::string::npos) {  // Check if query matches medicine name
+        if (med.getName().find(query) != string::npos) {  // Check if query matches medicine name
              showListDrug2(med);
             found = true;
         }
     }
-    if (!found) std::cout << "No medicines found.\n";
+    if (!found) cout <<"\033[31m"  << "No medicines found.\n"<<"\033[0m";
 }
+
+
+//Tìm kiếm thuốc 2
 void searchDrug(string name,vector<Drug> temp){
     for(auto x:temp){
       if(x.getName().find(name) != string::npos){
@@ -126,14 +172,24 @@ void searchDrug(string name,vector<Drug> temp){
     }
 
 }
+
+
+//Menu tổng
 void User::userBuyDrugProcess(){
   int choice;
   int id;
   bool search=0;
   while (1)
   {
-    cin.ignore();
+    
     vector<Drug > temp = Drug::readFromFile("drugStore/wareHouse.txt");
+    for(int i=0;i<temp.size();++i){
+      if(temp[i].getQuantityInStock() <= 0){
+          Drug a=temp[i];
+          a.setOOT(1);
+          Drug::updateDrugInFile(i+1,a,"drugStore/wareHouse.txt");
+      }
+  }
     userBuyDrugMenu1();
     cin>>choice;
     system("cls");
@@ -146,7 +202,7 @@ void User::userBuyDrugProcess(){
           for(auto x:temp){
             showListDrug2(x);
           }
-          cout<<"\033[36m"<<"Enter Drug's id you want oce "<<"\033[0m";
+          cout<<"\033[36m"<<"Enter Drug's id you want: "<<"\033[0m";
           cin>>id;
           if(id> temp.size() || id <0){
             cout<<"\033[31m"<<"Id not valid !"<<"\033[0m"<<endl;
@@ -164,7 +220,7 @@ void User::userBuyDrugProcess(){
         string query="";
         char ch;
         while (ch != '\r'){
-          std::cout << "\nPlease type drug's name to search: "; cout<<query; ch = _getch();
+          cout <<"\033[36m"  << "\nPlease type drug's name to search: "<<"\033[0m"; cout<<query; ch = _getch();
           if(ch != '\r') system("cls");
           if(ch == '\r') break;
           if (ch == '\b') {  // Handle Backspace

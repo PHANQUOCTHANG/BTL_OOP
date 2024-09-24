@@ -1,29 +1,34 @@
 #pragma once
-#include "../Header.h"
-#include "../drugStore/drugHeader.h"
+#include "Design.h"
+
+
 //Hàm set delay(độ chậm) cho giao diện
 void delay(int milliseconds) {
-    std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
+    this_thread::sleep_for(chrono::milliseconds(milliseconds));
 }
+
+
 //Hàm xử lý nhập mật khẩu
-std::string hidePassword(std::string &password) {
+string hidePassword(std::string &password) {
     char ch;
     while ((ch = _getch()) != '\r') { // '\r' là ký tự Enter
         if (ch == '\b') { // Xóa ký tự nếu nhấn Backspace
             if (!password.empty()) {
                 password.pop_back();
-                std::cout << "\b \b"; // Xóa dấu '*'
+                cout << "\b \b"; // Xóa dấu '*'
             }
         } else {
             password.push_back(ch);
-            std::cout << '*'; // Hiển thị dấu '*'
+            cout << '*'; // Hiển thị dấu '*'
         }
     }
-    std::cout << std::endl;
+    cout << std::endl;
     return password;
 }
+
+
 // Hàm căn giữa một chuỗi (có thể thêm khoảng trắng nếu chuỗi ngắn hơn chiều rộng cột)
-std::string centerText(const std::string& text, int width) {
+string centerText(const string& text, int width) {
     int padding = width - text.length();
     if (padding > 0) {
         int padLeft = padding / 2;
@@ -33,6 +38,8 @@ std::string centerText(const std::string& text, int width) {
         return text.substr(0, width);  // Cắt bớt chuỗi nếu nó dài hơn chiều rộng cột
     }
 }
+
+
 void phu1(){
     for(int i=1;i<=154;++i){
         if(i==1 || i==5 || i==31 || i==52 || i==93 || i== 114 || i==133 || i==154) cout<<'+';
@@ -42,6 +49,8 @@ void phu1(){
     }
     cout<<endl;
 }
+
+
 void phu2(){
     for(int i=1;i<=52;++i){
         if(i==1 || i==5 || i==31 || i==52) cout<<'+';
@@ -62,6 +71,9 @@ void phu2(){
     }
     cout<<endl;
 }
+
+
+
 void phu3(){
   for(int i=1;i<=31;++i){
       if(i==1 || i==5 || i==31) cout<<'+';
@@ -73,13 +85,6 @@ void phu3(){
   std::cout << "|" << centerText("ID", 3)
   << "|" << centerText("Name", 25)
   << "|\n";
-  for(int i=1;i<=31;++i){
-      if(i==1 || i==5 || i==31) cout<<'+';
-      else{
-          cout<<'-';
-      }
-  }
-  cout<<endl;
 
 }
 // In tiêu đề
@@ -95,6 +100,32 @@ void title(){
           << "|\n";
     phu1();
 }
+void Title1(){
+    for(int i=1;i<=164;++i){
+        if(i==1 || i==5 || i==31 || i==52 || i==103 ||i == 122 || i==143 || i== 164) cout<<'+';
+        else{
+            cout<<'-';
+        }
+    }
+    cout<<endl;
+    std::cout << "|" << centerText("ID", 3)
+    << "|" << centerText("UserName", 25)
+    << "|" << centerText("Drug name", 20) 
+    << "|" << centerText("Time", 50) 
+    << "|" << centerText("price", 18) 
+    << "|" << centerText("Quantity", 20) 
+    << "|" << centerText("Total", 20)
+    << "|\n";
+    for(int i=1;i<=164;++i){
+        if(i==1 || i==5 || i==31 || i==52) cout<<'+';
+        else{
+            cout<<'-';
+        }
+    }
+    cout<<endl;
+}
+
+
 void showMenu1(){
     cout<<"+-----------------"<<"\033[35m"<<"MENU"<<"\033[0m"<<"-----------------+\n";
   cout << "|    1. Register          2. Login     |\n";
@@ -102,6 +133,8 @@ void showMenu1(){
     cout<<"+--------------------------------------+\n";
     cout<<"Enter your choice: ";
 }
+
+
 void showMenuLogin(){
     cout<<"+-----------------"<<"\033[35m"<<"LOGIN"<<"\033[0m"<<"-----------------+\n";
   cout << "|    1. User               2. Admin     |\n";
@@ -109,6 +142,8 @@ void showMenuLogin(){
     cout<<"+---------------------------------------+\n";
     cout<<"Enter your choice: ";
 }
+
+
 void drugManaMenuUpdateMenu(){
        cout<<"+-----------------"<<"\033[35m"<<"MENU"<<"\033[0m"<<"------------------+\n";
   cout << "|    1.Name                              |\n";
@@ -124,10 +159,12 @@ void drugManaMenuUpdateMenu(){
     cout<<"+----------------------------------------+\n";
     cout<<"Enter your choice: ";
 }
+
+
 void printStockLevels(Drug drug) {
     
     // In các loại thuốc trong bảng với độ rộng cột được định nghĩa trước
-        std::cout << "|" << centerText(to_string(drug.getId()), 3)   // ID
+        cout << "|" << centerText(to_string(drug.getId()), 3)   // ID
                   << "|" << centerText(drug.getName(), 25)  // Tên thuốc
                   << "|" << centerText(to_string( drug.getQuantityInStock()), 20)  // Số lượng
                   << "|\n";
@@ -140,6 +177,8 @@ void printStockLevels(Drug drug) {
     }
     cout<<endl;
 }
+
+
 void showListDrug2(Drug drug){
      for(int i=1;i<=31;++i){
         if(i==1 || i==5 || i==31) cout<<'+';
@@ -147,11 +186,33 @@ void showListDrug2(Drug drug){
             cout<<'-';
         }
     }
-cout<<endl;
+    cout<<endl;
  // In các loại thuốc trong bảng với độ rộng cột được định nghĩa trước
-     std::cout << "|" << centerText(to_string(drug.getId()), 3)   // ID
+    if(drug.getOOT()){
+        cout<<"\033[31m";
+    }
+    else if(drug.getDiscount()){
+        cout<<"\033[38;5;206m";
+    }
+        for(int i=1;i<=31;++i){
+        if(i==1 || i==5 || i==31) cout<<'+';
+        else{
+            cout<<'-';
+        }
+    }
+    cout<<endl;
+    cout << "|" << centerText(to_string(drug.getId()), 3)   // ID
                << "|" << centerText(drug.getName(), 25)  // Tên thuốc
-               << "|\n";
+               << "|";
+                   if(drug.getOOT()){
+                        cout<<"\tOut of stock";
+                    }
+                    else if(drug.getDiscount()){
+                        cout<<"\tSale "<<drug.getDiscount()<<"%";
+                    }
+
+               
+               cout<<"\n";
  // Đường kẻ ngang kết thúc
     for(int i=1;i<=31;++i){
         if(i==1 || i==5 || i==31) cout<<'+';
@@ -160,5 +221,49 @@ cout<<endl;
         }
     }
     cout<<endl;
+    cout<<"\033[0m";
+
 
 }
+
+
+void Title2(){
+    for(int i=1;i<=83;++i){
+        if(i==1 || i==42 || i==83) cout<<'+';
+        else{
+            cout<<'-';
+        }
+    }
+    cout<<endl;
+    std::cout
+    << "|" << centerText("Username", 40)
+    << "|" << centerText("Password", 40) 
+    << "|\n";
+    for(int i=1;i<=83;++i){
+        if(i==1 || i==42 || i==83) cout<<'+';
+        else{
+            cout<<'-';
+        }
+    }
+    cout<<endl;
+}
+void printListAccount(pair<string,string> a){
+     std::cout
+    << "|" << centerText(a.first, 40)
+    << "|" << centerText(string(a.second.size(),'*'), 40) 
+    << "|\n";
+    for(int i=1;i<=83;++i){
+        if(i==1 || i==42 || i==83) cout<<'+';
+        else{
+            cout<<'-';
+        }
+    }
+    cout<<endl;
+
+
+
+}
+
+
+
+

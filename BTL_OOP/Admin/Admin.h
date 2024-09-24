@@ -1,9 +1,13 @@
 #pragma once
 #include "../Header.h"
-#include "../drugStore/DrugFunction.cpp"
+#include "../Account_mangement/Account.h"
 #include "../drugStore/drugHeader.h"
-#include "../Design/Interaction.cpp"
-class Admin:public Account{
+#include "../Design/Design.h"
+#include "../Function.cpp"
+
+
+class Admin : public Account
+{
     public:
         //admin
         void adminMenu();
@@ -26,8 +30,9 @@ class Admin:public Account{
         void salesManaProcess();
 
         //User
-        void userManaMenu();
+        void userManaMenu1();
         void userManaProcess();
 
 };
+
 
