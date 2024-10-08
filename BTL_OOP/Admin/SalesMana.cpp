@@ -13,7 +13,6 @@ void Admin::salesManaMenu(){
     cout<<"Enter your choice: ";
 
 }
-
 //Menu Tổng
 void Admin::salesManaProcess(){
   int choice;
