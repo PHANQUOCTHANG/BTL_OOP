@@ -34,6 +34,7 @@ string paymentMethod(int choice){
     cout<<"+------------------------------------------------+"<<endl;
     cout<<"Enter your choice: ";
     cin>>choice;
+    cout << "aaaA" ;
     while(1){
       if(choice==1){
         return "Pay on Pickup";
