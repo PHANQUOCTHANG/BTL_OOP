@@ -2,5 +2,5 @@
 //Ham main
 int main() {
     Account::accountProcess();
-    
+    cout << "AaaaaA";
 }
