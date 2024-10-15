@@ -76,32 +76,53 @@ void User::payment(int id,vector<Drug> temp){
             cout<<"\033[31m"  <<"Excess quantity!"<<"\033[0m"  <<endl;
           }
       }while(quanlity > temp[id-1].getQuantityInStock());
-      totalMoney =(temp[id-1].getPrice() - 1.0*(temp[id-1].getPrice() * (1.0*temp[id-1].getDiscount()/100)))*quanlity ;
-      cout<<"\033[33m"  <<"Total money is: "<<"\033[0m"<<totalMoney  <<endl;
-      paymentMethod(choice);
-      cout<<"\033[32m"  <<"Successful order confirmation"<<"\033[0m"  <<endl;
-      Drug::DecreseQuan(id,temp[id-1],"drugStore/wareHouse.txt",quanlity);
-      string fileName="Transactions/usesHistory/";
-      fileName+=this->getAccountName()+".txt";
-
-      Orders demo;
-      demo.inheritDrug(temp[id-1]);
-      demo.setId(Drug::countDrugsInFile(fileName));
-      demo.setTotal(totalMoney);
-      demo.setQuantityInStock(quanlity);
-      demo.setExpirationDate(getCurrentTime());
-      demo.setBuyerName(this->getAccountName());
-      demo.writeOrderToFile(fileName);
-      demo.writeOrderToFile("Transactions/HistorySales.txt");
-      temp[id-1].setQuantityInStock(temp[id-1].getQuantityInStock()-quanlity);
-      cout<<"\033[33m"  <<"Do you want continue ? (Y/N) "<<"\033[0m"; cin>>rep;
+      // cout<<"\033[33m"  <<"Total money is: "<<"\033[0m"<<totalMoney  <<endl;
+      cout<<"\033[33m"  <<"Do you want confirm the transaction ? (Y/N) "<<"\033[0m"; cin>>rep;
       rep=toupper(rep);
       if(rep!='Y'){
         system("cls");
         return;
       } 
-      delay(1000);
-      break;
+      string paymentMethodRes = paymentMethod(choice);
+      Drug::DecreseQuan(id,temp[id-1],"drugStore/wareHouse.txt",quanlity);
+      string fileName="Transactions/usesHistory/";
+      fileName+=this->getAccountName()+".txt";
+      Orders demo;
+      totalMoney = quanlity * temp[id-1].getPrice(); 
+      demo.inheritDrug(temp[id-1]);
+      demo.setId(Drug::countDrugsInFile(fileName));
+      demo.setTotal(totalMoney);
+      demo.setDiscount(temp[id-1].getDiscount());
+      demo.setQuantityInStock(quanlity);
+      demo.setExpirationDate(getCurrentTime());
+      demo.setBuyerName(this->getAccountName());
+      demo.writeOrderToFile(fileName);
+      demo.writeOrderToFile("Transactions/HistorySales.txt");
+      vector<Orders> t;
+      t.push_back(demo);
+      string filename = "Account_mangement/Account/userInfor/";
+      filename+=this->getAccountName()+"infor.txt";
+      vector<User> temp = findUserByUsername(filename,this->getAccountName());
+      int id;
+      do
+      {
+        for(int i=0;i<temp.size();++i){
+          cout<<"\033[33m"<<"Information "<<i+1<<": ";
+          cout<<"\033[36m"<<"Full Name:"<<"\033[32m" <<temp[i].getName()<<"\t";
+          cout<<"\033[36m"<<"Address:"<<"\033[32m" <<temp[i].getAddress()<<"\t";
+          cout<<"\033[36m"<<"Hotline:"<<"\033[32m"<<temp[i].getPhoneNumber()<<"\033[0m"<<endl;
+          cout<<endl;
+        }
+        cout<<"Choose your Addres: "; cin>>id;
+        if(!(id>0 && id <=temp.size())){
+          cout<<"Address not valid !";
+          system("cls");
+        }
+      } while (!(id>0 && id <5));
+      bill(temp[id-1],t,paymentMethodRes);
+      cout<<"\033[32m"  <<"Successful order confirmation"<<"\033[0m"  <<endl;
+      delay(2000);
+      return;
     }
     case 2:
     {
@@ -126,15 +147,7 @@ void User::payment(int id,vector<Drug> temp){
       demo.setExpirationDate(getCurrentTime());
       demo.setBuyerName(this->getAccountName());
       demo.writeOrderToFile(fileName);
-      temp[id-1].setQuantityInStock(temp[id-1].getQuantityInStock()-quanlity);
-      cout<<"\033[32m"<<"Do you want continue ? (Y/N) "<<"\033[0m"; cin>>rep;
-      rep=toupper(rep);
-      if(rep!='Y'){
-        system("cls");
-        return;
-      }
-      delay(1000);
-      break;
+      return;
     }
     case 3:
     {
@@ -142,6 +155,7 @@ void User::payment(int id,vector<Drug> temp){
       return;
     }
     default:
+      cout<<"\033[31m"  <<"Invalid selection"<<"\033[0m"<<endl;
       break;
     }
     
@@ -189,7 +203,7 @@ void User::userBuyDrugProcess(){
           a.setOOT(1);
           Drug::updateDrugInFile(i+1,a,"drugStore/wareHouse.txt");
       }
-  }
+    }
     userBuyDrugMenu1();
     cin>>choice;
     system("cls");
@@ -259,7 +273,6 @@ void User::userBuyDrugProcess(){
         break;
       }
     }
-    delay(1000);
 
   }
 }

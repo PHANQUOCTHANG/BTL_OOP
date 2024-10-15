@@ -60,13 +60,13 @@ void Orders::printOrdersList(Orders order) {
     ostringstream out;
     out << std::fixed << std::setprecision(2) << order.total;
     // In các loại thuốc trong bảng với độ rộng cột được định nghĩa trước
-        std::cout << "|" << centerText(to_string(order.getId()), 3)   // ID
-                  << "|" << centerText(order.buyerName, 25)  // Tên thuốc
-                  << "|" << centerText(order.getName(), 20)   // Loại
-                  << "|" << centerText(order.getExpirationDate(), 50)  // Thành phần
+        std::cout << "|" << centerText(to_string(order.getId()), 3)   // STT
+                  << "|" << centerText(order.buyerName, 25)  // Tên người dùng
+                  << "|" << centerText(order.getName(), 20)   // Tên thuốc
+                  << "|" << centerText(order.getExpirationDate(), 50)  // Thời gian mua
                   << "|" << centerText(to_string(order.getPrice()), 18)  // Giá
                   << "|" << centerText(to_string( order.getQuantityInStock()), 20)  // Số lượng
-                  << "|" << centerText(out.str(), 20)  // Số lượng
+                  << "|" << centerText(out.str(), 20)  // tổng tiền
                   << "|\n";
     
 
@@ -81,7 +81,18 @@ void Orders::printOrdersList(Orders order) {
 
 
 }
-
+void Orders::printOrdersListBill(Orders order) {
+    ostringstream out;
+    out << std::fixed << std::setprecision(2) << order.total;
+    // In các loại thuốc trong bảng với độ rộng cột được định nghĩa trước
+    cout  << centerText(to_string(order.getId()), 3)   // STT
+          << centerText(order.getName(), 77)   // Tên thuốc
+          << centerText(to_string( order.getQuantityInStock()), 40)  // Số lượng
+          << centerText(to_string(order.getPrice()), 40)  // Giá
+          << centerText(out.str(), 40)  // tổng tiền
+          << "\n";
+    
+}
 
 //Kế thừa thuốc tính từ thuốc
 void Orders::inheritDrug(Drug drug){
@@ -100,7 +111,7 @@ void Orders::analyzeSales(const vector<Orders>& orders) {
     map<string, double> revenueByMedicine;  // Medicine name -> Total revenue
 
     int totalOrders = 0;
-    double totalRevenue = 0;
+    int totalRevenue = 0;
     int totalQuantitySold = 0;
 
     // Analyzing the sales data

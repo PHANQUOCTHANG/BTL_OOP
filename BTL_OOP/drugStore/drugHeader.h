@@ -67,7 +67,7 @@ class Drug {
         void setOOT(int _outOfStock) { outOfStock = _outOfStock;}
 
         //Giảm giá
-        int getDiscount() const { return discount; }
+        int getDiscount()  { return discount; }
         void setDiscount(int _discount) { discount = _discount;}
 
         //Nạp chồng toán tử

@@ -65,17 +65,19 @@ class User : public Info, public Account
         void userBuyDrugProcess();
         void payment(int id,vector<Drug> temp);
     //User Infor
+        void PrivateInfor(); //Thông tin người dùng
         void userInfoMenu1();  //Show Menu
         void userInfoProcess(); //Menu tổng
         void update(); //Cập nhât
         void cartProcess(); //Menu Cart
         void writeInfor(const string &fileName); //Ghi thông tin vào file
-        User findUserByUsername(const string &fileName, const string &searchUsername);  //Tìm thông tin người dùng bằng tên người dùng
+        vector<User> findUserByUsername(const string &fileName, const string &searchUsername);  //Tìm thông tin người dùng bằng tên người dùng
     //discount
 
         void userDiscountMenu1(); //Show Menu
         void userDiscountProcess(); //Menu tổng
-
+    //in bill
+        void bill(User temp,vector<Orders> orders,string paymentMethod);
 
 };
 

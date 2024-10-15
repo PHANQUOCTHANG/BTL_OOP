@@ -124,8 +124,6 @@ void Title1(){
     }
     cout<<endl;
 }
-
-
 void showMenu1(){
     cout<<"+-----------------"<<"\033[35m"<<"MENU"<<"\033[0m"<<"-----------------+\n";
   cout << "|    1. Register          2. Login     |\n";

@@ -25,7 +25,15 @@ void userInfoCart1(){
     cout<<"Enter your choice: ";
 
 }
+void userPrivateInfo(){
+            cout<<"+-------------------"<<"\033[35m"<<"User"<<"\033[0m"<<"----------------------+\n";
+  cout << "|    1. View all                              |\n";
+  cout << "|    2. Add new Address                       |\n";
+  cout << "|    3. Back                                  |\n";
+    cout<<"+---------------------------------------------+\n";
+    cout<<"Enter your choice: ";
 
+}
 //Tính tổng tiền
 int total(vector<Orders> cart){
   int count=0;
@@ -246,11 +254,12 @@ void User::writeInfor(const string &fileName){
 }
 
 //Tìm thông tin người dùng bằng tên người dùng
-User User::findUserByUsername(const string &fileName, const string &searchUsername) {
+vector<User> User::findUserByUsername(const string &fileName, const string &searchUsername) {
     ifstream file(fileName);
+    vector<User> res;
     if (!file.is_open()) {
         cout <<"\033[31m"  << "Cannot open file!" << "\033[0m"  <<endl;
-        return User();
+        return res;
     }
 
     string line;
@@ -266,42 +275,80 @@ User User::findUserByUsername(const string &fileName, const string &searchUserna
 
         // Kiểm tra nếu username khớp
         if (username == searchUsername) {
-            file.close();
-            return User( fullName, address, phoneNumber);
+            User temp( fullName, address, phoneNumber);
+            res.push_back(temp);
         }
     }
 
     // Nếu không tìm thấy user
     file.close();
-    return User();
+    return res;
 }
 
 //Cập nhật thông tin người dùng
 void User::update(){
-  if(!this->getCheck()){
     string fullName,address,phoneNumber;
-    cout<<"\033[33m"  <<"Please update your information: "<<"\033[0m"  <<endl;
+    cout<<"\033[33m"  <<"Please fill new your information: "<<"\033[0m"  <<endl;
     cout<<"\033[36m"  <<"Enter your full name: "<<"\033[0m"; cin.ignore(); getline(cin,fullName) ;  this->setName(fullName);
     cout<<"\033[36m"  <<"Enter your address: "<<"\033[0m";  getline(cin,address) ; this->setAddress(address);
     cout<<"\033[36m"  <<"Enter your phone number: "<<"\033[0m";  getline(cin,phoneNumber) ; this->setPhoneNumber(phoneNumber);
-    this->writeInfor("Account_mangement/Account/Information");
+    string fileName3="Account_mangement/Account/userInfor/";
+    fileName3+=this->getAccountName()+"infor.txt";
+    this->writeInfor(fileName3);
     this->setCheck(1);
-    
-  }
-  else{
-    User tokens=findUserByUsername("Account_mangement/Account/Information",this->getAccountName());
-    this->setName(tokens.getName()),
-    this->setAddress(tokens.getAddress());
-    this->setPhoneNumber(tokens.getPhoneNumber());
-    cout<<"\033[32m"<<"Full name : "<<"\033[0m"<<this->getName()<<endl;
-    cout<<"\033[32m"<<"Address : "<<"\033[0m"<<this->getAddress()<<endl;
-    cout<<"\033[32m"<<"Phone number : "<<"\033[0m"<<this->getPhoneNumber()<<endl;
-
-  }
-
-
 }
 
+void User::PrivateInfor(){
+  int choice;
+  int id;
+  string filename = "Account_mangement/Account/userInfor/";
+  filename+=this->getAccountName()+"infor.txt";
+  while (1){
+
+    vector<User> temp = findUserByUsername(filename,this->getAccountName());
+    userPrivateInfo();
+    cin>>choice;
+    switch (choice){
+      case 1:
+      {
+          system("cls");
+          if(temp.size()){
+            for(int i=0;i<temp.size();++i){
+              cout<<"\033[33m"<<"Information "<<i+1<<": ";
+              cout<<"\033[36m"<<"Full Name:"<<"\033[32m" <<temp[i].getName()<<"\t";
+              cout<<"\033[36m"<<"Address:"<<"\033[32m" <<temp[i].getAddress()<<"\t";
+              cout<<"\033[36m"<<"Hotline:"<<"\033[32m"<<temp[i].getPhoneNumber()<<"\033[0m"<<endl;
+              cout<<endl;
+            }
+          }
+          else{
+            cout<<"\033[31m"<<"List is empty ! Please add your information! "<<"\033[0m" ;
+          }
+        break;
+      }
+      case 2:
+      {
+        system("cls");
+        if(temp.size() >= 4){
+          cout<<"\033[33m"<<"Number of your Information not excess 4"<<"\033[0m"<<endl;
+          break;
+        }
+        update();
+        break;
+      }
+      case 3:
+      {
+        system("cls");
+        return; 
+      }
+      default:
+      {
+       cout<<"\033[31m"  <<"Invalid selection"<<"\033[0m"<<endl;
+       break;
+      }
+    }
+  }
+}
 //Menu tổng
 void User::userInfoProcess(){
   int choice;
@@ -317,7 +364,7 @@ void User::userInfoProcess(){
       case 1:
       {
         system("cls");
-        update();
+        PrivateInfor();
 
         break;
       }
@@ -358,4 +405,49 @@ void User::userInfoProcess(){
     delay(1000);
 
   }
+}
+void User::bill(User temp,vector<Orders> orders,string paymentMethod){
+  double total=0;
+  double TotalPayouts = 0 ;
+  double VAT = 1.750;
+  double Sale=0;
+  for (int i=1;i<=200;i++) cout << "-" ;
+  cout<<endl;
+  cout<< centerText("PVT Pharmacy", 200)<<endl;
+  cout<< centerText("Customer Information", 200)<<endl;
+  cout<<"Customer Name: "<<temp.getName()<<endl;
+  cout<<"Address: "<<temp.getAddress()<<endl; 
+  cout<<"Phone number: "<<temp.getPhoneNumber()<<endl; 
+  for (int i=1;i<=200;i++) cout << "-" ;
+  cout<<endl;
+  cout<<centerText("Bills for the sale of drugs", 200)<<endl;
+  cout << centerText("STT", 3)   // STT
+      << centerText("Drug name", 77)   // Tên thuốc
+      << centerText("Quanlity", 40)  // Số lượng
+      << centerText("Price", 40)  // Giá
+      << centerText("Into money", 40)  // tổng tiền
+      << "\n";
+    
+      for(auto x:orders){
+        Orders::printOrdersListBill(x);
+        total+=x.getTotal();
+        cout << x.getDiscount() ;
+        Sale += 1.0 * (x.getPrice() * x.getDiscount() / 100) * x.getQuantityInStock() ;
+      }
+      for (int i=1;i<=200;i++) cout << "-" ;
+      cout<<endl;
+      cout<<"Total: "<<total<<endl;
+      cout<<"VAT tax: "<<VAT<<endl;
+      cout<<"Sale: "<<Sale<<endl;
+      TotalPayouts = total+VAT-Sale;
+      cout << "TotalPayouts: "<< fixed << setprecision(2) << TotalPayouts << endl ;
+      for (int i=1;i<=200;i++) cout << "-" ;
+      cout<<endl;
+      string currentTime = getCurrentTime();
+      cout<<"Time: "<<currentTime<<endl;
+      cout<<"Payment Method: "<<paymentMethod<<endl;
+      cout<<"Thank you and see you soon.....!"<<endl;
+      for (int i=1;i<=200;i++) cout << "-" ;
+      cout<<endl;
+
 }

@@ -25,12 +25,15 @@ void User::userProcess(){
         }
     }
     int choice;
-    User tokens=findUserByUsername("Account_mangement/Account/Information",this->getAccountName());
-    if(tokens.getName() != ""){
-        this->setCheck(1);
+    string fileName3="Account_mangement/Account/userInfor/";
+    fileName3+=this->getAccountName()+"infor.txt";
+    createFileIfNotExists(fileName3);
+    vector<User> tokens=findUserByUsername(fileName3,this->getAccountName());
+    if(!tokens.size()){
+        this->setCheck(0);
     }
     else{
-        this->setCheck(0);
+        this->setCheck(1);
     }
     string fileName1="Transactions/usesHistory/";
     fileName1+=this->getAccountName()+".txt";
@@ -57,6 +60,7 @@ void User::userProcess(){
                     break;
                 }
                 else{
+                    system("cls");
                     continue;;
                 }
             }
