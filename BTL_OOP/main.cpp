@@ -2,5 +2,6 @@
 // Ham main
 int main()
 {
+    printPharmacyLogo() ;
     Account::accountProcess();
 }

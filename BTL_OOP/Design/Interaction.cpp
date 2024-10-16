@@ -129,20 +129,35 @@ void Title1(){
     }
     cout<<endl;
 }
+
+void tab() {
+    for (int i = 1 ; i <= 7 ; i++) cout << "\t" ;
+}
+
 void showMenu1(){
+    tab() ;
     cout<<"+-----------------"<<"\033[35m"<<"MENU"<<"\033[0m"<<"-----------------+\n";
-  cout << "|    1. Register          2. Login     |\n";
-  cout << "|                3. Exit               |\n";
+    tab() ;
+    cout << "|    1. Register          2. Login     |\n";
+    tab() ;
+    cout << "|                3. Exit               |\n";
+    tab() ;
     cout<<"+--------------------------------------+\n";
+    tab() ;
     cout<<"Enter your choice: ";
 }
 
 
 void showMenuLogin(){
+    tab() ;
     cout<<"+-----------------"<<"\033[35m"<<"LOGIN"<<"\033[0m"<<"-----------------+\n";
-  cout << "|    1. User               2. Admin     |\n";
-  cout << "|          3. Back to Menu              |\n";
+    tab() ;
+    cout << "|    1. User               2. Admin     |\n";
+    tab() ;
+    cout << "|          3. Back to Menu              |\n";
+    tab() ;
     cout<<"+---------------------------------------+\n";
+    tab() ;
     cout<<"Enter your choice: ";
 }
 
@@ -262,9 +277,39 @@ void printListAccount(pair<string,string> a){
         }
     }
     cout<<endl;
+}
 
+void printPharmacyLogo() {
+    // Logo hình chiếc lá và dấu cộng với mã màu ANSI đơn giản
+    cout << "\033[32m";  // Màu xanh lá cây
+    tab() ;
+    cout << "              ***              " << endl;
+    tab() ;
+    cout << "           **     **           " << endl;
+    tab() ;
+    cout << "         **         **         " << endl;
+    tab() ;
+    cout << "       **\033[37m   +++++   \033[32m**       " << endl;
+    tab() ;
+    cout << "      **\033[37m   +     +   \033[32m**      " << endl;
+    tab() ;
+    cout << "      **\033[37m   +     +   \033[32m**      " << endl;
+    tab() ;
+    cout << "       **\033[37m   +++++   \033[32m**       " << endl;
+    tab() ;
+    cout << "         **         **         " << endl;
+    tab() ;
+    cout << "           **     **           " << endl;
+    tab() ;
+    cout << "              ***              " << endl;
+    // Chuyển sang màu đỏ để in tên thương hiệu
+    cout << "\033[32m";  // Màu đỏ
+    tab() ;
+    cout << "       ~~~~~ OS PHARMACY ~~~~~       " << endl;
 
-
+    // Đặt lại màu sắc về mặc định
+    cout << "\033[0m";  // Reset màu về mặc định
+    cout << "\n\n" ;
 }
 
 

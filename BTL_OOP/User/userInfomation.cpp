@@ -418,7 +418,7 @@ void User::bill(User temp,vector<Orders> orders,string paymentMethod){
 
     // Vẽ đường viền đầu tiên
     Line('=', 85);
-    cout << centerText("PVT Pharmacy", 85) << endl;
+    cout << centerText("OS Pharmacy", 85) << endl;
     Line('=', 85);
     
     // Thông tin khách hàng

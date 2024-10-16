@@ -19,4 +19,4 @@ void drugManaMenuUpdateMenu();
 void printStockLevels(Drug drug);
 void printListAccount(pair<string,string> a);
 void showListDrug2(Drug drug);
-
+void printPharmacyLogo() ;
