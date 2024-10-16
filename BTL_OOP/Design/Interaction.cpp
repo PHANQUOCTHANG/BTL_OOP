@@ -39,6 +39,11 @@ string centerText(const string& text, int width) {
     }
 }
 
+// viền .
+void Line(char c, int length) {
+    cout << string(length, c) << endl;
+}
+
 
 void phu1(){
     for(int i=1;i<=154;++i){

@@ -406,48 +406,74 @@ void User::userInfoProcess(){
 
   }
 }
+
+
+// setw(x) : quy định độ rộng của một cột (setWidth) .
+
 void User::bill(User temp,vector<Orders> orders,string paymentMethod){
-  double total=0;
-  double TotalPayouts = 0 ;
-  double VAT = 1.750;
-  double Sale=0;
-  for (int i=1;i<=200;i++) cout << "-" ;
-  cout<<endl;
-  cout<< centerText("PVT Pharmacy", 200)<<endl;
-  cout<< centerText("Customer Information", 200)<<endl;
-  cout<<"Customer Name: "<<temp.getName()<<endl;
-  cout<<"Address: "<<temp.getAddress()<<endl; 
-  cout<<"Phone number: "<<temp.getPhoneNumber()<<endl; 
-  for (int i=1;i<=200;i++) cout << "-" ;
-  cout<<endl;
-  cout<<centerText("Bills for the sale of drugs", 200)<<endl;
-  cout << centerText("STT", 3)   // STT
-      << centerText("Drug name", 77)   // Tên thuốc
-      << centerText("Quanlity", 40)  // Số lượng
-      << centerText("Price", 40)  // Giá
-      << centerText("Into money", 40)  // tổng tiền
-      << "\n";
+  double total = 0;
+    double TotalPayouts = 0;
+    double VAT = 1.75; // Thuế VAT
+    double Sale = 0;
+
+    // Vẽ đường viền đầu tiên
+    Line('=', 85);
+    cout << centerText("PVT Pharmacy", 85) << endl;
+    Line('=', 85);
     
-      for(auto x:orders){
-        Orders::printOrdersListBill(x);
-        total+=x.getTotal();
-        cout << x.getDiscount() ;
-        Sale += 1.0 * (x.getPrice() * x.getDiscount() / 100) * x.getQuantityInStock() ;
-      }
-      for (int i=1;i<=200;i++) cout << "-" ;
-      cout<<endl;
-      cout<<"Total: "<<total<<endl;
-      cout<<"VAT tax: "<<VAT<<endl;
-      cout<<"Sale: "<<Sale<<endl;
-      TotalPayouts = total+VAT-Sale;
-      cout << "TotalPayouts: "<< fixed << setprecision(2) << TotalPayouts << endl ;
-      for (int i=1;i<=200;i++) cout << "-" ;
-      cout<<endl;
-      string currentTime = getCurrentTime();
-      cout<<"Time: "<<currentTime<<endl;
-      cout<<"Payment Method: "<<paymentMethod<<endl;
-      cout<<"Thank you and see you soon.....!"<<endl;
-      for (int i=1;i<=200;i++) cout << "-" ;
-      cout<<endl;
+    // Thông tin khách hàng
+    cout << left << setw(20) << "Customer Name:" << temp.getName() << endl;
+    cout << left << setw(20) << "Address:" << temp.getAddress() << endl;
+    cout << left << setw(20) << "Phone number:" << temp.getPhoneNumber() << endl;
+    
+    // Vẽ đường viền
+    Line('-', 85);
+    cout << centerText("Bills for the Sale of Drugs", 85) << endl;
+    Line('-', 85);
+    
+    // Tiêu đề hoá đơn
+    cout << left << setw(5) << "STT" 
+         << left << setw(35) << "Drug Name" 
+         << right << setw(10) << "Quantity" 
+         << right << setw(12) << "Price" 
+         << right << setw(15) << "Into Money" << endl;
+    
+    Line('-', 85);
+
+    // Xuất danh sách đơn hàng
+    for (size_t i = 0; i < orders.size(); ++i) {
+        cout << left << setw(5) << (i + 1) 
+             << left << setw(35) << orders[i].getName() // Tên thuốc
+             << right << setw(10) << orders[i].getQuantityInStock() // Số lượng
+             << right << setw(12) << fixed << setprecision(2) << orders[i].getPrice() // Giá
+             << right << setw(15) << fixed << setprecision(2) << orders[i].getTotal() << endl; // Tổng tiền
+        total += orders[i].getTotal();
+        Sale += (1.0 * (orders[i].getPrice() * orders[i].getDiscount() / 100) * orders[i].getQuantityInStock());
+    }
+
+    Line('-', 85);
+
+    // In ra tổng tiền
+    cout << left << setw(40) << "Total:" 
+         << right << setw(12) << fixed << setprecision(2) << total << endl;
+    cout << left << setw(40) << "VAT Tax:" 
+         << right << setw(12) << fixed << setprecision(2) << VAT << endl;
+    cout << left << setw(40) << "Sale:" 
+         << right << setw(12) << fixed << setprecision(2) << Sale << endl;
+
+    TotalPayouts = total + VAT - Sale;
+    cout << left << setw(40) << "Total Payouts:" 
+         << right << setw(12) << fixed << setprecision(2) << TotalPayouts << endl;
+
+    // Vẽ đường viền
+    Line('=', 85);
+
+    // Thời gian và phương thức thanh toán
+    string currentTime = getCurrentTime();
+    cout << left << setw(40) << "Time:" << currentTime << endl;
+    cout << left << setw(40) << "Payment Method:" << paymentMethod << endl;
+
+    // Vẽ đường viền cuối
+    Line('=', 85);
 
 }
