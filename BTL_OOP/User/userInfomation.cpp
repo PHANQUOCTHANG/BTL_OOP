@@ -289,9 +289,23 @@ vector<User> User::findUserByUsername(const string &fileName, const string &sear
 void User::update(){
     string fullName,address,phoneNumber;
     cout<<"\033[33m"  <<"Please fill new your information: "<<"\033[0m"  <<endl;
-    cout<<"\033[36m"  <<"Enter your full name: "<<"\033[0m"; cin.ignore(); getline(cin,fullName) ;  this->setName(fullName);
-    cout<<"\033[36m"  <<"Enter your address: "<<"\033[0m";  getline(cin,address) ; this->setAddress(address);
-    cout<<"\033[36m"  <<"Enter your phone number: "<<"\033[0m";  getline(cin,phoneNumber) ; this->setPhoneNumber(phoneNumber);
+    do {
+      cout<<"\033[36m"  <<"Enter your full name: "<<"\033[0m";
+      cin.ignore() ;
+      getline(cin,fullName) ;
+      if (fullName.length() < 0 || fullName.length() > 30) cout << "\033[31m"  << "Name Invalid"  << "\033[0m" << "\n"  ;
+    }while (fullName.length() < 0 || fullName.length() > 30) ;
+    this->setName(fullName);
+    do {
+      cout<<"\033[36m"  <<"Enter your address: "<<"\033[0m"; getline(cin,address) ;
+      if (address.length() <= 0) cout << "\033[31m"  << "Address Invalid"  << "\033[0m" << "\n"  ;
+    }while (address.length() <= 0) ;
+    this->setAddress(address);
+    do {
+      cout<<"\033[36m"  <<"Enter your phone number: "<<"\033[0m";  getline(cin,phoneNumber) ;
+      if (phoneNumber.length() != 10) cout << "\033[31m"  << "Phone Invalid"  << "\033[0m" << "\n"  ;
+    }while (phoneNumber.length() != 10) ;
+    this->setPhoneNumber(phoneNumber);
     string fileName3="Account_mangement/Account/userInfor/";
     fileName3+=this->getAccountName()+"infor.txt";
     this->writeInfor(fileName3);

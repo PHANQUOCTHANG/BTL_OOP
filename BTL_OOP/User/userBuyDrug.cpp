@@ -143,9 +143,9 @@ void User::payment(int id, vector<Drug> temp)
         demo.writeOrderToFile(fileName);
         demo.writeOrderToFile("Transactions/HistorySales.txt");
         system("cls");
-        cout << "\033[32m" << "Successful order confirmation" << "\033[0m" << endl;
+        cout << "\033[32m" << "Successful order confirmation.!" << "\033[0m" << endl;
+        delay(4000);
         system("cls") ;
-        delay(2000);
       }
       return;
     }
