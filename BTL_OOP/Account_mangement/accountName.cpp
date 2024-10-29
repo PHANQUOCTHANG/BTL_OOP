@@ -62,22 +62,15 @@ void Account::setAccountName(string accountName)
 
 int checkPassword(string accountPassword)
 {
-    int countAlphaLower = 0; // dem chu in thuong .
-    int countAlphaUpper = 0; // dem chu in hoa .
+    int count_Alpha = 0 ; // dem chu cai .
 
     for (char c : accountPassword)
     {
         if (!isalpha(c) && !isdigit(c))
             return 0;
-        if (isalpha(c) && c <= 90)
-            countAlphaUpper++;
-        if (isalpha(c) && c >= 97)
-            countAlphaLower++;
-
-        if (countAlphaUpper > 1 || countAlphaLower > 1)
-            return 0;
+        if (!isalpha(c)) count_Alpha++ ;
     }
-    return countAlphaUpper == 1 && countAlphaLower == 1;
+    return count_Alpha > 0 ;
 }
 
 
@@ -88,7 +81,6 @@ void Account::setAccountPassword(string accountPassword)
     // Nhập Password
     cout << borderColor << resetColor
          << setw(20) << left << " Password:" << resetColor;
-    cin >> accountPassword ;
     this->accountPassword = hidePassword(accountPassword);
 }
 
@@ -154,7 +146,7 @@ bool Account::setAccountRegister(string accountName, string accountPassword)
             this->accountPassword = hidePassword(accountPassword);
             if (!checkPassword(accountPassword)){
                 tab() ;
-                cout << "\033[31m" << " Password only includes numbers and 1 character upper and 1 character lower.!" << "\033[0m" << "\n";
+                cout << "\033[31m" << " Password includes numbers and at least 1 character .!" << "\033[0m" << "\n";
             }
         } while (!checkPassword(accountPassword));
         tab();

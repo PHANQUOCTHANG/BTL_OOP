@@ -1,4 +1,4 @@
-1;Aspirin;Tablet;Aspirin;Pain relief;1-2 tablets every 4-6 hours;Stomach upset, nausea;2025-12-01;50000;179;0;20
+1;Aspirin;Tablet;Aspirin;Pain relief;1-2 tablets every 4-6 hours;Stomach upset, nausea;2025-12-01;50000;178;0;20
 2;Paracetamol;Tablet;Paracetamol;Fever reduction;1-2 tablets every 4-6 hours;Rare allergic reactions;2024-05-20;30000;198;0;0
 3;Ibuprofen;Tablet;Ibuprofen;Anti-inflammatory;1 tablet every 6-8 hours;Dizziness, nausea;2024-08-15;60000;200;0;0
 4;Vitamin C;Tablet;Ascorbic Acid;Immune booster;1 tablet per day;Stomach upset in high doses;2025-02-28;40000;300;0;0
