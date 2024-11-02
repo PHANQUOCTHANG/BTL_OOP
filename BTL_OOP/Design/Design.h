@@ -1,7 +1,7 @@
 #pragma once
-#include "../Header.h"
+#include "../extra_function/Header.h"
 #include "../drugStore/drugHeader.h"
-#include "../Function.cpp"
+#include "../extra_function/Function.cpp"
 
 //Interaction
 void delay(int milliseconds);

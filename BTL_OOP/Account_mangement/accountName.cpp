@@ -1,7 +1,7 @@
 #pragma once
 #include "Account.h"
 #include "../Design/Design.h"
-#include "../Function.cpp"
+#include "../extra_function/Function.cpp"
 #include "../Admin/Admin.h"
 #include "../User/User.h"
 
@@ -26,30 +26,6 @@ string Account::getAccountPassword()
 string Account::adminName = "admin";
 string Account::adminPassword = "admin";
 
-// Check tên tài khoản đã tồn tại chưa
-bool isExistUsername(const string &name)
-{
-    ifstream file("Account_mangement/Account/User.txt");
-    if (!file.is_open())
-    {
-        cout << "\033[31m" << "Unable to open file" << "\033[0m" << endl;
-        return false;
-    }
-
-    string storedName;
-    while (file >> storedName)
-    {
-        if (storedName == name)
-        {
-            file.close();
-            return true;
-        }
-    }
-
-    file.close();
-    return false;
-}
-
 // Set Tên tài khoản
 void Account::setAccountName(string accountName)
 {
@@ -59,21 +35,6 @@ void Account::setAccountName(string accountName)
     cin >> accountName;
     this->accountName = accountName;
 }
-
-int checkPassword(string accountPassword)
-{
-    int count_Alpha = 0 ; // dem chu cai .
-
-    for (char c : accountPassword)
-    {
-        if (!isalpha(c) && !isdigit(c))
-            return 0;
-        if (!isalpha(c)) count_Alpha++ ;
-    }
-    return count_Alpha > 0 ;
-}
-
-
 
 // Set Mật khẩu
 void Account::setAccountPassword(string accountPassword)
@@ -89,102 +50,109 @@ bool Account::setAccountRegister(string accountName, string accountPassword)
 {
     char res;
     string verify;
-    do
-    {
         // check username
+        // cin.ignore();
         do
         {
-            do
-            {
-                // Nhập Account Name
-                tab();
-                cout << borderColor << resetColor
-                     << setw(20) << left << " Account Name:" << resetColor;
-                cin >> accountName;
-                if (accountName.length() < 8){
-                    tab();
-                    cout << "\033[31m" << " AccountName at least 8 characters" << "\033[0m" << "\n";
-                }
-            } while (accountName.length() < 8);
-            if (isExistUsername(accountName))
-            {
-                cout << "\n\n";
-                tab();
-                cout << "\033[31m" << "Username has exist !" << "\033[0m" << endl;
-                tab();
-                cout << "\033[33m" << "Do you want continue ! (Y/N)" << "\033[0m" << endl;
-                tab();
-                cout << "\033[33m" << "Enter choice: " << "\033[0m";
-                cin >> res;
-                res = toupper(res);
-                if (res != 'Y')
-                    return 0;
-                delay(2000);
-                system("cls");
-                tab();
-                cout << borderColor << "+" << string(48, '-') << "+" << resetColor << endl;
-                string title = "USER REGISTER";
-                int padding = (48 - title.length()) / 2; // Tính toán số khoảng trắng để căn giữa
-                tab();
-                cout << borderColor << "|" << string(padding, ' ') << titleColor
-                     << title << resetColor << string(48 - padding - title.length(), ' ')
-                     << borderColor << "|" << resetColor << endl;
-                // Vẽ viền ngăn cách tiêu đề và nội dung
-                tab();
-                cout << borderColor << "+" << string(48, '-') << "+" << resetColor << endl;
-            }
-            /* code */
-        } while (isExistUsername(accountName));
-        this->accountName = accountName;
+            tab() ;
+            cout << borderColor << resetColor
+            << setw(20) << left << " Username: " << resetColor;
+            cin.ignore();
+            
+            getline(cin,this->accountName);
+        } while (!validateUsername(this->accountName));
+        // this->accountName = accountName;
+        ///////
+
+        system("cls");
+        tab();
+        cout << borderColor << "+" << string(48, '-') << "+" << resetColor << endl;
+        string title = "USER REGISTER";
+        int padding = (48 - title.length()) / 2; // Tính toán số khoảng trắng để căn giữa
+        tab();
+        cout << borderColor << "|" << string(padding, ' ') << titleColor
+             << title << resetColor << string(48 - padding - title.length(), ' ')
+             << borderColor << "|" << resetColor << endl;
+        // Vẽ viền ngăn cách tiêu đề và nội dung
+        tab();
+        cout << borderColor << "+" << string(48, '-') << "+" << resetColor << endl;
+        tab() ;
+        cout << borderColor << resetColor
+        << setw(20) << left << " Username: " << resetColor;
+        cout<<this->accountName<<endl;
+        ////////
+
+
         // check match password
         do
         {
             // Nhập Password
+            accountPassword = "";
             tab() ;
             cout << borderColor << resetColor
                  << setw(20) << left << " Password: " << resetColor;
-            this->accountPassword = hidePassword(accountPassword);
-            if (!checkPassword(accountPassword)){
-                tab() ;
-                cout << "\033[31m" << " Password includes numbers and at least 1 character .!" << "\033[0m" << "\n";
-            }
-        } while (!checkPassword(accountPassword));
+            accountPassword = hidePassword(accountPassword);
+            cout<<accountPassword<<endl;
+        } while (!validatePassword(accountPassword));
+        this->accountPassword = accountPassword;
+        ///////
+        system("cls");
         tab();
-        cout << borderColor << resetColor
-             << setw(20) << left << " Confirm Password:" << resetColor;
-        hidePassword(verify);
+        cout << borderColor << "+" << string(48, '-') << "+" << resetColor << endl;
+        tab();
+        cout << borderColor << "|" << string(padding, ' ') << titleColor
+             << title << resetColor << string(48 - padding - title.length(), ' ')
+             << borderColor << "|" << resetColor << endl;
         // Vẽ viền ngăn cách tiêu đề và nội dung
         tab();
         cout << borderColor << "+" << string(48, '-') << "+" << resetColor << endl;
-        if (verify != accountPassword)
-        {
+        tab() ;
+        cout << borderColor << resetColor
+        << setw(20) << left << " Username: " << resetColor;
+        cout<<this->accountName<<endl;
+        tab() ;
+        cout << borderColor << resetColor
+        << setw(20) << left << " Password: " << resetColor;
+        for(int i=0;i<this->accountPassword.length();++i) cout<<"*";
+        cout<<endl;
+        ////////
+        do{
+            verify = "";
             tab();
-            cout << "\033[31m" << "Password does not mactch!" << "\033[0m" << endl;
-            tab();
-            cout << "\033[33m" << "Do you want continue ! (Y/N)" << "\033[0m" << endl;
-            cin >> res;
-            tab();
-            cout << "\033[33m" << "Enter choice: " << "\033[0m";
-            res = toupper(res);
-            if (res != 'Y')
-                return 0;
-            delay(2000);
-            system("cls");
-            cout << borderColor << "+" << string(48, '-') << "+" << resetColor << endl;
-            tab();
-            cout << borderColor << "+" << string(48, '-') << "+" << resetColor << endl;
-            string title = "USER REGISTER";
-            int padding = (48 - title.length()) / 2; // Tính toán số khoảng trắng để căn giữa
-            tab();
-            cout << borderColor << "|" << string(padding, ' ') << titleColor
-                 << title << resetColor << string(48 - padding - title.length(), ' ')
-                 << borderColor << "|" << resetColor << endl;
-            // Vẽ viền ngăn cách tiêu đề và nội dung
-            tab();
-            cout << borderColor << "+" << string(48, '-') << "+" << resetColor << endl;
-        }
-    } while (verify != accountPassword);
-    return 1;
+            cout << borderColor << resetColor
+             << setw(20) << left << " Confirm Password:" << resetColor;
+            hidePassword(verify);
+            if (verify != accountPassword){
+                tab();
+                cout << "\033[31m" << "Password does not mactch!" << "\033[0m" << endl;
+                tab();
+                cout << "\033[33m" << "Do you want show password ! (Y/N)" << "\033[0m";
+                cin >> res;
+                res = toupper(res);
+                if (res == 'Y'){
+                    system("cls");
+                    tab();
+                    cout << borderColor << "+" << string(48, '-') << "+" << resetColor << endl;
+                    tab();
+                    cout << borderColor << "|" << string(padding, ' ') << titleColor
+                         << title << resetColor << string(48 - padding - title.length(), ' ')
+                         << borderColor << "|" << resetColor << endl;
+                    // Vẽ viền ngăn cách tiêu đề và nội dung
+                    tab();
+                    cout << borderColor << "+" << string(48, '-') << "+" << resetColor << endl;
+                    tab() ;
+                    cout << borderColor << resetColor
+                    << setw(20) << left << " Username: " << resetColor;
+                    cout<<this->accountName<<endl;
+                    tab() ;
+                    cout << borderColor << resetColor
+                    << setw(20) << left << " Password: " << resetColor;
+                    cout<<this->accountPassword<<endl;
+                    
+                }
+            }
+        }while(verify != accountPassword);
+        return 1;
 }
 
 // Tạo tài khoản mới
@@ -220,15 +188,31 @@ void Account::Register()
 // Menu Login
 bool Account::Login()
 {
-    string choice;
+    int choice;
     string accountName, accountPassword;
     while (1)
     {
-        adminMode = 0;
-        showMenuLogin();
-        cin >> choice;
+            adminMode = 0;
+            int selection = 1;  // Start with the first option selected
+            char key;
+
+            do {
+                showMenuLogin(selection);
+
+                key = _getch();  // Get a single character input
+
+                if (key == 72) {  // Up arrow key code
+                    selection--;
+                    if (selection < 1) selection = 3;
+                } else if (key == 80) {  // Down arrow key code
+                    selection++;
+                    if (selection > 3) selection = 1;
+                }
+            } while (key != '\r');  // Continue until the Enter key is pressed
+
+        choice = selection;
         system("cls");
-        if (choice == "1")
+        if (choice == 1)
         {
             do
             {
@@ -280,7 +264,7 @@ bool Account::Login()
                 return 1;
             }
         }
-        else if (choice == "2")
+        else if (choice == 2)
         {
             adminMode = 1;
             do
@@ -322,6 +306,8 @@ bool Account::Login()
             if (this->accountName == this->adminName && this->accountPassword == this->adminPassword)
             {
                 tab();
+                cout << borderColor << "+" << string(48, '-') << "+" << resetColor << endl;
+                tab();
                 cout << "\033[32m" << "Login successful!" << "\033[0m" << endl;
                 tab();
                 cout << "\033[33m" << "Now you are a Admin ! Press Enter to continue !" << "\033[0m" << endl;
@@ -330,7 +316,7 @@ bool Account::Login()
                 return 1;
             }
         }
-        else if (choice == "3")
+        else if (choice == 3)
         {
             return 0;
         }
@@ -443,19 +429,32 @@ vector<pair<string, string>> Account::loadUserInfo(const string &filename)
 
 void Account::accountProcess()
 {
-    string choice;
+    int choice;
     while (1)
     {
         Account p;
-        showMenu1();
-        cin >> choice;
+        int selection = 1;  // Start with the first option selected
+        char key;
+        do {
+            showMenu1(selection);
+            key = _getch();  // Get a single character input
+            if (key == 72) {  // Up arrow key code
+                selection--;
+                if (selection < 1) selection = 3;
+            } else if (key == 80) {  // Down arrow key code
+                selection++;
+                if (selection > 3) selection = 1;
+            }
+        } while (key != '\r');  // Continue until the Enter key is pressed
+        choice = selection;
+        
         system("cls");
-        if (choice == "1")
+        if (choice == 1)
         {
             p.Register();
             delay(2000);
         }
-        else if (choice == "2")
+        else if (choice == 2)
         {
             if (p.Login())
             {
@@ -473,7 +472,7 @@ void Account::accountProcess()
                 }
             }
         }
-        else if (choice == "3")
+        else if (choice == 3)
         {
             cout << "\033[32m" << "AMSR Programming thank you very much" << "\033[0m" << endl;
             return;

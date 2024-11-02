@@ -1,4 +1,0 @@
-phu;Tran Van Phu;Mang Yang;0343495396
-phu;Phan Quoc Thang;Binh Dinh;0343495396
-phu;Nguyen Cong Vu;Quang Nam;0343495396
-phu;Tran dinh Vo;Binh Dinh;0343495396

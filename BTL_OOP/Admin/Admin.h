@@ -1,16 +1,16 @@
 #pragma once
-#include "../Header.h"
+#include "../extra_function/Header.h"
 #include "../Account_mangement/Account.h"
 #include "../drugStore/drugHeader.h"
 #include "../Design/Design.h"
-#include "../Function.cpp"
+#include "../extra_function/Function.cpp"
 
 
 class Admin : public Account
 {
     public:
         //admin
-        void adminMenu();
+        void adminMenu(int selection);
         void adminProcess();
         //
 

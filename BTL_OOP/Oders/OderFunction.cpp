@@ -9,7 +9,7 @@ void Orders::writeOrderToFile(const string &fileName) {
             return;
         }
         outFile << getId() << ";" << getBuyerName() << ";" << getName() << ";" << getExpirationDate() << ";" << getPrice() << ";"
-                << getQuantityInStock() << ";" << total << "\n";
+                << getQuantityInStock() << ";" <<getDiscount()<<";"<< total << "\n";
         outFile.close();
         
 }
@@ -36,7 +36,7 @@ vector<Orders> Orders::readOrdersFromFile(const string &fileName) {
             tokens.push_back(item);
         }
 
-        if (tokens.size() == 7) {
+        if (tokens.size() == 8) {
             // Tạo đối tượng Drug từ các giá trị đã đọc
             Orders order;
             order.setId(stoi(tokens[0])),
@@ -45,7 +45,8 @@ vector<Orders> Orders::readOrdersFromFile(const string &fileName) {
             order.setExpirationDate(tokens[3]),
             order.setPrice(stoi(tokens[4])),
             order.setQuantityInStock(stoi(tokens[5]));
-            order.total=stod(tokens[6]);
+            order.setDiscount(stoi(tokens[6]));
+            order.total=stod(tokens[7]);
             odersList.push_back(order);
         }
     }
@@ -72,7 +73,7 @@ void Orders::printOrdersList(Orders order) {
 
     // Đường kẻ ngang kết thúc
     for(int i=1;i<=164;++i){
-        if(i==1 || i==5 || i==31 || i==52) cout<<'+';
+        if(i==1 || i==5 || i==31 || i==52 || i == 103 || i==122 || i==143 || i==164) cout<<'+';
         else{
             cout<<'-';
         }

@@ -192,16 +192,19 @@ void Drug::deleteDrugById( int idToDelete,const string &fileName) {
 void Drug::printDrugList(Drug drug) {
     
     // In các loại thuốc trong bảng với độ rộng cột được định nghĩa trước
-        std::cout << "|" << centerText(to_string(drug.id), 3)   // ID
+        cout << "|" << centerText(to_string(drug.id), 3)   // ID
                   << "|" << centerText(drug.name, 25)  // Tên thuốc
                   << "|" << centerText(drug.type, 20)   // Loại
                   << "|" << centerText(drug.ingredients, 40)  // Thành phần
                   << "|" << centerText(drug.expirationDate, 20)  // HSD
                   << "|" << centerText(to_string(drug.price), 18)  // Giá
                   << "|" << centerText(to_string( drug.quantityInStock), 20)  // Số lượng
-                  << "|\n";
+                  << "|\t";
     
-
+        if(drug.getDiscount() > 0){
+            cout<<"\033[38;5;214m" <<"<==   SALE: "<<drug.getDiscount()<<"%"<<"\033[0m"; //Sale
+        }
+        cout<<endl;
     // Đường kẻ ngang kết thúc
     phu1();
 

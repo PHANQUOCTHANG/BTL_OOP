@@ -1,4 +1,5 @@
-#include "Header.h"
+#pragma once
+#include "extra_function/Header.h"
 
 #include "Account_mangement/Account.h"
 #include "Account_mangement/accountName.cpp"
@@ -25,4 +26,4 @@
 #include "User/userDiscount.cpp"
 #include "User/userInfomation.cpp"
 
-#include "Function.cpp"
+#include "extra_function/Function.cpp"

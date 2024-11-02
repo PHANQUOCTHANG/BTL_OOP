@@ -147,7 +147,7 @@ void Title1()
               << "|\n";
     for (int i = 1; i <= 164; ++i)
     {
-        if (i == 1 || i == 5 || i == 31 || i == 52)
+        if (i == 1 || i == 5 || i == 31 || i == 52  || i == 103 || i == 122 || i == 143 || i == 164)
             cout << '+';
         else
         {
@@ -162,38 +162,50 @@ void tab()
     for (int i = 1; i <= 7; i++)
         cout << "\t";
 }
-
-void showMenu1()
+void showMenu1(int selection)
 {
+    system("cls");
     tab();
-    cout << "+-----------------" << "\033[35m" << "MENU" << "\033[0m" << "-----------------+\n";
+    cout << "+-------------------" << "\033[35m" << "MENU" << "\033[0m" << "------------------+\n";
+    // Mục 1: User
     tab();
-    cout << "|    1. Register          2. Login     |\n";
+    cout << "|" << (selection == 1 ? "\033[38;5;214m ->            1. Register               \033[0m|\n" 
+                                    : "                1. Register              |\n");
+    // Mục 2: Admin
     tab();
-    cout << "|                3. Exit               |\n";
+    cout << "|" << (selection == 2 ? "\033[38;5;214m ->            2. Login                  \033[0m|\n" 
+                                    : "                2. Login                 |\n");
+    // Mục 3: Back
     tab();
-    cout << "+--------------------------------------+\n";
+    cout << "|" << (selection == 3 ? "\033[38;5;214m ->            3. Exit                   \033[0m|\n" 
+                                    : "                3. Exit                  |\n");
     tab();
-    cout << "Enter your choice: ";
+    cout << "+-----------------------------------------+\n";
 }
-
-void showMenuLogin()
+void showMenuLogin(int selection)
 {
+    system("cls");
     tab();
     cout << "+-----------------" << "\033[35m" << "LOGIN" << "\033[0m" << "-----------------+\n";
+    // Mục 1: User
     tab();
-    cout << "|    1. User               2. Admin     |\n";
+    cout << "|" << (selection == 1 ? "\033[38;5;214m ->            1. User                 \033[0m|\n" 
+                                    : "                1. User                |\n");
+    // Mục 2: Admin
     tab();
-    cout << "|          3. Back to Menu              |\n";
+    cout << "|" << (selection == 2 ? "\033[38;5;214m ->            2. Admin                \033[0m|\n" 
+                                    : "                2. Admin               |\n");
+    // Mục 3: Back
+    tab();
+    cout << "|" << (selection == 3 ? "\033[38;5;214m ->            3. Back                 \033[0m|\n" 
+                                    : "                3. Back                |\n");
     tab();
     cout << "+---------------------------------------+\n";
-    tab();
-    cout << "Enter your choice: ";
 }
 
 void drugManaMenuUpdateMenu()
 {
-    cout << "+-----------------" << "\033[35m" << "MENU" << "\033[0m" << "------------------+\n";
+    cout << "+-----------------" << "\033[35m" << "MENU" << "\033[0m" << "-------------------+\n";
     cout << "|    1.Name                              |\n";
     cout << "|    2.Type                              |\n";
     cout << "|    3.Ingredients                       |\n";
@@ -346,21 +358,23 @@ void printPharmacyLogo()
     // tab();
     // cout << "       *                       *" << endl;
     tab();
-    cout << "       *         *****         *" << endl;
+    cout << "       *         \033[31m*****\033[32m         *" << endl;
     tab();
-    cout << "       *         *   *         *" << endl;
+    cout << "       *         \033[31m*   *\033[32m         *" << endl;
     tab();
-    cout << "       *         *\033[37m   \033[32m*         *" << endl;  // Chữ thập trắng ở giữa
+    cout << "       *         \033[31m*   *\033[32m         *" << endl;  // Chữ thập trắng ở giữa
     tab();
-    cout << "       *    *****\033[37m     \033[32m*****    *" << endl;
+    cout << "       *    \033[31m*****     *****\033[32m    *" << endl;
     tab();
-    cout << "       *    *****\033[37m     \033[32m*****    *" << endl;
+    cout << "       *    \033[31m*             *\033[32m    *" << endl;
     tab();
-    cout << "       *         *\033[37m   \033[32m*         *" << endl;
+    cout << "       *    \033[31m*****     *****\033[32m    *" << endl;
     tab();
-    cout << "       *         *   *         *" << endl;
+    cout << "       *         \033[31m*   *\033[32m         *" << endl;
     tab();
-    cout << "       *         *****         *" << endl;
+    cout << "       *         \033[31m*   *\033[32m         *" << endl;
+    tab();
+    cout << "       *         \033[31m*****\033[32m         *" << endl;
     // tab();
     // cout << "       *                       *" << endl;
 
@@ -376,4 +390,8 @@ void printPharmacyLogo()
     // Reset lại màu sắc về mặc định
     cout << "\033[0m";  // Reset màu về mặc định
     cout << "\n\n";
+    tab();
+    cout<<"\tWELLCOME TO OS PHARMACY"<<endl;
+    tab();
+    cout<<"\tPress "<<"\033[32m"<<"Enter"<<"\033[0m"<<" to continue"<<endl;
 }

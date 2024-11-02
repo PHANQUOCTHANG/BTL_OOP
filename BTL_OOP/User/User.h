@@ -1,10 +1,10 @@
 #pragma once
-#include "../Header.h"
+#include "../extra_function/Header.h"
 #include "../Account_mangement/Account.h"
 #include "../Oders/Orders.h"
 #include "../drugStore/drugHeader.h"
 #include "../Design/Interaction.cpp"
-#include "../Function.cpp"
+#include "../extra_function/Function.cpp"
 
 
 //Đối tượng thông tin
@@ -57,7 +57,7 @@ class User : public Info, public Account
         }
 
     //User Main
-        void userMenu();
+        void userMenu(int selection);
         void userProcess();
     //Drug
 

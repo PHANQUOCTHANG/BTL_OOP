@@ -47,13 +47,12 @@ void User::userDiscountProcess(){
                     break;
                 }
                 if(id> temp.size() || id <0){
-                cout<<"\033[31m"<<"Id not valid !"<<"\033[0m"<<endl;
-                delay(1000); 
-                system("cls");
-                break;
+                    cout<<"\033[31m"<<"Id not valid !"<<"\033[0m"<<endl;
+                    delay(1000); 
+                    system("cls");
+                    break;
                 }
                 payment(id,temp);
-                
                 break;
             }
             case 2:
@@ -66,7 +65,7 @@ void User::userDiscountProcess(){
                 break;
             }
         }
-        delay(1000);
+       
 
     }
 

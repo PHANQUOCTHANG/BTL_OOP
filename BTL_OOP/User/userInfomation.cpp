@@ -3,6 +3,7 @@
 
 //Menu 1
 void User::userInfoMenu1(){
+
             cout<<"+-------------------"<<"\033[35m"<<"User"<<"\033[0m"<<"---------------------+\n";
   cout << "|    1. User information                     |\n";
   cout << "|    2. Cart                                 |\n";
@@ -79,20 +80,60 @@ void User::cartProcess(){
         cout<<"\033[33m"<<"Do you want buy all ? (Y/N)  "<<"\033[0m"; cin>>rep;
         rep=toupper(rep);
         if(rep=='Y'){
-            int totalMoney=total(cart);
-            cout<<"\033[33m"  <<"Total money is "<<"\033[0m"<<totalMoney<<endl;
-            paymentMethod(choice);
-            cout<<"\033[32m"  <<"Successful order confirmation"<<"\033[0m"  <<endl;
-            string fileName="Transactions/usesHistory/";
-            fileName+=this->getAccountName()+".txt";
-            for(auto x:cart){
-              Orders demo = x;
-              demo.setId(Drug::countDrugsInFile(fileName));
-              demo.writeOrderToFile(fileName);
-              demo.writeOrderToFile("Transactions/HistorySales.txt");
-
-
+          string paymentMethodRes = paymentMethod(choice);
+          system("cls") ;
+          string fileName1 = "Account_mangement/Account/userInfor/";
+          fileName1 += this->getAccountName() + "infor.txt";
+          vector<User> token = findUserByUsername(fileName1, this->getAccountName());
+          int id_infor;
+          do
+          {
+            for (int i = 0; i < token.size(); ++i)
+            {
+               cout << "\033[33m" << "Information " << i + 1 << ": " << "\033[0m" << endl;
+              // In thông tin khách hàng với định dạng thẳng hàng
+              cout << left << setw(12) << "\033[36mFull Name:\033[32m" << setw(30) << token[i].getName();  // Cột "Full Name"
+              cout << left << setw(10) << "\033[36mAddress:\033[32m" << setw(30) << token[i].getAddress(); // Cột "Address"
+              cout << left << setw(10) << "\033[36mHotline:\033[32m" << setw(15) << token[i].getPhoneNumber() << "\033[0m"; // Cột "Hotline"
+              cout << endl;
+              cout << endl;
             }
+            cout << "Choose your Address: ";
+            cin >> id_infor;
+            if (!(id_infor > 0 && id_infor <= token.size()))
+            {
+              cout << "\033[31m" << "Address not valid !"<<"\033[0m"<<endl;
+              delay(1000);
+              system("cls");
+            }
+          } while (!(id_infor > 0 && id_infor <= token.size()));
+          system("cls") ;
+          string fileName2 = "Transactions/usesHistory/";
+          fileName2 += this->getAccountName() + ".txt";
+          bill(token[id_infor - 1], cart, paymentMethodRes);
+          cout << "\033[33m";
+          cout << "+-------------------------+                                  +----------------------+" << endl;
+          cout << "|         1. Back         |                                  |       2. Order       |" << "\n";
+          cout << "+-------------------------+                                  +----------------------+" << endl;
+          cout << "\033[0m";
+          cout << "Enter to choice : ";
+          cin >> choice;
+          if (choice == 1)
+            system("cls");
+          else{
+            for(auto x:cart){
+              x.setTotal(x.getTotal() - (1.0 * (x.getPrice() * x.getDiscount() / 100) *x.getQuantityInStock()));
+              x.setId(Drug::countDrugsInFile(fileName2));
+              x.writeOrderToFile(fileName2);
+              x.setId(Drug::countDrugsInFile("Transactions/HistorySales.txt"));
+              x.writeOrderToFile("Transactions/HistorySales.txt");
+              system("cls");
+            }
+             cout << "\033[32m" << "Successful order confirmation.!" << "\033[0m" << endl;
+            delay(2000);
+            system("cls") ;
+          }
+
         }
         break;
       }
@@ -112,6 +153,8 @@ void User::cartProcess(){
            cout<<"\033[31m"<<"Cart is empty ! Please add something to cart "<<"\033[0m"<<endl;
            return;
         }
+          system("cls");
+        
         break;
       }
       case 3:
@@ -155,19 +198,60 @@ void User::cartProcess(){
           cout<<"\033[33m"<<"Do you want buy them ? (Y/N)  "<<"\033[0m"; cin>>rep;
           rep=toupper(rep);
           if(rep=='Y'){
-              int totalMoney=total(temp);
-              cout<<"\033[33m"  <<"Total money is "<<"\033[0m"<<totalMoney<<endl;
-              paymentMethod(choice);
-              cout<<"\033[32m"  <<"Successful order confirmation"<<"\033[0m"  <<endl;
-              string fileName="Transactions/usesHistory/";
-              fileName+=this->getAccountName()+".txt";
-              for(auto x:temp){
-                Orders demo = x;
-                demo.setId(Drug::countDrugsInFile(fileName));
-                demo.writeOrderToFile(fileName);
-                demo.writeOrderToFile("Transactions/HistorySales.txt");
-
-              }
+              string paymentMethodRes = paymentMethod(choice);
+              system("cls") ;
+              string fileName1 = "Account_mangement/Account/userInfor/";
+              fileName1 += this->getAccountName() + "infor.txt";
+              vector<User> token = findUserByUsername(fileName1, this->getAccountName());
+              int id_infor;
+              do
+              {
+                for (int i = 0; i < token.size(); ++i)
+                {
+                   cout << "\033[33m" << "Information " << i + 1 << ": " << "\033[0m" << endl;
+                  // In thông tin khách hàng với định dạng thẳng hàng
+                  cout << left << setw(12) << "\033[36mFull Name:\033[32m" << setw(30) << token[i].getName();  // Cột "Full Name"
+                  cout << left << setw(10) << "\033[36mAddress:\033[32m" << setw(30) << token[i].getAddress(); // Cột "Address"
+                  cout << left << setw(10) << "\033[36mHotline:\033[32m" << setw(15) << token[i].getPhoneNumber() << "\033[0m"; // Cột "Hotline"
+                  cout << endl;
+                  cout << endl;
+                }
+                cout << "Choose your Address: ";
+                cin >> id_infor;
+                if (!(id_infor > 0 && id_infor <= token.size()))
+                {
+                  cout << "\033[31m" << "Address not valid !"<<"\033[0m"<<endl;
+                  delay(1000);
+                  system("cls");
+                }
+              } while (!(id_infor > 0 && id_infor <= token.size()));
+              system("cls") ;
+              string fileName2 = "Transactions/usesHistory/";
+              fileName2 += this->getAccountName() + ".txt";
+              bill(token[id_infor - 1], temp, paymentMethodRes);
+              cout << "\033[33m";
+              cout << "+-------------------------+                                  +----------------------+" << endl;
+              cout << "|         1. Back         |                                  |       2. Order       |" << "\n";
+              cout << "+-------------------------+                                  +----------------------+" << endl;
+              cout << "\033[0m";
+              cout << "Enter to choice : ";
+              cin >> choice;
+              if (choice == 1)
+                system("cls");
+              else{
+                for(auto x:temp){
+                  x.setTotal(x.getTotal() - (1.0 * (x.getPrice() * x.getDiscount() / 100) *x.getQuantityInStock()));
+                  x.setId(Drug::countDrugsInFile(fileName2));
+                  x.writeOrderToFile(fileName2);
+                  x.setId(Drug::countDrugsInFile("Transactions/HistorySales.txt"));
+                  x.writeOrderToFile("Transactions/HistorySales.txt");
+                  system("cls");
+                }
+                 cout << "\033[32m" << "Successful order confirmation.!" << "\033[0m" << endl;
+                delay(2000);
+                system("cls") ;
+              }                                                                                          
+            
           }
           system("cls");
         }
@@ -235,7 +319,6 @@ void User::cartProcess(){
         break;
       }
     }
-    delay(1000);
 
   }
 }
@@ -293,8 +376,7 @@ void User::update(){
       cout<<"\033[36m"  <<"Enter your full name: "<<"\033[0m";
       cin.ignore() ;
       getline(cin,fullName) ;
-      if (fullName.length() < 0 || fullName.length() > 30) cout << "\033[31m"  << "Name Invalid"  << "\033[0m" << "\n"  ;
-    }while (fullName.length() < 0 || fullName.length() > 30) ;
+    }while (!validateName(fullName));
     this->setName(fullName);
     do {
       cout<<"\033[36m"  <<"Enter your address: "<<"\033[0m"; getline(cin,address) ;
@@ -303,13 +385,15 @@ void User::update(){
     this->setAddress(address);
     do {
       cout<<"\033[36m"  <<"Enter your phone number: "<<"\033[0m";  getline(cin,phoneNumber) ;
-      if (phoneNumber.length() != 10) cout << "\033[31m"  << "Phone Invalid"  << "\033[0m" << "\n"  ;
-    }while (phoneNumber.length() != 10) ;
+      if (!isValidVietnamesePhoneNumber(phoneNumber)) cout << "\033[31m"  << "Phone number Invalid"  << "\033[0m" << "\n"  ;
+    
+    }while (!isValidVietnamesePhoneNumber(phoneNumber)) ;
     this->setPhoneNumber(phoneNumber);
     string fileName3="Account_mangement/Account/userInfor/";
     fileName3+=this->getAccountName()+"infor.txt";
     this->writeInfor(fileName3);
     this->setCheck(1);
+    delay(1000);
 }
 
 void User::PrivateInfor(){
@@ -328,15 +412,19 @@ void User::PrivateInfor(){
           system("cls");
           if(temp.size()){
             for(int i=0;i<temp.size();++i){
-              cout<<"\033[33m"<<"Information "<<i+1<<": ";
-              cout<<"\033[36m"<<"Full Name:"<<"\033[32m" <<temp[i].getName()<<"\t";
-              cout<<"\033[36m"<<"Address:"<<"\033[32m" <<temp[i].getAddress()<<"\t";
-              cout<<"\033[36m"<<"Hotline:"<<"\033[32m"<<temp[i].getPhoneNumber()<<"\033[0m"<<endl;
-              cout<<endl;
+              
+                  std::cout << "\033[33m" << "Information " << i + 1 << ": ";
+
+                  std::cout << std::setw(15) << "\033[36mFull Name:\033[32m" << std::setw(20) << temp[i].getName() << "\t"
+                            << std::setw(10) << "\033[36mAddress:\033[32m" << std::setw(25) << temp[i].getAddress() << "\t"
+                            << std::setw(10) << "\033[36mHotline:\033[32m" << std::setw(15) << temp[i].getPhoneNumber() 
+                            << "\033[0m" << std::endl;
+
+                  std::cout << std::endl;
             }
           }
           else{
-            cout<<"\033[31m"<<"List is empty ! Please add your information! "<<"\033[0m" ;
+            cout<<"\033[31m"<<"List is empty ! Please add your information! "<<"\033[0m"<<endl ;
           }
         break;
       }
@@ -416,7 +504,6 @@ void User::userInfoProcess(){
         break;
       }
     }
-    delay(1000);
 
   }
 }
@@ -447,20 +534,23 @@ void User::bill(User temp,vector<Orders> orders,string paymentMethod){
     
     // Tiêu đề hoá đơn
     cout << left << setw(5) << "STT" 
-         << left << setw(35) << "Drug Name" 
-         << right << setw(10) << "Quantity" 
-         << right << setw(12) << "Price" 
-         << right << setw(15) << "Into Money" << endl;
+         << left << setw(30) << "Drug Name" 
+         << right << setw(8) << "Quantity" 
+          << setw(7) << "Sale" 
+         << right << setw(15) << "Price" 
+         << right << setw(17) << "Into Money" << endl;
     
     Line('-', 85);
 
     // Xuất danh sách đơn hàng
     for (size_t i = 0; i < orders.size(); ++i) {
+
         cout << left << setw(5) << (i + 1) 
-             << left << setw(35) << orders[i].getName() // Tên thuốc
-             << right << setw(10) << orders[i].getQuantityInStock() // Số lượng
+             << left << setw(30) << orders[i].getName() // Tên thuốc
+             << left << setw(8) << centerText(to_string( orders[i].getQuantityInStock()),8)  // Số lượng
+             << left << setw(7) << centerText(to_string( orders[i].getDiscount())+"%",10) // Giảm giá
              << right << setw(12) << fixed << setprecision(2) << orders[i].getPrice() // Giá
-             << right << setw(15) << fixed << setprecision(2) << orders[i].getTotal() << endl; // Tổng tiền
+             << right << setw(15) << fixed << setprecision(2) << orders[i].getTotal()-(1.0 * (orders[i].getPrice() * orders[i].getDiscount() / 100) * orders[i].getQuantityInStock()) << endl; // Tổng tiền
         total += orders[i].getTotal();
         Sale += (1.0 * (orders[i].getPrice() * orders[i].getDiscount() / 100) * orders[i].getQuantityInStock());
     }

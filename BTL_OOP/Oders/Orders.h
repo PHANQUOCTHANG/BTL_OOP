@@ -1,5 +1,5 @@
 #pragma once
-#include "../Header.h"
+#include "../extra_function/Header.h"
 #include "../drugStore/drugHeader.h"
 #include "../Design/Interaction.cpp"
 
@@ -9,6 +9,18 @@ class Orders:public Drug{
         string buyerName; //Tên người mua
         double total; //Tổng tiền
     public:
+        //constructer
+        Orders(){};
+        Orders(string Buyer_name,string oder_name,int price,int quanlity,string real_time,int disount,double total){
+            this->setBuyerName(Buyer_name);
+            this->setName(oder_name);
+            this->setPrice(price);
+            this->setQuantityInStock(quanlity);
+            this->setExpirationDate(real_time);
+            this->setDiscount(disount);
+            this->setTotal(total);
+            
+        }
         //getter và setter
 
         //Tên người mua

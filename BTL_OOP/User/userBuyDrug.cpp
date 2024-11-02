@@ -88,10 +88,10 @@ void User::payment(int id, vector<Drug> temp)
       } while (quanlity > temp[id - 1].getQuantityInStock() || quanlity <= 0);
       string paymentMethodRes = paymentMethod(choice);
       system("cls") ;
-      string filename = "Account_mangement/Account/userInfor/";
-      filename += this->getAccountName() + "infor.txt";
-      vector<User> token = findUserByUsername(filename, this->getAccountName());
-      int id;
+      fileName = "Account_mangement/Account/userInfor/";
+      fileName += this->getAccountName() + "infor.txt";
+      vector<User> token = findUserByUsername(fileName, this->getAccountName());
+      int id_infor;
       do
       {
         for (int i = 0; i < token.size(); ++i)
@@ -104,29 +104,23 @@ void User::payment(int id, vector<Drug> temp)
           cout << endl;
           cout << endl;
         }
-        cout << "Choose your Addres: ";
-        cin >> id;
-        if (!(id > 0 && id <= token.size()))
+        cout << "Choose your Address: ";
+        cin >> id_infor;
+        if (!(id_infor > 0 && id_infor <= token.size()))
         {
-          cout << "Address not valid !";
+          cout << "\033[31m" << "Address not valid !"<<"\033[0m"<<endl;
+          delay(1000);
           system("cls");
         }
-      } while (!(id > 0 && id < 5));
+      } while (!(id_infor > 0 && id_infor <= token.size()));
       system("cls") ;
-      string fileName = "Transactions/usesHistory/";
+      fileName = "Transactions/usesHistory/";
       fileName += this->getAccountName() + ".txt";
-      Orders demo;
       totalMoney = quanlity * temp[id - 1].getPrice();
-      demo.inheritDrug(temp[id - 1]);
-      demo.setId(Drug::countDrugsInFile(fileName));
-      demo.setTotal(totalMoney);
-      demo.setDiscount(temp[id - 1].getDiscount());
-      demo.setQuantityInStock(quanlity);
-      demo.setExpirationDate(getCurrentTime());
-      demo.setBuyerName(this->getAccountName());
+      Orders demo(this->getAccountName(),temp[id - 1].getName(),temp[id - 1].getPrice(),quanlity,getCurrentTime(),temp[id - 1].getDiscount(),totalMoney);
       vector<Orders> t;
       t.push_back(demo);
-      bill(token[id - 1], t, paymentMethodRes);
+      bill(token[id_infor - 1], t, paymentMethodRes);
       cout << "\033[33m";
       cout << "+-------------------------+                                  +----------------------+" << endl;
       cout << "|         1. Back         |                                  |       2. Order       |" << "\n";
@@ -140,11 +134,14 @@ void User::payment(int id, vector<Drug> temp)
       else
       {
         Drug::DecreseQuan(id, temp[id - 1], "drugStore/wareHouse.txt", quanlity);
+        demo.setTotal(demo.getTotal() - (1.0 * (demo.getPrice() * demo.getDiscount() / 100) *demo.getQuantityInStock()));
+        demo.setId(Drug::countDrugsInFile(fileName));
         demo.writeOrderToFile(fileName);
+        demo.setId(Drug::countDrugsInFile("Transactions/HistorySales.txt"));
         demo.writeOrderToFile("Transactions/HistorySales.txt");
         system("cls");
         cout << "\033[32m" << "Successful order confirmation.!" << "\033[0m" << endl;
-        delay(4000);
+        delay(2000);
         system("cls") ;
       }
       return;
@@ -160,20 +157,29 @@ void User::payment(int id, vector<Drug> temp)
           cout << "\033[31m" << "Excess quantity!" << "\033[0m" << endl;
         }
       } while (quanlity > temp[id - 1].getQuantityInStock());
-      totalMoney = (temp[id - 1].getPrice() - 1.0 * (temp[id - 1].getPrice() * (1.0 * temp[id - 1].getDiscount() / 100))) * quanlity;
-      cout << "\033[33m" << "Total money is: " << "\033[0m" << totalMoney << endl;
-      cout << "\033[32m" << "Successful add cart" << "\033[0m" << endl;
-      Drug::DecreseQuan(id, temp[id - 1], "drugStore/wareHouse.txt", quanlity);
-      string fileName = "Transactions/usesHistory/";
-      fileName += this->getAccountName() + "cart.txt";
-      Orders demo;
-      demo.inheritDrug(temp[id - 1]);
-      demo.setId(Drug::countDrugsInFile(fileName));
-      demo.setTotal(totalMoney);
-      demo.setQuantityInStock(quanlity);
-      demo.setExpirationDate(getCurrentTime());
-      demo.setBuyerName(this->getAccountName());
-      demo.writeOrderToFile(fileName);
+
+
+      totalMoney = (temp[id - 1].getPrice() ) * quanlity;
+      cout << "\033[33m";
+      cout << "+-------------------------+                                  +----------------------+" << endl;
+      cout << "|         1. Back         |                                  |     2. Add cart      |" << "\n";
+      cout << "+-------------------------+                                  +----------------------+" << endl;
+      cout << "\033[0m";
+      cout << "Enter to choice : ";
+      cin >> choice;
+      if (choice == 1)
+        system("cls");
+      else{
+        fileName = "Transactions/usesHistory/";
+        fileName += this->getAccountName() + "cart.txt";
+        Drug::DecreseQuan(id, temp[id - 1], "drugStore/wareHouse.txt", quanlity);
+        Orders demo(this->getAccountName(),temp[id - 1].getName(),temp[id - 1].getPrice(),quanlity,getCurrentTime(),temp[id - 1].getDiscount(),totalMoney);
+        demo.setId(Drug::countDrugsInFile(fileName));
+        demo.writeOrderToFile(fileName);
+        cout << "\033[32m" << "Successful add cart" << "\033[0m" << endl; 
+        delay(2000);
+        system("cls");
+      }
       return;
     }
     case 3:
@@ -183,6 +189,7 @@ void User::payment(int id, vector<Drug> temp)
     }
     default:
       cout << "\033[31m" << "Invalid selection" << "\033[0m" << endl;
+
       break;
     }
   }
@@ -193,27 +200,31 @@ void searchMedicines(const vector<Drug> &medicines, const string &query)
 {
   cout << "\033[33m" << "Search results for \"" << query << "\":" << "\033[0m" << endl;
   bool found = false;
+  title();
   for (const auto &med : medicines)
   {
     if (med.getName().find(query) != string::npos)
     { // Check if query matches medicine name
-      showListDrug2(med);
+      Drug::printDrugList(med);
       found = true;
     }
   }
-  if (!found)
+  if (!found){
+    system("cls");
     cout << "\033[31m" << "No medicines found.\n"
          << "\033[0m";
+  }
 }
 
 // Tìm kiếm thuốc 2
 void searchDrug(string name, vector<Drug> temp)
 {
+  title();
   for (auto x : temp)
   {
     if (x.getName().find(name) != string::npos)
     {
-      showListDrug2(x);
+      Drug::printDrugList(x);
     }
   }
 }
@@ -243,80 +254,98 @@ void User::userBuyDrugProcess()
 
     switch (choice)
     {
-    case 1:
-    {
-      system("cls");
-      phu3();
-      for (auto x : temp)
+      case 1:
       {
-        showListDrug2(x);
-      }
-      cout << "\033[36m" << "Enter Drug's id you want: " << "\033[0m";
-      cin >> id;
-      if (id > temp.size() || id < 0)
-      {
-        cout << "\033[31m" << "Id not valid !" << "\033[0m" << endl;
-        delay(1000);
         system("cls");
+        title();
+        for (auto x : temp)
+        {
+          Drug::printDrugList(x);
+        }
+        cout<<"\033[36m"<<"Enter Drug's id you want or (-1) to Back: "<<"\033[0m";
+        cin >> id;
+        if(id == -1){
+          system("cls");
+          break;
+        }
+        else if (id > temp.size() || id < 0)
+        {
+          cout << "\033[31m" << "Id not valid !" << "\033[0m" << endl;
+          delay(1000);
+          system("cls");
+          break;
+        }
+        payment(id, temp);
+
         break;
       }
-      payment(id, temp);
-
-      break;
-    }
-    case 2:
-    {
-      system("cls");
-      string query = "";
-      char ch;
-      while (ch != '\r')
+      case 2:
       {
-        cout << "\033[36m" << "\nPlease type drug's name to search: " << "\033[0m";
-        cout << query;
-        ch = _getch();
-        if (ch != '\r')
           system("cls");
-        if (ch == '\r')
+          string query = "";
+          char ch = '\0'; // Initialize ch to avoid undefined behavior
+          while (true)
+          {
+              cout << "\033[36m" << "\nPlease type drug's name to search: " << "\033[0m";
+              cout << query;
+              
+              ch = _getch();
+      
+              if (ch == '\r') // Enter key
+                  break;
+              else if (ch == '\b') // Backspace
+              {
+                  if (!query.empty())
+                      query.pop_back();
+              }
+              else if (ch != '\n') // Add character to query if not newline
+              {
+                  query += ch;
+              }
+      
+              // Clear screen only if necessary
+              system("cls");
+      
+              // Search and display results if the query is not empty
+              if (!query.empty())
+              {
+                  searchMedicines(temp, query);
+              }
+          }
+      
+          system("cls");
+          searchDrug(query, temp);
+      
+          cout << "\033[36m" << "Enter Drug's id you want or (-1) to Back: " << "\033[0m";
+          cin >> id;
+      
+          if (id == -1)
+          {
+              system("cls");
+              break;
+          }
+          if (id > temp.size() || id < 0)
+          {
+              cout << "\033[31m" << "Id not valid!" << "\033[0m" << endl;
+              delay(1000);
+              system("cls");
+              continue;
+          }
+      
+          payment(id, temp);
           break;
-        if (ch == '\b')
-        { // Handle Backspace
-          if (!query.empty())
-            query.pop_back();
-        }
-        else if (ch != '\n')
-        { // Add character to query if not newline
-          query += ch;
-        }
+      }
 
-        if (!query.empty())
-        {
-          searchMedicines(temp, query); // Search and display results
-        }
-      }
-      system("cls");
-      searchDrug(query, temp);
-      cout << "\033[36m" << "Enter Drug's id you want: " << "\033[0m";
-      cin >> id;
-      if (id > temp.size() || id < 0)
+      case 3:
       {
-        cout << "\033[31m" << "Id not valid !" << "\033[0m" << endl;
-        delay(1000);
         system("cls");
-        continue;
+        return;
       }
-      payment(id, temp);
-      break;
-    }
-    case 3:
-    {
-      system("cls");
-      return;
-    }
-    default:
-    {
-      cout << "\033[31m" << "Invalid selection" << "\033[0m" << endl;
-      break;
-    }
+      default:
+      {
+        cout << "\033[31m" << "Invalid selection" << "\033[0m" << endl;
+        break;
+      }
     }
   }
 }

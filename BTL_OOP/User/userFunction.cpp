@@ -2,16 +2,28 @@
 #include "User.h"
 
 //Show Menu
-void User::userMenu(){
-            cout<<"+-------------------"<<"\033[35m"<<"User"<<"\033[0m"<<"---------------------+\n";
-  cout << "|    1. Buy Drug                             |\n";
-  cout << "|    2. User Profile Management              |\n";
-  cout << "|    3. Discounts                            |\n";
-  cout << "|    4. Log out                              |\n";
-    cout<<"+--------------------------------------------+\n";
-    cout<<"Enter your choice: ";
-
-
+void User::userMenu(int selection)
+{
+    system("cls");
+    tab();
+    cout << "+-----------------" << "\033[35m" << "User" << "\033[0m" << "-----------------+\n";
+    // Mục 1: User
+    tab();
+    cout << "|" << (selection == 1 ? "\033[38;5;214m ->         1. Buy Drug               \033[0m|\n" 
+                                    : "             1. Buy Drug              |\n");
+    // Mục 2: Admin
+    tab();
+    cout << "|" << (selection == 2 ? "\033[38;5;214m ->         2. User Profile           \033[0m|\n" 
+                                    : "             2. User Profile          |\n");
+    // Mục 3: Back
+    tab();
+    cout << "|" << (selection == 3 ? "\033[38;5;214m ->         3. Discounts              \033[0m|\n" 
+                                    : "             3. Discounts             |\n");
+    tab();
+    cout << "|" << (selection == 4 ? "\033[38;5;214m ->         4. Log out                \033[0m|\n"
+                                    : "             4. Log out               |\n");
+    tab();
+    cout << "+--------------------------------------+\n";
 }
 
 //Menu tổng
@@ -44,57 +56,65 @@ void User::userProcess(){
     char rep;
     while (1)
     {
-        userMenu();
-        cin>>choice;
+        int selection = 1;  // Start with the first option selected
+        char key;
+        do {
+            userMenu(selection);
+            key = _getch();  // Get a single character input
+            if (key == 72) {  // Up arrow key code
+                selection--;
+                if (selection < 1) selection = 4;
+            } else if (key == 80) {  // Down arrow key code
+                selection++;
+                if (selection > 4) selection = 1;
+            }
+        } while (key != '\r');  // Continue until the Enter key is pressed
+        choice = selection;
         switch (choice){
         
-        case 1:{
-            system("cls");
-            if(!this->getCheck()){
-                cout<<"\033[33m"  <<"Please update your infomation to buy!"<<endl;
-                cout<<"Do you want update your information now ? (Y/N)"<<"\033[0m"; cin>>rep;
-                rep=toupper(rep);
-                if(rep=='Y'){
-                    system("cls");
-                    this->update();
-                    break;
+            case 1:{
+                system("cls");
+                if(!this->getCheck()){
+                    cout<<"\033[33m"  <<"Please update your infomation to buy!"<<endl;
+                    cout<<"Do you want update your information now ? (Y/N)"<<"\033[0m"; cin>>rep;
+                    rep=toupper(rep);
+                    if(rep=='Y'){
+                        system("cls");
+                        this->update();
+                        break;
+                    }
+                    else{
+                        system("cls");
+                        continue;;
+                    }
                 }
-                else{
-                    system("cls");
-                    continue;;
-                }
+                userBuyDrugProcess();
+                break;
             }
-            userBuyDrugProcess();
-            break;
+            case 2:
+            {
+                system("cls");
+                userInfoProcess();
+                break;
+            }
+            case 3:
+            {
+                system("cls");
+                userDiscountProcess();
+                break;
+            }
+            case 4:
+            {
+                system("cls");
+                return;
+            }
+            default:{
+                cout<<"\033[31m"  <<"Invalid selection"<<"\033[0m"<<endl;
+                break;
+            }
         }
-        case 2:
-        {
-            system("cls");
-            userInfoProcess();
-            break;
-        }
-        case 3:
-        {
-            system("cls");
-            userDiscountProcess();
-            break;
-        }
-        case 4:
-        {
-            system("cls");
-            return;
-        }
-        default:{
-            cout<<"\033[31m"  <<"Invalid selection"<<"\033[0m"<<endl;
-            break;
-        }
-        }
-        delay(1000);
 
     }
-
-
-
 
 }
 
