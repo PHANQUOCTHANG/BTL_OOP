@@ -51,18 +51,15 @@ bool Account::setAccountRegister(string accountName, string accountPassword)
     char res;
     string verify;
         // check username
-        // cin.ignore();
+        
         do
         {
             tab() ;
             cout << borderColor << resetColor
             << setw(20) << left << " Username: " << resetColor;
-            cin.ignore();
             
             getline(cin,this->accountName);
         } while (!validateUsername(this->accountName));
-        // this->accountName = accountName;
-        ///////
 
         system("cls");
         tab();
@@ -92,7 +89,6 @@ bool Account::setAccountRegister(string accountName, string accountPassword)
             cout << borderColor << resetColor
                  << setw(20) << left << " Password: " << resetColor;
             accountPassword = hidePassword(accountPassword);
-            cout<<accountPassword<<endl;
         } while (!validatePassword(accountPassword));
         this->accountPassword = accountPassword;
         ///////
@@ -177,11 +173,14 @@ void Account::Register()
     {
         tab();
         cout << "\033[32m" << "Registration successful!" << "\033[0m" << endl;
+        return;
+        
     }
     else
     {
         tab();
         cout << "\033[31m" << "Registration failed!" << "\033[0m" << endl;
+        return;
     }
 }
 
