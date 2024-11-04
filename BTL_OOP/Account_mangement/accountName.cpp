@@ -327,7 +327,9 @@ bool Account::Login()
         }
 
         system("cls");
+        
     }
+    
 }
 
 // Xóa tài khoản
@@ -482,6 +484,7 @@ void Account::accountProcess()
             delay(2000);
         }
         system("cls");
+        cin.ignore();
     }
     system("cls");
 }
