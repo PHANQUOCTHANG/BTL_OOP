@@ -4,7 +4,7 @@
 
 //Show Menu
 void Admin::userManaMenu1(){
-                cout<<"+-------------------"<<"\033[35m"<<"Admin"<<"\033[0m"<<"--------------------+\n";
+                cout<<"+----------------"<<"\033[35m"<<"USER MANAGER"<<"\033[0m"<<"----------------+\n";
   cout << "|    1. Show                                 |\n";
   cout << "|    2. Add Users                            |\n";
   cout << "|    3. Remove Users                         |\n";

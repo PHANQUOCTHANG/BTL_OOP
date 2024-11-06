@@ -4,7 +4,7 @@
 
 //Show Menu
 void Admin::salesManaMenu(){
-            cout<<"+-------------------"<<"\033[35m"<<"Admin"<<"\033[0m"<<"--------------------+\n";
+            cout<<"+-----------------"<<"\033[35m"<<"DRUG SALE"<<"\033[0m"<<"------------------+\n";
   cout << "|    1. Record Sales                         |\n";
   cout << "|    2. Generate Sales Reports               |\n";
   cout << "|    3. Monthly Revenue                      |\n";

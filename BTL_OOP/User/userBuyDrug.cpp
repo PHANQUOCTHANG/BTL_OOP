@@ -4,7 +4,7 @@
 // Show Menu 1
 void User::userBuyDrugMenu1()
 {
-  cout << "+-------------------" << "\033[35m" << "User" << "\033[0m" << "---------------------+\n";
+  cout << "+------------------" << "\033[35m" << "BUY DRUG" << "\033[0m" << "------------------+\n";
   cout << "|    1. View all drug in store               |\n";
   cout << "|    2. Search Medicine by Name              |\n";
   cout << "|    3. Back                                 |\n";
@@ -15,7 +15,7 @@ void User::userBuyDrugMenu1()
 // Show Menu 2
 void userBuyDrugMenu2()
 {
-  cout << "+-------------------" << "\033[35m" << "User" << "\033[0m" << "---------------------+\n";
+  cout << "+---------------" << "\033[35m" << "BUY SELECTION" << "\033[0m" << "----------------+\n";
   cout << "|    1. Buy now                              |\n";
   cout << "|    2. Add cart                             |\n";
   cout << "|    3. Back                                 |\n";

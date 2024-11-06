@@ -198,10 +198,18 @@ void Drug::printDrugList(Drug drug) {
                   << "|" << centerText(drug.ingredients, 40)  // Thành phần
                   << "|" << centerText(drug.expirationDate, 20)  // HSD
                   << "|" << centerText(to_string(drug.price), 18)  // Giá
-                  << "|" << centerText(to_string( drug.quantityInStock), 20)  // Số lượng
-                  << "|\t";
-    
-        if(drug.getDiscount() > 0){
+                  << "|";
+                  if(drug.quantityInStock <= 0){
+                    cout<<"\033[31m"<<centerText("OOT",20) <<"\033[0m";
+                  }
+                  else{
+                    cout<<centerText(to_string( drug.quantityInStock), 20);  // Số lượng
+                  }
+                  cout<< "|\t";
+        if(drug.quantityInStock <= 0){
+            cout<<"\033[31m" <<"<==   OUT OF STOCK"<<"\033[0m"; //Sale
+        }
+        else if(drug.getDiscount() > 0){
             cout<<"\033[38;5;214m" <<"<==   SALE: "<<drug.getDiscount()<<"%"<<"\033[0m"; //Sale
         }
         cout<<endl;

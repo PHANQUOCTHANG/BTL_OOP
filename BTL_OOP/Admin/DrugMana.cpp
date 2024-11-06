@@ -4,7 +4,7 @@
 
 //Show Menu
 void Admin::printDrugManaMenu(){
-       cout<<"+-------------------"<<"\033[35m"<<"MENU"<<"\033[0m"<<"---------------------+\n";
+       cout<<"+---------------"<<"\033[35m"<<"DRUG MANAGER"<<"\033[0m"<<"-----------------+\n";
  cout << "|    1.Show Drug List                        |\n";
  cout << "|    2.Add more medicine to the warehouse    |\n";
  cout << "|    3.Remove medicine                       |\n";

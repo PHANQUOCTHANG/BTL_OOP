@@ -181,6 +181,11 @@ void showMenu1(int selection)
                                     : "                3. Exit                  |\n");
     tab();
     cout << "+-----------------------------------------+\n";
+    tab();
+
+    cout << "\t    \033[32mUSE \033[1;35mUP\033[0m" 
+         << "\033[32m/\033[1;35mDOWN\033[0m" 
+         << "\033[32m TO SELECT\033[0m" << endl;
 }
 void showMenuLogin(int selection)
 {
@@ -201,11 +206,15 @@ void showMenuLogin(int selection)
                                     : "                3. Back                |\n");
     tab();
     cout << "+---------------------------------------+\n";
+    tab();
+    cout << "\t    \033[32mUSE \033[1;35mUP\033[0m" 
+     << "\033[32m/\033[1;35mDOWN\033[0m" 
+     << "\033[32m TO SELECT\033[0m" << endl;
 }
 
 void drugManaMenuUpdateMenu()
 {
-    cout << "+-----------------" << "\033[35m" << "MENU" << "\033[0m" << "-------------------+\n";
+    cout << "+-----------------" << "\033[35m" << "UPDATE" << "\033[0m" << "-----------------+\n";
     cout << "|    1.Name                              |\n";
     cout << "|    2.Type                              |\n";
     cout << "|    3.Ingredients                       |\n";

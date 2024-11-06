@@ -454,6 +454,7 @@ void Account::accountProcess()
         {
             p.Register();
             delay(2000);
+            cin.ignore();
         }
         else if (choice == 2)
         {
@@ -484,7 +485,7 @@ void Account::accountProcess()
             delay(2000);
         }
         system("cls");
-        cin.ignore();
+        
     }
     system("cls");
 }

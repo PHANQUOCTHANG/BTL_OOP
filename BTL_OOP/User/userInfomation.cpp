@@ -4,7 +4,7 @@
 //Menu 1
 void User::userInfoMenu1(){
 
-            cout<<"+-------------------"<<"\033[35m"<<"User"<<"\033[0m"<<"---------------------+\n";
+            cout<<"+---------------"<<"\033[35m"<<"USER INFOMATION"<<"\033[0m"<<"--------------+\n";
   cout << "|    1. User information                     |\n";
   cout << "|    2. Cart                                 |\n";
   cout << "|    3. Purchase history                     |\n";
@@ -16,7 +16,7 @@ void User::userInfoMenu1(){
 
 //Menu Cart
 void userInfoCart1(){
-            cout<<"+-------------------"<<"\033[35m"<<"User"<<"\033[0m"<<"----------------------+\n";
+            cout<<"+---------------------"<<"\033[35m"<<"CART"<<"\033[0m"<<"--------------------+\n";
   cout << "|    1. Buy all                               |\n";
   cout << "|    2. Remove all                            |\n";
   cout << "|    3. Choose drug's id to buy               |\n";
@@ -27,7 +27,7 @@ void userInfoCart1(){
 
 }
 void userPrivateInfo(){
-            cout<<"+-------------------"<<"\033[35m"<<"User"<<"\033[0m"<<"----------------------+\n";
+            cout<<"+-----------------"<<"\033[35m"<<"USER ADDRESS"<<"\033[0m"<<"----------------+\n";
   cout << "|    1. View all                              |\n";
   cout << "|    2. Add new Address                       |\n";
   cout << "|    3. Back                                  |\n";

@@ -6,7 +6,7 @@ void User::userMenu(int selection)
 {
     system("cls");
     tab();
-    cout << "+-----------------" << "\033[35m" << "User" << "\033[0m" << "-----------------+\n";
+    cout << "+-------------" << "\033[35m" << "USER SELECTION" << "\033[0m" << "-----------+\n";
     // Mục 1: User
     tab();
     cout << "|" << (selection == 1 ? "\033[38;5;214m ->         1. Buy Drug               \033[0m|\n" 
@@ -24,6 +24,10 @@ void User::userMenu(int selection)
                                     : "             4. Log out               |\n");
     tab();
     cout << "+--------------------------------------+\n";
+    tab();
+    cout << "\t  \033[32mUSE \033[1;35mUP\033[0m" 
+     << "\033[32m/\033[1;35mDOWN\033[0m" 
+     << "\033[32m TO SELECT\033[0m" << endl;
 }
 
 //Menu tổng

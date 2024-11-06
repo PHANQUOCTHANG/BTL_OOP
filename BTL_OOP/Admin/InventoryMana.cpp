@@ -40,7 +40,7 @@ void Admin::lowStockAlerts(vector<Drug> temp){
 
 //Show Menu
 void Admin::inventoryManaMenu(){
-            cout<<"+-------------------"<<"\033[35m"<<"Admin"<<"\033[0m"<<"--------------------+\n";
+            cout<<"+-----------------"<<"\033[35m"<<"DRUG STOCK"<<"\033[0m"<<"-----------------+\n";
   cout << "|    1. View Stock Levels                    |\n";
   cout << "|    2. Low Stock Alerts                     |\n";
   cout << "|    3. Update Stock Quantity                |\n";

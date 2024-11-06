@@ -23,10 +23,14 @@ void Admin::adminMenu(int selection)
     cout << "|" << (selection == 4 ? "\033[38;5;214m ->      4. User Management            \033[0m|\n"
                                     : "          4. User Management           |\n");
     tab();
-    cout << "|" << (selection == 5 ? "\033[38;5;214m ->      5. Log out                \033[0m|\n"
+    cout << "|" << (selection == 5 ? "\033[38;5;214m ->      5. Log out                    \033[0m|\n"
                                 : "          5. Log out                   |\n");                                
     tab();
     cout << "+---------------------------------------+\n";
+    tab();
+    cout << "\t  \033[32mUSE \033[1;35mUP\033[0m" 
+     << "\033[32m/\033[1;35mDOWN\033[0m" 
+     << "\033[32m TO SELECT\033[0m" << endl;
 }
 
 
