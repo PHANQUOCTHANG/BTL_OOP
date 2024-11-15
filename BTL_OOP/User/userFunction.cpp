@@ -80,7 +80,7 @@ void User::userProcess(){
                 system("cls");
                 if(!this->getCheck()){
                     cout<<"\033[33m"  <<"Please update your infomation to buy!"<<endl;
-                    cout<<"Do you want update your information now ? (Y/N)"<<"\033[0m"; cin>>rep;
+                    cout<<"Do you want update your information now ? [Y/N] : "<<"\033[0m"; cin>>rep;
                     rep=toupper(rep);
                     if(rep=='Y'){
                         system("cls");

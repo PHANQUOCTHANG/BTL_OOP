@@ -372,11 +372,11 @@ vector<User> User::findUserByUsername(const string &fileName, const string &sear
 void User::update(){
     string fullName,address,phoneNumber;
     cout<<"\033[33m"  <<"Please fill new your information: "<<"\033[0m"  <<endl;
-    do {
+    // do {
       cout<<"\033[36m"  <<"Enter your full name: "<<"\033[0m";
       cin.ignore() ;
       getline(cin,fullName) ;
-    }while (!validateName(fullName));
+    // }while (!validateName(fullName));
     this->setName(fullName);
     do {
       cout<<"\033[36m"  <<"Enter your address: "<<"\033[0m"; getline(cin,address) ;

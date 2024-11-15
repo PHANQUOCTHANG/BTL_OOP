@@ -1,6 +1,18 @@
 #pragma once
 #include "Design.h"
 
+
+// Bảng màu .
+
+const string RESET = "\033[0m";
+const string RED = "\033[31m";
+const string GREEN = "\033[32m";
+const string YELLOW = "\033[33m";
+const string BLUE = "\033[34m";
+const string MAGENTA = "\033[35m";
+const string CYAN = "\033[36m";
+const string WHITE = "\033[37m";
+
 // Hàm set delay(độ chậm) cho giao diện
 void delay(int milliseconds)
 {
@@ -162,6 +174,7 @@ void tab()
     for (int i = 1; i <= 7; i++)
         cout << "\t";
 }
+
 void showMenu1(int selection)
 {
     system("cls");

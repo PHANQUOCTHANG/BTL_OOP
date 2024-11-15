@@ -452,8 +452,30 @@ void Account::accountProcess()
         system("cls");
         if (choice == 1)
         {
+
             p.Register();
-            delay(2000);
+            tab() ;
+            cout << "Do you Login ? [Y/N] : " ;
+            char choice ; cin >> choice ;
+            if (isalpha(choice)) {
+                if (choice == 'Y' || choice == 'y') {
+                    User p1 ;
+                    p1.userProcess() ;
+                }
+                else if (choice == 'N' || choice == 'n') {
+                    delay(2000);
+                }
+                else {
+                    tab() ;
+                    cout << RED << "Invalid\n" << RESET ;
+                    delay(2000) ;
+                }
+            }
+            else {
+                tab() ;
+                cout << RED << "Invalid\n" << RESET;
+                delay(2000) ;
+            }
             cin.ignore();
         }
         else if (choice == 2)
