@@ -111,10 +111,10 @@ void User::cartProcess(){
           string fileName2 = "Transactions/usesHistory/";
           fileName2 += this->getAccountName() + ".txt";
           bill(token[id_infor - 1], cart, paymentMethodRes);
-          cout << "\033[33m";
-          cout << "+-------------------------+                                  +----------------------+" << endl;
-          cout << "|         1. Back         |                                  |       2. Order       |" << "\n";
-          cout << "+-------------------------+                                  +----------------------+" << endl;
+          cout << RED;
+          cout << "+-------------------------+                "<<GREEN<<"                  +----------------------+" << RED<< endl;
+          cout << "|         1. Back         |                "<<GREEN<<"                  |       2. Order       |" << RED<< "\n";
+          cout << "+-------------------------+                "<<GREEN<<"                  +----------------------+" << endl;
           cout << "\033[0m";
           cout << "Enter to choice : ";
           cin >> choice;
@@ -229,10 +229,10 @@ void User::cartProcess(){
               string fileName2 = "Transactions/usesHistory/";
               fileName2 += this->getAccountName() + ".txt";
               bill(token[id_infor - 1], temp, paymentMethodRes);
-              cout << "\033[33m";
-              cout << "+-------------------------+                                  +----------------------+" << endl;
-              cout << "|         1. Back         |                                  |       2. Order       |" << "\n";
-              cout << "+-------------------------+                                  +----------------------+" << endl;
+              cout << RED;
+              cout << "+-------------------------+                "<<GREEN<<"                  +----------------------+" << RED<< endl;
+              cout << "|         1. Back         |                "<<GREEN<<"                  |       2. Order       |" << RED<< "\n";
+              cout << "+-------------------------+                "<<GREEN<<"                  +----------------------+" << endl;
               cout << "\033[0m";
               cout << "Enter to choice : ";
               cin >> choice;
@@ -508,28 +508,28 @@ void User::userInfoProcess(){
   }
 }
 
-
 // setw(x) : quy định độ rộng của một cột (setWidth) .
 
 void User::bill(User temp,vector<Orders> orders,string paymentMethod){
-  double total = 0;
-    double TotalPayouts = 0;
-    double VAT = 1.75; // Thuế VAT
-    double Sale = 0;
+  SetConsoleOutputCP(CP_UTF8);
+  long long total = 0;
+    long long TotalPayouts = 0;
+    int VAT = 175; // Thuế VAT
+    long long Sale = 0;
 
     // Vẽ đường viền đầu tiên
     Line('=', 85);
-    cout << centerText("OS Pharmacy", 85) << endl;
+    cout <<GREEN<< centerText("OS Pharmacy", 85) <<RESET<< endl;
     Line('=', 85);
     
     // Thông tin khách hàng
-    cout << left << setw(20) << "Customer Name:" << temp.getName() << endl;
-    cout << left << setw(20) << "Address:" << temp.getAddress() << endl;
-    cout << left << setw(20) << "Phone number:" << temp.getPhoneNumber() << endl;
+    cout <<YELLOW<< left << setw(20) << "Customer Name:"<<RESET << temp.getName() << endl;
+    cout <<YELLOW<< left << setw(20) << "Address:"<<RESET << temp.getAddress() << endl;
+    cout <<YELLOW<< left << setw(20) << "Phone number:"<<RESET << temp.getPhoneNumber() << endl;
     
     // Vẽ đường viền
     Line('-', 85);
-    cout << centerText("Bills for the Sale of Drugs", 85) << endl;
+    cout <<BLUE<< centerText("Bills for the Sale of Drugs", 85) <<RESET << endl;
     Line('-', 85);
     
     // Tiêu đề hoá đơn
@@ -549,8 +549,8 @@ void User::bill(User temp,vector<Orders> orders,string paymentMethod){
              << left << setw(30) << orders[i].getName() // Tên thuốc
              << left << setw(8) << centerText(to_string( orders[i].getQuantityInStock()),8)  // Số lượng
              << left << setw(7) << centerText(to_string( orders[i].getDiscount())+"%",10) // Giảm giá
-             << right << setw(12) << fixed << setprecision(2) << orders[i].getPrice() // Giá
-             << right << setw(15) << fixed << setprecision(2) << orders[i].getTotal()-(1.0 * (orders[i].getPrice() * orders[i].getDiscount() / 100) * orders[i].getQuantityInStock()) << endl; // Tổng tiền
+             << right << setw(12) << formatNumberWithSpaces(orders[i].getPrice())  // Giá
+             << right << setw(15) << formatNumberWithSpaces(orders[i].getTotal()-(1.0 * (orders[i].getPrice() * orders[i].getDiscount() / 100) * orders[i].getQuantityInStock()))  << endl; // Tổng tiền
         total += orders[i].getTotal();
         Sale += (1.0 * (orders[i].getPrice() * orders[i].getDiscount() / 100) * orders[i].getQuantityInStock());
     }
@@ -558,24 +558,25 @@ void User::bill(User temp,vector<Orders> orders,string paymentMethod){
     Line('-', 85);
 
     // In ra tổng tiền
-    cout << left << setw(40) << "Total:" 
-         << right << setw(12) << fixed << setprecision(2) << total << endl;
-    cout << left << setw(40) << "VAT Tax:" 
-         << right << setw(12) << fixed << setprecision(2) << VAT << endl;
-    cout << left << setw(40) << "Sale:" 
-         << right << setw(12) << fixed << setprecision(2) << Sale << endl;
+    cout <<YELLOW<< left << setw(40) << "Total:" <<RESET
+         << right << setw(12) <<formatNumberWithSpaces(total)<<RESET<<" VND" << endl;
+    cout <<YELLOW<< left << setw(40) << "VAT Tax:" <<RESET
+         << right << setw(12) << VAT <<" VND"<<RESET << endl;
+    cout <<YELLOW<< left << setw(40) << "Sale:" <<RESET
+         << right << setw(12) <<formatNumberWithSpaces(Sale)<<RESET<<" VND" << endl;
 
     TotalPayouts = total + VAT - Sale;
-    cout << left << setw(40) << "Total Payouts:" 
-         << right << setw(12) << fixed << setprecision(2) << TotalPayouts << endl;
-
+    cout <<YELLOW<< left << setw(40) << "Total Payouts:" <<GREEN
+         << right << setw(12) <<formatNumberWithSpaces(TotalPayouts) <<" VND"<<RESET<< endl;
+    cout<<YELLOW<< left << setw(13) << "INTO WORD:" <<"\033[38;5;214m"
+       << left << setw(100)<<numberToWords(TotalPayouts)<<RESET<< endl;
     // Vẽ đường viền
     Line('=', 85);
 
     // Thời gian và phương thức thanh toán
     string currentTime = getCurrentTime();
-    cout << left << setw(40) << "Time:" << currentTime << endl;
-    cout << left << setw(40) << "Payment Method:" << paymentMethod << endl;
+    cout <<YELLOW<< left << setw(40) << "Time:"<<RESET << currentTime << endl;
+    cout <<YELLOW<< left << setw(40) << "Payment Method:"<<RESET << paymentMethod << endl;
 
     // Vẽ đường viền cuối
     Line('=', 85);

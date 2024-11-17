@@ -2,6 +2,7 @@
 // Ham main
 int main()
 {
+   
     printPharmacyLogo();
     while (true)
     {
@@ -10,6 +11,4 @@ int main()
     }
     system("cls");
     Account::accountProcess();
-    // Admin p ;
-    // p.listRating() ;
 }

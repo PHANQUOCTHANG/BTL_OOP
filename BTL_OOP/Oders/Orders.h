@@ -7,11 +7,11 @@
 class Orders:public Drug{
     private:
         string buyerName; //Tên người mua
-        double total; //Tổng tiền
+        long long total; //Tổng tiền
     public:
         //constructer
         Orders(){};
-        Orders(string Buyer_name,string oder_name,int price,int quanlity,string real_time,int disount,double total){
+        Orders(string Buyer_name,string oder_name,int price,int quanlity,string real_time,int disount,long long total){
             this->setBuyerName(Buyer_name);
             this->setName(oder_name);
             this->setPrice(price);
@@ -28,8 +28,8 @@ class Orders:public Drug{
         void setBuyerName(string _buyerName) { buyerName = _buyerName; }
 
         //Tổng tiền
-        double getTotal() const { return total; }
-        void setTotal(double _total) { total = _total; }
+        long long getTotal() const { return total; }
+        void setTotal(long long _total) { total = _total; }
 
         //xử lý file
         void writeOrderToFile(const string &fileName); //Ghi sản phẩm vào file

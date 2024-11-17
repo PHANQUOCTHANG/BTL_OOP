@@ -4,7 +4,7 @@
 vector<vector<string>> Admin::readFromFile()
 {
     vector<vector<string>> ratingList;
-    ifstream inFile("Admin/ListRating.txt");
+    ifstream inFile("ListRating.txt");
 
     if (!inFile)
     {

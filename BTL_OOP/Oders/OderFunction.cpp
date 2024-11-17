@@ -29,7 +29,7 @@ vector<Orders> Orders::readOrdersFromFile(const string &fileName) {
     while (getline(inFile, line)) {
         stringstream ss(line);
         string item;
-        vector<std::string> tokens;
+        vector<string> tokens;
 
         // Tách từng giá trị từ dòng CSV
         while (getline(ss, item, ';')) {
@@ -46,7 +46,7 @@ vector<Orders> Orders::readOrdersFromFile(const string &fileName) {
             order.setPrice(stoi(tokens[4])),
             order.setQuantityInStock(stoi(tokens[5]));
             order.setDiscount(stoi(tokens[6]));
-            order.total=stod(tokens[7]);
+            order.total=stoll(tokens[7]);
             odersList.push_back(order);
         }
     }
@@ -65,9 +65,9 @@ void Orders::printOrdersList(Orders order) {
                   << "|" << centerText(order.buyerName, 25)  // Tên người dùng
                   << "|" << centerText(order.getName(), 20)   // Tên thuốc
                   << "|" << centerText(order.getExpirationDate(), 50)  // Thời gian mua
-                  << "|" << centerText(to_string(order.getPrice()), 18)  // Giá
+                  << "|" << centerText(formatNumberWithSpaces(order.getPrice()), 18)  // Giá
                   << "|" << centerText(to_string( order.getQuantityInStock()), 20)  // Số lượng
-                  << "|" << centerText(out.str(), 20)  // tổng tiền
+                  << "|" << centerText(formatNumberWithSpaces(order.getTotal()), 20)  // tổng tiền
                   << "|\n";
     
 
@@ -82,15 +82,14 @@ void Orders::printOrdersList(Orders order) {
 
 
 }
+// in bill
 void Orders::printOrdersListBill(Orders order) {
-    ostringstream out;
-    out << std::fixed << std::setprecision(2) << order.total;
     // In các loại thuốc trong bảng với độ rộng cột được định nghĩa trước
     cout  << centerText(to_string(order.getId()), 3)   // STT
           << centerText(order.getName(), 77)   // Tên thuốc
           << centerText(to_string( order.getQuantityInStock()), 40)  // Số lượng
           << centerText(to_string(order.getPrice()), 40)  // Giá
-          << centerText(out.str(), 40)  // tổng tiền
+          << centerText(formatNumberWithSpaces(order.getTotal()), 40)  // tổng tiền
           << "\n";
     
 }
@@ -109,10 +108,10 @@ void Orders::inheritDrug(Drug drug){
 void Orders::analyzeSales(const vector<Orders>& orders) {
     // Maps to store sales data
     map<string, int> medicineSales;  // Medicine name -> Total quantity sold
-    map<string, double> revenueByMedicine;  // Medicine name -> Total revenue
+    map<string, long long> revenueByMedicine;  // Medicine name -> Total revenue
 
     int totalOrders = 0;
-    int totalRevenue = 0;
+    long long totalRevenue = 0;
     int totalQuantitySold = 0;
 
     // Analyzing the sales data

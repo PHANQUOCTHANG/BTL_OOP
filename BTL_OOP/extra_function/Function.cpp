@@ -106,7 +106,7 @@ string extractMonth(const string& dateTime) {
 
 // Function to calculate revenue by month
 void calculateMonthlyRevenue(const vector<Orders>& orders) {
-    map<std::string, int> revenueByMonth;  // Key: month, Value: total revenue
+    map<string, long long> revenueByMonth;  // Key: month, Value: total revenue
 
     for (const auto& order : orders) {
         string month = extractMonth(order.getExpirationDate());
@@ -291,4 +291,101 @@ bool validateName(const std::string& name) {
         return false;
     }
     return true;
+}
+// in sô với định dạng dễ nhìn
+string formatNumberWithSpaces(long long number) {
+    string numStr = to_string(number);
+    int n = numStr.size();
+
+    // Bắt đầu từ vị trí thứ 3 tính từ cuối, chèn khoảng trắng
+    for (int i = n - 3; i > 0; i -= 3) {
+        numStr.insert(i, " ");
+    }
+    return numStr;
+}
+string numberToWords(long long number) {
+    if (number == 0) return "không";
+
+    vector<string> units = {"", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"};
+    vector<string> levels = {"", "nghìn", "triệu", "tỷ"};
+
+    string result = "";
+
+    // Đảm bảo số là dương trong khi xử lý
+    bool isNegative = number < 0;
+    number = abs(number);
+
+    int level = 0;
+
+    while (number > 0) {
+        int part = number % 1000; // Lấy 3 chữ số cuối
+        number /= 1000;
+
+        if (part > 0) {
+            string partWords = "";
+            int hundred = part / 100;      // Hàng trăm
+            int ten = (part / 10) % 10;   // Hàng chục
+            int unit = part % 10;         // Hàng đơn vị
+
+            // Đọc hàng trăm
+            if (hundred > 0) {
+                partWords += units[hundred] + " trăm ";
+            } else if (number > 0) {
+                partWords += "không trăm ";
+            }
+
+            // Đọc hàng chục
+            if (ten > 1) {
+                partWords += units[ten] + " mươi ";
+            } else if (ten == 1) {
+                partWords += "mười ";
+            } else if (ten == 0 && unit > 0 && hundred > 0) {
+                partWords += "lẻ ";
+            }
+
+            // Đọc hàng đơn vị
+            if (unit > 0) {
+                if (ten > 1 && unit == 1) {
+                    partWords += "mốt ";
+                } else if (ten > 0 && unit == 5) {
+                    partWords += "lăm ";
+                } else {
+                    partWords += units[unit] + " ";
+                }
+            }
+
+            // Thêm đơn vị nghìn, triệu, tỷ
+            if (!partWords.empty()) {
+                partWords += levels[level] + " ";
+            }
+
+            // Gắn phần đọc của nhóm 3 chữ số vào kết quả cuối
+            result = partWords + result;
+        }
+
+        level++;
+    }
+
+    // Xử lý số âm
+    if (isNegative) {
+        result = "âm " + result;
+    }
+
+    // Loại bỏ khoảng trắng thừa
+    while (!result.empty() && result.back() == ' ') {
+        result.pop_back();
+    }
+    result[0]-=32;
+    result+=" Việt Nam Đồng";
+    return result;
+}
+void printVietnamese(const string& text) {
+    // Thiết lập mã UTF-8 cho console
+    SetConsoleOutputCP(CP_UTF8);
+
+    // In chuỗi
+    cout << text << endl;
+
+    // Khôi phục mã mặc định (nếu cần dùng lại mã khác sau này)
+    SetConsoleOutputCP(CP_ACP); // Chỉ cần nếu bạn không muốn giữ UTF-8 mãi
 }

@@ -21,7 +21,7 @@ void User::userMenu(int selection)
     cout << "|" << (selection == 3 ? "\033[38;5;214m ->         3. Discounts              \033[0m|\n" 
                                     : "             3. Discounts             |\n");
     tab();
-    cout << "|" << (selection == 4 ? "\033[38;5;214m ->         4. Rating                \033[0m|\n"
+    cout << "|" << (selection == 4 ? "\033[38;5;214m ->         4. Rating                 \033[0m|\n"
                                     : "             4. Rating                |\n");
     tab();
     cout << "|" << (selection == 5 ? "\033[38;5;214m ->         5. Log out                \033[0m|\n"

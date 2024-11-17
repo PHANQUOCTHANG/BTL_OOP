@@ -101,6 +101,9 @@ void Admin::inventoryManaProcess(){
             printStockLevels(temp[id-1]);
             int QuantityInStock;
             cout<<"\033[36m"  <<"Update quantityInStock: "<<"\033[0m"; cin>>QuantityInStock;
+            if(QuantityInStock < 0){
+              QuantityInStock = 0;
+            }
             temp[id-1].setQuantityInStock(QuantityInStock);
             char rep;
             cout<<"\033[33m"<<"Are you sure you want to change, the data will not be recoverable ! (Y/N)   "<<"\033[0m"; cin>>rep;

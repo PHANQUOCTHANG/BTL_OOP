@@ -197,7 +197,7 @@ void Drug::printDrugList(Drug drug) {
                   << "|" << centerText(drug.type, 20)   // Loại
                   << "|" << centerText(drug.ingredients, 40)  // Thành phần
                   << "|" << centerText(drug.expirationDate, 20)  // HSD
-                  << "|" << centerText(to_string(drug.price), 18)  // Giá
+                  << "|" << centerText(formatNumberWithSpaces(drug.price), 18)  // Giá
                   << "|";
                   if(drug.quantityInStock <= 0){
                     cout<<"\033[31m"<<centerText("OOT",20) <<"\033[0m";
@@ -235,10 +235,10 @@ void Drug::display() {
         <<"\033[32m"<< "Expiration Date: "<<"\033[34m" << expirationDate << "\n";
         if(discount > 0){
             float sale = price - (1.0*price *(discount/100.0));
-            cout<<"\033[32m"<< "Price: "<<"\033[34m" << price<<" (VND)"<<" ===> "<<sale<<" (VND)"<<"\033[38;5;206m" << "\t\t(Sale "<<discount <<"%)"<< "\n";
+            cout<<"\033[32m"<< "Price: "<<"\033[34m" <<formatNumberWithSpaces(price)<<" (VND)"<<" ===> "<< formatNumberWithSpaces(sale)<<" (VND)"<<"\033[38;5;206m" << "\t\t(Sale "<<discount <<"%)"<< "\n";
         }
         else{
-            cout<<"\033[32m"<< "Price: "<<"\033[34m" << price<<"\n";
+            cout<<"\033[32m"<< "Price: "<<"\033[34m" <<formatNumberWithSpaces(price)<<" (VND)"<<"\n";
         }
         cout<<"\033[32m"<< "Quantity In Stock: "<<"\033[34m" << (!outOfStock?to_string(quantityInStock):"Out Of Stock") << "\n\n"<<"\033[0m";
 

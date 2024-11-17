@@ -34,6 +34,16 @@ void BlackListProcess(){
     BlackListMenu();
     cin>>choice;
     vector<vector<string>> tempAdmin = Account::loadUserInfo("Account_mangement/Account/User.txt");
+    bool check=0;
+    for(auto x:tempAdmin){
+      if(x[2] == "0"){
+        check =1;
+      }
+    }
+    if(!check){
+      cout<<RED<<"List is empty !"<<RESET;
+      return;
+    }
     switch (choice){
       
       case 1:{

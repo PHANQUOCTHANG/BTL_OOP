@@ -40,6 +40,7 @@ void Admin::salesManaProcess(){
       }
       case 2:
       {
+        system("cls");
         Orders::analyzeSales(temp);
         break;
       }

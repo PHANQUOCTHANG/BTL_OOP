@@ -79,7 +79,7 @@ void User::payment(int id, vector<Drug> temp)
     userBuyDrugMenu2();
     cin >> choice;
     int quanlity;
-    double totalMoney;
+    long long totalMoney;
     switch (choice)
     {
     case 1:
@@ -131,12 +131,11 @@ void User::payment(int id, vector<Drug> temp)
       vector<Orders> t;
       t.push_back(demo);
       bill(token[id_infor - 1], t, paymentMethodRes);
-      cout << "\033[33m";
-      cout << "+-------------------------+                                  +----------------------+" << endl;
-      cout << "|         1. Back         |                                  |       2. Order       |" << "\n";
-      cout << "+-------------------------+                                  +----------------------+" << endl;
+      cout << RED;
+      cout << "+-------------------------+                "<<GREEN<<"                  +----------------------+" << RED<< endl;
+      cout << "|         1. Back         |                "<<GREEN<<"                  |       2. Order       |" << RED<< "\n";
+      cout << "+-------------------------+                "<<GREEN<<"                  +----------------------+" << endl;
       cout << "\033[0m";
-
       cout << "Enter to choice : ";
       cin >> choice;
       if (choice == 1)
@@ -169,10 +168,10 @@ void User::payment(int id, vector<Drug> temp)
       } while (quanlity > temp[id - 1].getQuantityInStock());
 
       totalMoney = (temp[id - 1].getPrice()) * quanlity;
-      cout << "\033[33m";
-      cout << "+-------------------------+                                  +----------------------+" << endl;
-      cout << "|         1. Back         |                                  |     2. Add cart      |" << "\n";
-      cout << "+-------------------------+                                  +----------------------+" << endl;
+      cout << RED;
+      cout << "+-------------------------+                "<<GREEN<<"                  +----------------------+" << RED<< endl;
+      cout << "|         1. Back         |                "<<GREEN<<"                  |     2. Add cart      |" << RED<< "\n";
+      cout << "+-------------------------+                "<<GREEN<<"                  +----------------------+" << endl;
       cout << "\033[0m";
       cout << "Enter to choice : ";
       cin >> choice;
@@ -267,98 +266,111 @@ void User::userBuyDrugProcess()
     {
       case 1:
       {
-        system("cls");
-        title();
-        for (auto x : temp)
-        {
-          Drug::printDrugList(x);
-        }
-        cout << "\n" ;
-        userBuyDrugMenu3();
-        int choice1;
-        cin >> choice1;
-        switch (choice1)
-        {
-          case 1:
-          {
-            cout << "\033[36m" << "Enter Drug's id you want or (-1) to Back: " << "\033[0m";
-            cin >> id;
-            if (id == -1)
-            {
-              system("cls");
-              break;
-            }
-            else if (id > temp.size() || id < 0)
-            {
-              cout << "\033[31m" << "Id not valid !" << "\033[0m" << endl;
-              delay(1000);
-              system("cls");
-              break;
-            }
-            payment(id, temp);
-            break;
-          }
-          case 2:
-          {
+        while(1){
             system("cls");
-            string query = "";
-            char ch = '\0'; // Initialize ch to avoid undefined behavior
-            while (true)
+            title();
+            for (auto x : temp)
             {
-              cout << "\033[36m" << "\nPlease type drug's name to search: " << "\033[0m";
-              cout << query;
-
-              ch = _getch();
-
-              if (ch == '\r') // Enter key
+              Drug::printDrugList(x);
+            }
+            cout << "\n" ;
+            userBuyDrugMenu3();
+            bool flag = 0;
+            int choice1;
+            cin >> choice1;
+            switch (choice1)
+            {
+              case 1:
+              {
+                cout << "\033[36m" << "Enter Drug's id you want or (-1) to Back: " << "\033[0m";
+                cin >> id;
+                if (id == -1)
+                {
+                  system("cls");
+                  continue;;
+                }
+                else if (id > temp.size() || id < 0)
+                {
+                  cout << "\033[31m" << "Id not valid !" << "\033[0m" << endl;
+                  delay(1000);
+                  system("cls");
+                  break;
+                }
+                payment(id, temp);
                 break;
-              else if (ch == '\b') // Backspace
-              {
-                if (!query.empty())
-                  query.pop_back();
               }
-              else if (ch != '\n') // Add character to query if not newline
+              case 2:
               {
-                query += ch;
+                system("cls");
+                string query = "";
+                char ch = '\0'; // Initialize ch to avoid undefined behavior
+                while (true)
+                {
+                  cout << "\033[36m" << "\nPlease type drug's name to search: " << "\033[0m";
+                  cout << query;
+
+                  ch = _getch();
+
+                  if (ch == '\r') // Enter key
+                    break;
+                  else if (ch == '\b') // Backspace
+                  {
+                    if (!query.empty())
+                      query.pop_back();
+                  }
+                  else if (ch != '\n') // Add character to query if not newline
+                  {
+                    query += ch;
+                  }
+
+                  // Clear screen only if necessary
+                  system("cls");
+
+                  // Search and display results if the query is not empty
+                  if (!query.empty())
+                  {
+                    searchMedicines(temp, query);
+                  }
+                }
+
+                system("cls");
+                searchDrug(query, temp);
+
+                cout << "\033[36m" << "Enter Drug's id you want or (-1) to Back: " << "\033[0m";
+                cin >> id;
+
+                if (id == -1)
+                {
+                  system("cls");
+                  break;
+                }
+                if (id > temp.size() || id < 0)
+                {
+                  cout << "\033[31m" << "Id not valid!" << "\033[0m" << endl;
+                  delay(1000);
+                  system("cls");
+                  break;;
+                }
+                payment(id, temp);
+                break;
               }
-
-              // Clear screen only if necessary
-              system("cls");
-
-              // Search and display results if the query is not empty
-              if (!query.empty())
+              case 3:
               {
-                searchMedicines(temp, query);
+                system("cls");
+                flag=1;
+                break;
+              }
+              default:
+              {
+                system("cls");
+                cout << "\033[31m" << "Invalid selection" << "\033[0m" << endl;
+                delay(1000);
+                break;
               }
             }
-
-            system("cls");
-            searchDrug(query, temp);
-
-            cout << "\033[36m" << "Enter Drug's id you want or (-1) to Back: " << "\033[0m";
-            cin >> id;
-
-            if (id == -1)
-            {
-              system("cls");
-              break;
-            }
-            if (id > temp.size() || id < 0)
-            {
-              cout << "\033[31m" << "Id not valid!" << "\033[0m" << endl;
-              delay(1000);
-              system("cls");
-              continue;
-            }
-            payment(id, temp);
-            break;
-          }
-          default:
-          {
-            cout << "\033[31m" << "Invalid selection" << "\033[0m" << endl;
-            break;
-          }
+            if(flag) break;
         }
+        break;
       }
       case 2:
       {
