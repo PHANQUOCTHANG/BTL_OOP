@@ -109,6 +109,7 @@ void User::userProcess(){
             }
             case 4:
             {
+                updateStatus(this->getAccountName(),"-1","Account_mangement/Account/User.txt");
                 system("cls");
                 return;
             }

@@ -323,9 +323,9 @@ void showListDrug2(Drug drug)
 
 void Title2()
 {
-    for (int i = 1; i <= 83; ++i)
+    for (int i = 1; i <= 104; ++i)
     {
-        if (i == 1 || i == 42 || i == 83)
+        if (i == 1 || i == 42 || i == 83 ||i==104)
             cout << '+';
         else
         {
@@ -336,27 +336,41 @@ void Title2()
     std::cout
         << "|" << centerText("Username", 40)
         << "|" << centerText("Password", 40)
+        << "|" << centerText("Status", 20)
         << "|\n";
-    for (int i = 1; i <= 83; ++i)
+    for (int i = 1; i <= 104; ++i)
     {
-        if (i == 1 || i == 42 || i == 83)
+        if (i == 1 || i == 42 || i == 83 || i==104){
             cout << '+';
+        }
         else
         {
             cout << '-';
         }
     }
-    cout << endl;
+    cout << "\n";
 }
-void printListAccount(pair<string, string> a)
+void printListAccount(vector<string> a)
 {
     std::cout
-        << "|" << centerText(a.first, 40)
-        << "|" << centerText(string(a.second.size(), '*'), 40)
-        << "|\n";
-    for (int i = 1; i <= 83; ++i)
+        << "|" << centerText(a[0], 40)
+        << "|" << centerText(string(a[1].size(), '*'), 40)
+        << "|";
+        int status = stoi(a[2]);
+        if(status == 1){
+         cout<<GREEN<< centerText("ONLINE", 20);
+        }
+        else if(status == -1){
+         cout<<MAGENTA<< centerText("OFFLINE", 20);
+        }
+        else{
+
+         cout<<RED<< centerText("LOCKED", 20);
+        }
+        cout<<RESET<< "|\n";
+    for (int i = 1; i <= 104; ++i)
     {
-        if (i == 1 || i == 42 || i == 83)
+        if (i == 1 || i == 42 || i == 83 || i==104)
             cout << '+';
         else
         {

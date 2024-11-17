@@ -20,14 +20,14 @@ string getCurrentTime() {
 
 
 //Hàm đăng kí thông tin nguòi dùng
-bool registerUser(const string& fileName,const string& name, const string& password) {
+bool registerUser(const string& fileName,const string& name, const string& password,const string& status) {
     ofstream file(fileName, ios::app);
     if (!file.is_open()) {
         cout << "\033[31m" << "Unable to open file" << "\033[0m" << endl;
         return false;
     }
 
-    file << name << " " << password << std::endl;
+    file << name << " " << password << " "<< status << std::endl;
     file.close();
     return true;
 }
@@ -121,9 +121,9 @@ void calculateMonthlyRevenue(const vector<Orders>& orders) {
     cout<< "\033[0m";
 }
 // Check tên tài khoản đã tồn tại chưa
-bool isExistUsername(const string &name)
+bool isExistUsername(const string &name,const string &fileName)
 {
-    ifstream file("Account_mangement/Account/User.txt");
+    ifstream file(fileName);
     if (!file.is_open())
     {
         cout << "\033[31m" << " Unable to open file" << "\033[0m" << endl;
@@ -142,6 +142,28 @@ bool isExistUsername(const string &name)
 
     file.close();
     return false;
+}
+bool isBanUsername(const string &name,const string &fileName)
+{
+    ifstream file(fileName);
+    if (!file.is_open())
+    {
+        cout << "\033[31m" << " Unable to open file" << "\033[0m" << endl;
+        return false;
+    }
+
+    string storedName,storePass,storeStatus;
+    while (file >> storedName>>storePass>>storeStatus)
+    {
+        if (storedName == name)
+        {
+            if(storeStatus == "0"){
+                return false;
+            }
+        }
+    }
+    file.close();
+    return true;
 }
 //Hàm kiểm tra tên đăng nhập
 bool validateUsername(const string& username) {
@@ -173,7 +195,7 @@ bool validateUsername(const string& username) {
         tab() ;cout <<"\033[31m" << " Error: Username cannot contain spaces." << "\033[0m" << endl;
         return false;
     }
-    if (isExistUsername(username)){
+    if (isExistUsername(username,"Account_mangement/Account/User.txt")){
         tab() ;cout << "\033[31m" << " Username has exist !" << "\033[0m" << endl;
         return false;
     }

@@ -169,7 +169,7 @@ void Account::Register()
     cout << borderColor << "+" << string(48, '-') << "+" << resetColor << endl;
     if (!setAccountRegister(accountName, accountPassword))
         return;
-    if (registerUser("Account_mangement/Account/User.txt", this->accountName, this->accountPassword))
+    if (registerUser("Account_mangement/Account/User.txt", this->accountName, this->accountPassword,"-1"))
     {
         tab();
         cout << "\033[32m" << "Registration successful!" << "\033[0m" << endl;
@@ -254,12 +254,18 @@ bool Account::Login()
             } while (!loginUser("Account_mangement/Account/User.txt", this->accountName, this->accountPassword));
             if (loginUser("Account_mangement/Account/User.txt", this->accountName, this->accountPassword))
             {
+                 if(isBanUsername(this->accountName,"Account_mangement/Account/User.txt") == 0){
+                     system("cls");
+                     cout<<RED<<"YOUR ACCOUNT HAS BEEN LOCKED"<<RESET<<endl;
+                     delay(2000);
+                     return 0;
+                 }
                 tab();
                 cout << "\033[32m" << "Login successful!" << "\033[0m" << endl;
                 tab();
-                cout << "\033[33m" << "Now you are a User ! Press Enter to continue !" << "\033[0m" << endl;
-                cin.ignore(); // Bỏ qua bất kỳ ký tự nào đã có sẵn trong bộ đệm
-                cin.get();    // Đợi người dùng nhấn Enter
+                cout << "\033[33m" << "Wellcome to my Drug Store ! Press Enter to continue !" << "\033[0m" << endl;
+                cin.ignore(); 
+                cin.get();    
                 return 1;
             }
         }
@@ -403,10 +409,10 @@ void Account::removedAccount(const string &userName, const string &fileName)
 }
 
 // Hàm đọc file để lấy thông tin username và password
-vector<pair<string, string>> Account::loadUserInfo(const string &filename)
+vector<vector<string>> Account::loadUserInfo(const string &filename)
 {
     ifstream file(filename);
-    vector<pair<string, string>> users;
+    vector<vector<string>> users;
     string line;
 
     // Kiểm tra nếu không mở được file
@@ -417,14 +423,39 @@ vector<pair<string, string>> Account::loadUserInfo(const string &filename)
     }
 
     // Đọc từng dòng trong file
-    string storedName, storedPassword;
-    while (file >> storedName >> storedPassword)
+    string storedName, storedPassword,status;
+    while (file >> storedName >> storedPassword>>status)
     {
-        users.push_back({storedName, storedPassword});
+        
+        vector<string> temp;
+        temp.push_back(storedName);
+        temp.push_back(storedPassword);
+        temp.push_back(status);
+        users.push_back(temp);
     }
-
     file.close();
     return users;
+}
+
+
+
+//Hàm thay đổi trạng thái tài khoản
+void Account::updateStatus(const string &accountName, const string &status,const string &fileName){
+     vector<vector<string>> temp =Account::loadUserInfo(fileName);
+     ofstream outFile(fileName); // Ghi đè file cũ
+     if (!outFile) {
+         cout << "\033[31m" << "Unable to open file to read" << "\033[0m" << endl;
+         return;
+     }
+     for (auto x : temp) {
+         // Tìm đối tượng Drug có id khớp và cập nhật
+         if (x[0] == accountName) {
+             x[2] = status;
+         }
+         // Ghi lại từng dòng vào file
+         registerUser(fileName,x[0],x[1],x[2]);
+     }
+     outFile.close();
 }
 // Hàm menu đăng nhâp / đăng kí thông tin nguòi dùng
 
@@ -455,12 +486,14 @@ void Account::accountProcess()
 
             p.Register();
             tab() ;
-            cout << "Do you Login ? [Y/N] : " ;
+            cout << "\033[33m"<<"Do you Login now? [Y/N] : " << "\033[0m";
             char choice ; cin >> choice ;
             if (isalpha(choice)) {
                 if (choice == 'Y' || choice == 'y') {
-                    User p1 ;
-                    p1.userProcess() ;
+                    User p2;
+                    p2.setUserName(p.getAccountName());
+                    updateStatus(p2.getAccountName(),"1","Account_mangement/Account/User.txt");
+                    p2.userProcess();
                 }
                 else if (choice == 'N' || choice == 'n') {
                     delay(2000);
@@ -492,6 +525,7 @@ void Account::accountProcess()
                 {
                     User p2;
                     p2.setUserName(p.getAccountName());
+                    Account::updateStatus(p2.getAccountName(),"1","Account_mangement/Account/User.txt");
                     p2.userProcess();
                 }
             }

@@ -21,7 +21,8 @@ class Account{
         void Register();
         bool Login();
         static void removedAccount(const string &userName,const string &fileName);
-        static vector<pair<string,string>> loadUserInfo(const std::string& filename) ;
+        static vector<vector<string>> loadUserInfo(const std::string& filename) ;
+        static void updateStatus(const string &accountName, const string &status,const string &fileName);
         static void accountProcess();
 };
 
