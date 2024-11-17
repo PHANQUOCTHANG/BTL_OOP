@@ -122,7 +122,7 @@ bool Account::setAccountRegister(string accountName, string accountPassword)
                 tab();
                 cout << "\033[31m" << "Password does not mactch!" << "\033[0m" << endl;
                 tab();
-                cout << "\033[33m" << "Do you want show password ! (Y/N)" << "\033[0m";
+                cout << "\033[33m" << "Do you want show password ! [Y/N]: " << "\033[0m";
                 cin >> res;
                 res = toupper(res);
                 if (res == 'Y'){
@@ -455,8 +455,10 @@ void Account::accountProcess()
 
             p.Register();
             tab() ;
+            cout << YELLOW ;
             cout << "Do you Login ? [Y/N] : " ;
             char choice ; cin >> choice ;
+            cout << RESET  ;
             if (isalpha(choice)) {
                 if (choice == 'Y' || choice == 'y') {
                     User p1 ;

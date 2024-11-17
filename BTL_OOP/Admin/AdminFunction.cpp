@@ -23,8 +23,11 @@ void Admin::adminMenu(int selection)
     cout << "|" << (selection == 4 ? "\033[38;5;214m ->      4. User Management            \033[0m|\n"
                                     : "          4. User Management           |\n");
     tab();
-    cout << "|" << (selection == 5 ? "\033[38;5;214m ->      5. Log out                    \033[0m|\n"
-                                : "          5. Log out                   |\n");                                
+    cout << "|" << (selection == 5 ? "\033[38;5;214m ->      5. List Rating                \033[0m|\n"
+                                    : "          5. List Rating               |\n");
+    tab();
+    cout << "|" << (selection == 6 ? "\033[38;5;214m ->      6. Log out                    \033[0m|\n"
+                                : "          6. Log out                   |\n");                                
     tab();
     cout << "+---------------------------------------+\n";
     tab();
@@ -48,10 +51,10 @@ void Admin::adminProcess(){
         key = _getch();  // Get a single character input
         if (key == 72) {  // Up arrow key code
             selection--;
-            if (selection < 1) selection = 5;
+            if (selection < 1) selection = 6;
         } else if (key == 80) {  // Down arrow key code
             selection++;
-            if (selection > 5) selection = 1;
+            if (selection > 6) selection = 1;
         }
     } while (key != '\r');  // Continue until the Enter key is pressed
     choice = selection;
@@ -82,6 +85,12 @@ void Admin::adminProcess(){
 
       }
       case 5:
+      {
+        system("cls");
+        listRating() ;
+        break ;
+      }
+      case 6:
       {
         system("cls");
         return;

@@ -29,6 +29,10 @@ class Admin : public Account
         void salesManaMenu();
         void salesManaProcess();
 
+        // rating
+        vector <vector<string>> readFromFile() ;
+        void listRating() ;
+
         //User
         void userManaMenu1();
         void userManaProcess();

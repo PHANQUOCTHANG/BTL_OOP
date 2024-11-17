@@ -86,15 +86,16 @@ void User::payment(int id, vector<Drug> temp)
     {
       do
       {
-        cout << "\n\033[36m" << "Enter the quantity you want to buy :" << "\033[0m";
+        cout << "\n\033[36m" << "Enter the quantity you want to buy (max : 50 products) : " << "\033[0m";
         cin >> quanlity;
         if (quanlity > temp[id - 1].getQuantityInStock())
         {
           cout << "\033[31m" << "Excess quantity!" << "\033[0m" << endl;
         }
-        if (quanlity <= 0)
-          cout << "Invalid" << endl;
-      } while (quanlity > temp[id - 1].getQuantityInStock() || quanlity <= 0);
+        else if (quanlity > 50) cout << RED <<  "Exceeded purchase limit" << RESET << endl ;
+        else if (quanlity <= 0 )
+          cout << RED << "Invalid" << RESET <<  endl;
+      } while (quanlity > temp[id - 1].getQuantityInStock() || quanlity <= 0 || quanlity > 50 );
       string paymentMethodRes = paymentMethod(choice);
       system("cls");
       fileName = "Account_mangement/Account/userInfor/";

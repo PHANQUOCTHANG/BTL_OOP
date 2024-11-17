@@ -79,6 +79,9 @@ class User : public Info, public Account
     //in bill
         void bill(User temp,vector<Orders> orders,string paymentMethod);
 
+    // rating user 
+        void ratingUser () ;
+
 };
 
 

@@ -186,7 +186,7 @@ void Admin::drugManaProcess(){
             title();
             Drug::printDrugList(temp[id-1]);
               char rep;
-              cout<<"\033[33m"<<"Are you sure you want to delete, the data will not be recoverable ! (Y/N)  "<<"\033[0m"; cin>>rep;
+              cout<<"\033[33m"<<"Are you sure you want to delete, the data will not be recoverable ! [Y/N]: "<<"\033[0m"; cin>>rep;
               rep=toupper(rep);
               if(rep=='Y'){
                 Drug::deleteDrugById(id,"drugStore/wareHouse.txt");
