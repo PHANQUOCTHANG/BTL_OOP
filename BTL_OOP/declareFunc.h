@@ -10,6 +10,7 @@
 #include "Admin/InventoryMana.cpp"
 #include "Admin/SalesMana.cpp"
 #include "Admin/UserMana.cpp"
+#include "Admin/ListRating.cpp"
 
 #include "Design/Design.h"
 #include "Design/Design.h"
@@ -25,5 +26,6 @@
 #include "User/userBuyDrug.cpp"
 #include "User/userDiscount.cpp"
 #include "User/userInfomation.cpp"
+
 
 #include "extra_function/Function.cpp"

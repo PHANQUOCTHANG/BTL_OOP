@@ -1,5 +1,6 @@
 #pragma once
 #include "User.h"
+#include "rating.cpp"
 
 //Show Menu
 void User::userMenu(int selection)
@@ -20,8 +21,11 @@ void User::userMenu(int selection)
     cout << "|" << (selection == 3 ? "\033[38;5;214m ->         3. Discounts              \033[0m|\n" 
                                     : "             3. Discounts             |\n");
     tab();
-    cout << "|" << (selection == 4 ? "\033[38;5;214m ->         4. Log out                \033[0m|\n"
-                                    : "             4. Log out               |\n");
+    cout << "|" << (selection == 4 ? "\033[38;5;214m ->         4. Rating                \033[0m|\n"
+                                    : "             4. Rating                |\n");
+    tab();
+    cout << "|" << (selection == 5 ? "\033[38;5;214m ->         5. Log out                \033[0m|\n"
+                                    : "             5. Log out               |\n");
     tab();
     cout << "+--------------------------------------+\n";
     tab();
@@ -67,10 +71,10 @@ void User::userProcess(){
             key = _getch();  // Get a single character input
             if (key == 72) {  // Up arrow key code
                 selection--;
-                if (selection < 1) selection = 4;
+                if (selection < 1) selection = 5;
             } else if (key == 80) {  // Down arrow key code
                 selection++;
-                if (selection > 4) selection = 1;
+                if (selection > 5) selection = 1;
             }
         } while (key != '\r');  // Continue until the Enter key is pressed
         choice = selection;
@@ -108,6 +112,12 @@ void User::userProcess(){
                 break;
             }
             case 4:
+            {
+                system("cls") ;
+                ratingUser() ;
+                break ;
+            }
+            case 5:
             {
                 updateStatus(this->getAccountName(),"-1","Account_mangement/Account/User.txt");
                 system("cls");
